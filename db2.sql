@@ -4,22 +4,22 @@ use database  `ZeroGravity` ;
 
 --用户信息表(user)
 create table `tbl_user`(
-   `id`               int  ,
-   `accout_password`  varchar2(255) not null comment `账户密码` ，
-   `account`          varchar2(255) not null comment `Q Q账号` ，
-   `nickname`         varchar2(255) not null comment `昵称` ,
-   `avatar`           varchar2(255) not null comment `头像` ，
-   `energy`           int           not null comment `能量值` ，     
+   `user_id`          int           not null comment `用户id`  ,
+   `accout_password`  varchar2(255) not null comment `账户密码`，
+   `account`          varchar2(255) not null comment `Q Q账号`，
+   `nickname`         varchar2(255) not null comment `昵称`,
+   `avatar`           varchar2(255) not null comment `头像`，
+   `energy`           int           not null comment `能量值`，     
 --添加约束
    primary key (`id`),
-);
+)engine=innoDB default charset=UTF8MB4;
 
 
 --想法表(idea)
 create table `tbl_idea`(
     `id`              int           not null comment `想法id`,
     `content`         varchar       not null comment `想法内容`,
-    `releaseDate`     date default sysdate   comment `发布日期`,
+    `releaseDate`     date default  sysdate  comment `发布日期`,
     `publisher_id `   int                    comment `发布者ID`,
     `likes_sum`       int                    comment `点赞数`,
     `comments_sum`    int                    comment `评论数`,
@@ -28,8 +28,10 @@ create table `tbl_idea`(
     primary key(`id`),
     foreign key(`publisher_id`)
 
-);
+) engine=innoDB default charset=UTF8MB4;
  
+
+
 ----评论表(comments)
 create table tbl_comments(
     `id`               int          not null comment `评论id` ，
@@ -42,7 +44,7 @@ create table tbl_comments(
 primary key (`id`),
 foreign key (`commenter_id`),
 foreign key (`commented_id`)
-);
+) engine=innoDB default charset=UTF8MB4;
 
 
 
@@ -56,7 +58,7 @@ primary key (`id`),
 foreign key (`collector_id`),
 foreign key (`idea_id`)
 
-);
+) engine=innoDB default charset=UTF8MB4;
 
  
 ----想法点赞记录表(like_record_idea)
@@ -71,7 +73,7 @@ foreign key (`idea_id`),
 foreign key (`likers_id`),
 foreign key (`beliked_id`)
 
-);
+) engine=innoDB default charset=UTF8MB4;
 
 --评论点赞记录表(comment_record_idea)
 create table tbl_comment_record_idea(
@@ -80,9 +82,9 @@ create table tbl_comment_record_idea(
     `likers_id`        int            not null comment `点赞者id`,
     `beliked_id`       int            not null comment `被点赞者id`,
 --添加约束
-primary key (id),
-foreign key (comment_id),
-foreign key (likers_id),
-foreign key (beliked_id)
-);
+primary key (`id`),
+foreign key (`comment_id`),
+foreign key (`likers_id`),
+foreign key (`beliked_id`)
+) engine=innoDB default charset=UTF8MB4;
 
