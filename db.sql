@@ -10,8 +10,9 @@ create table tbl_userInformation(
     nickname varchar2(255) not null,
     avatar varchar2(255),
     energy int 
-    --添加约束
+ --添加约束
 primary key (id),
+unique (name )
 
 );
 
