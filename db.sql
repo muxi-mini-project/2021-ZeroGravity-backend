@@ -1,90 +1,90 @@
---此脚本是为“ZeroGravity”所设计的建表文件
---作者：龚娜
---建表时间：2020-01-19 15：30
+drop database if exists `ZeroGravity` ;
+create database`ZeroGravity ;
+use database  `ZeroGravity` ;
 
---用户（user）表
-create table tbl_userInformation(
-    id int  ,
-    accountPassword varchar2(255) not null,
-    account varchar2(255) not null,
-    nickname varchar2(255) not null,
-    avatar varchar2(255),
-    energy int 
- --添加约束
-primary key (id),
-unique (name )
-
-);
+--用户信息表(user)
+create table `tbl_user`(
+   `user_id`          int           not null comment `用户id`  ,
+   `accout_password`  varchar2(255) not null comment `账户密码`，
+   `account`          varchar2(255) not null comment `Q Q账号`，
+   `nickname`         varchar2(255) not null comment `昵称`,
+   `avatar`           varchar2(255) not null comment `头像`，
+   `energy`           int           not null comment `能量值`，     
+--添加约束
+   primary key (`id`),
+)engine=innoDB default charset=UTF8MB4;
 
 
 --想法表(idea)
-create table tbl_userIdea (
-    id int ,
-    content varchar not null ,
-    releaseDate date default sysdate,
-    publisherID int ,
-    heat int ,
-    numberOfComments int ,
+create table `tbl_idea`(
+    `id`              int           not null comment `想法id`,
+    `content`         varchar       not null comment `想法内容`,
+    `releaseDate`     date default  sysdate  comment `发布日期`,
+    `publisher_id `   int                    comment `发布者ID`,
+    `likes_sum`       int                    comment `点赞数`,
+    `comments_sum`    int                    comment `评论数`,
+    `collection_sum`  int                    comment `收藏数`，
 --添加约束
-primary key(id),
-foreign key(publisherID)
-);
+    primary key(`id`),
+    foreign key(`publisher_id`)
+
+) engine=innoDB default charset=UTF8MB4;
+ 
 
 
-
---评论表(comments)
-create table tbl_usercomments(
-    id int ,
-    commentatorID int ,
-    commentOnID int ,
-    likes int ,
-    releaseDate date default sysdate ,
-    content varchar2(255) not null,
+----评论表(comments)
+create table tbl_comments(
+    `id`               int          not null comment `评论id` ，
+    `commenter_id`     int          not null comment `评论者id`， 
+    `commented_id`     int          not null comment `被评论者id`，
+    `likes_sum`        int          not null comment `赞数`,
+    `release_date`     date default sysdate  comment `发布日期`,
+    `content`          varchar      not null comment `内容`,
 --添加约束
-primary key (id),
-foreign key (commentatorID),
-foreign key (commentOnID),
-);
+primary key (`id`),
+foreign key (`commenter_id`),
+foreign key (`commented_id`)
+) engine=innoDB default charset=UTF8MB4;
 
 
 
---收藏记录表(favoriteRecords)
-create table tbl_favoriteRecords(
-    id int,
-    user_id int,
-    idea_id int,
+--收藏表(favorite_records)
+create table tbl_favorite_records(
+    `id`               int           not null comment `收藏记录序号`,
+    `collector_id`     int           not null comment `收藏者id`,
+    `idea_id`          int           not null comment `想法id`,
 --添加约束
-primary key (id),
-foreign key (user_id),
-foreign key (idea_id),
+primary key (`id`),
+foreign key (`collector_id`),
+foreign key (`idea_id`)
 
-);
+) engine=innoDB default charset=UTF8MB4;
 
-
-
---想法点赞记录表(likeRecordOfIdea)
-create table tbl_likeRecordOfIdea (
-    id int,
-    idea_Id int ,
-    likesId int ,
-    beLikedPersonID int ,
+ 
+----想法点赞记录表(like_record_idea)
+create table tbl_like_record_idea(
+    `id`               int            not null comment `点赞记录序号`,
+    `idea_id`          int            not null comment `想法id`,
+    `likers_id`        int            not null comment `点赞者id`,
+    `beliked_id`       int            not null comment `被点赞者id`,
 --添加约束
-primary key (id),
-foreign key (idea_Id),
-foreign key (likesId),
-foreign key (beLikedPersonID)
+primary key (`id`),
+foreign key (`idea_id`),
+foreign key (`likers_id`),
+foreign key (`beliked_id`)
 
-);
+) engine=innoDB default charset=UTF8MB4;
 
---评论点赞记录表(likeRecordOfComments)
-create table tbl_likeRecordOfComments(
-    id int ,
-    commentID int,
-    likesId int,
-    beLikedPersonID int ,
+--评论点赞记录表(comment_record_idea)
+create table tbl_comment_record_idea(
+    `id`               int            not null comment `点赞记录序号`,
+    `comment_id`       int            not null comment `评论id`,
+    `likers_id`        int            not null comment `点赞者id`,
+    `beliked_id`       int            not null comment `被点赞者id`,
 --添加约束
-primary key(id),
-foreign key (commentID),
-foreign key (likesId),
-foreign key (beLikedPersonID)
-);
+primary key (`id`),
+foreign key (`comment_id`),
+foreign key (`likers_id`),
+foreign key (`beliked_id`)
+) engine=innoDB default charset=UTF8MB4;
+
