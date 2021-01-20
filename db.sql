@@ -7,19 +7,19 @@ use  `ZeroGravity`;
 
 --用户信息表(user)
 create table `tbl_user`(
-   `user_id`          int           not null               comment `用户id`  ,
-   `account_password` varchar2(20)  not null               comment `账户密码`，
-   `account`          varchar2(20)  not null               comment `Q Q账号`，
+   `user_id`          int           not null               comment `用户id` , 
+   `account_password` varchar2(20)  not null               comment `账户密码`,
+   `account`          varchar2(20)  not null               comment `Q Q账号`,
    `nickname`         varchar2(20)  not null               comment `昵称`,
-   `avatar`           varchar2(255) not null               comment `头像`，
-   `energy`           int           not null  default 0    comment `能量值`，     
+   `avatar`           varchar2(255) not null               comment `头像`,
+   `energy`           int           not null  default 0    comment `能量值`  ,   
 --添加约束
 primary key `id`                    (`id`),
 key  `account_password`             (`account_password`),
 key  `account`                      (`account`),
 key  `nickname`                     (`nickname`),
 key  `avater`                       (`avater`),
-key  `energy`                       (`energy`)
+key  `energy`                       (`energy`),
 )engine=innoDB default charset=UTF8MB4;
 
 
@@ -33,7 +33,7 @@ create table `tbl_idea`(
     `publisher_id `   int           not null comment `发布者ID`,
     `likes_sum`       int           not null comment `点赞数`,
     `comments_sum`    int           not null comment `评论数`,
-    `collection_sum`  int           not null comment `收藏数`，
+    `collection_sum`  int           not null comment `收藏数`,
 --添加约束
 primary key `id`                    (`id`),
 foreign key `publisher_id`          (`publisher_id`),
@@ -50,9 +50,9 @@ key   `collection_sum`              (`collection_sum`)
 
 --评论表(comments)
 create table `tbl_comments`(
-    `id`               int          not null comment `评论id` ，
-    `commenter_id`     int          not null comment `评论者id`， 
-    `commented_id`     int          not null comment `被评论者id`，
+    `id`               int          not null comment `评论id` ,
+    `commenter_id`     int          not null comment `评论者id`,
+    `commented_id`     int          not null comment `被评论者id`,
     `likes_sum`        int          not null comment `赞数`,
     `release_date`     date default sysdate  comment `发布日期`,
     `content`          varchar(255) not null comment `内容`,
