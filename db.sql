@@ -5,7 +5,7 @@ create database `ZeroGravity`;
 use  `ZeroGravity`;
 
 
---用户信息表(user)
+-- 用户信息表(user)
 create table `tbl_user` (
    `user_id`          int unsigned  not null               comment "用户id" ,       
    `account_password` varchar(20)       null               comment "账户密码",
@@ -13,7 +13,7 @@ create table `tbl_user` (
    `nickname`         varchar(20)       null               comment "昵称",
    `avatar`           varchar(255)      null               comment "头像",
    `energy`           int               null  default 0    comment "能量值"  ,   
---添加约束
+-- 添加约束
 primary key                         (`id`),
 key  `account_password`             (`account_password`),
 key  `account`                      (`account`),
@@ -25,7 +25,7 @@ key  `energy`                       (`energy`)
 
 
 
---想法表(idea)
+-- 想法表(idea)
 create table `tbl_idea`(
     `id`              int           not null comment "想法id",
     `content`         varchar(255)      null comment "想法内容",
@@ -34,7 +34,7 @@ create table `tbl_idea`(
     `likes_sum`       int               null comment "点赞数",
     `comments_sum`    int               null comment "评论数",
     `collection_sum`  int               null comment "收藏数",
---添加约束
+-- 添加约束
 primary key                         (`id`),
 foreign key                         (`publisher_id`),
 key   `content`                     (`content`),
@@ -48,7 +48,7 @@ key   `collection_sum`              (`collection_sum`)
 
 
 
---评论表(comments)
+-- 评论表(comments)
 create table `tbl_comments`(
     `id`               int          not null comment "评论id" ,
     `commenter_id`     int              null comment "评论者id",
@@ -56,7 +56,7 @@ create table `tbl_comments`(
     `likes_sum`        int              null comment "赞数",
     `release_date`     date default  sysdate comment "发布日期",
     `content`          varchar(255)     null comment "内容",
---添加约束
+-- 添加约束
 primary key                          (`id`),
 foreign key                          (`commenter_id`),
 foreign key                          (`commented_id`),
@@ -68,12 +68,12 @@ key           `content`              (`content`)
 
 
 
---收藏表(favorite_records)
+-- 收藏表(favorite_records)
 create table `tbl_favorite_records`(
     `id`               int           not null comment "收藏记录序号",
     `collector_id`     int               null comment "收藏者id",
     `idea_id`          int               null comment "想法id",
---添加约束
+-- 添加约束
 primary key                           (`id`),
 foreign key                           (`collector_id`),
 foreign key                           (`idea_id`)
@@ -82,13 +82,13 @@ foreign key                           (`idea_id`)
 
  
 
-----想法点赞记录表(like_record_idea)
+-- 想法点赞记录表(like_record_idea)
 create table `tbl_like_record_idea`(
     `id`               int            not null comment "点赞记录序号",
     `idea_id`          int                     comment "想法id",
     `likers_id`        int                     comment "点赞者id",
     `beliked_id`       int                     comment "被点赞者id",
---添加约束
+-- 添加约束
 primary key                           (`id`),
 foreign key                           (`idea_id`),
 foreign key                           (`likers_id`),
@@ -98,13 +98,13 @@ foreign key                           (`beliked_id`)
 
 
 
---评论点赞记录表(comment_record_idea)
+-- 评论点赞记录表(comment_record_idea)
 create table `tbl_comment_record_idea`(
     `id`               int            not null comment "点赞记录序号",
     `comment_id`       int                null comment "评论id",
     `likers_id`        int                null comment "点赞者id",
     `beliked_id`       int                null comment "被点赞者id",
---添加约束
+-- 添加约束
 primary key                            (`id`),
 foreign key                            (`comment_id`),
 foreign key                            (`likers_id`),
