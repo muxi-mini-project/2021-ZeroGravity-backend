@@ -14,7 +14,7 @@ create table `tbl_user` (
    `avatar`           varchar(255)      null               comment "头像",
    `energy`           int               null  default 0    comment "能量值"  ,   
 -- 添加约束
-primary key                         (`id`),
+primary key                         (`user_id`),
 key  `account_password`             (`account_password`),
 key  `account`                      (`account`),
 key  `nickname`                     (`nickname`),
@@ -26,17 +26,17 @@ key  `energy`                       (`energy`)
 
 
 -- 想法表(idea)
-create table `tbl_idea`(
-    `id`              int           not null comment "想法id",
+create table `tbl_idea` (
+    `idea_id`         int           not null comment "想法id",
     `content`         varchar(255)      null comment "想法内容",
     `releaseDate`     date              null comment "发布日期",
-    `publisher_id `   int               null comment "发布者ID",
+    `user_id `        int               null comment "发布者id",
     `likes_sum`       int               null comment "点赞数",
     `comments_sum`    int               null comment "评论数",
     `collection_sum`  int               null comment "收藏数",
 -- 添加约束
 primary key                         (`id`),
-foreign key                         (`publisher_id`),
+key   `publisher_id`                (`publisher_id`),
 key   `content`                     (`content`),
 key   `releaseDate`                 (`releaseDate`),
 key   `likes_sum`                   (`likes_sum`),
@@ -54,12 +54,12 @@ create table `tbl_comments`(
     `commenter_id`     int              null comment "评论者id",
     `commented_id`     int              null comment "被评论者id",
     `likes_sum`        int              null comment "赞数",
-    `release_date`     date default  sysdate comment "发布日期",
+    `release_date`     date             null comment "发布日期",
     `content`          varchar(255)     null comment "内容",
 -- 添加约束
 primary key                          (`id`),
-foreign key                          (`commenter_id`),
-foreign key                          (`commented_id`),
+key           `commenter_id`         (`commenter_id`),
+key           `commented_id`         (`commented_id`),
 key           `likes_sum`            (`likes_sum`),
 key           `release_date`         (`release_date`),
 key           `content`              (`content`)
@@ -75,8 +75,8 @@ create table `tbl_favorite_records`(
     `idea_id`          int               null comment "想法id",
 -- 添加约束
 primary key                           (`id`),
-foreign key                           (`collector_id`),
-foreign key                           (`idea_id`)
+key            `collector_id`         (`collector_id`),
+key            `idea_id`              (`idea_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 
@@ -90,9 +90,9 @@ create table `tbl_like_record_idea`(
     `beliked_id`       int                     comment "被点赞者id",
 -- 添加约束
 primary key                           (`id`),
-foreign key                           (`idea_id`),
-foreign key                           (`likers_id`),
-foreign key                           (`beliked_id`)
+key             `idea_id`             (`idea_id`),
+key             `likers_id`           (`likers_id`),
+key             `beliked_id`          (`beliked_id`)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
@@ -106,8 +106,8 @@ create table `tbl_comment_record_idea`(
     `beliked_id`       int                null comment "被点赞者id",
 -- 添加约束
 primary key                            (`id`),
-foreign key                            (`comment_id`),
-foreign key                            (`likers_id`),
-foreign key                            (`beliked_id`)
+key                `comment_id`        (`comment_id`),
+key                `likers_id`         (`likers_id`),
+key                `beliked_id`        (`beliked_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
