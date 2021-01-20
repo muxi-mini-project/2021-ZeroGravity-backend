@@ -36,7 +36,7 @@ create table `tbl_idea`(
 
 
 --评论表(comments)
-create table tbl_comments(
+create table `tbl_comments`(
     `id`               int          not null comment `评论id` ，
     `commenter_id`     int          not null comment `评论者id`， 
     `commented_id`     int          not null comment `被评论者id`，
@@ -53,7 +53,7 @@ foreign key (`commented_id`)
 
 
 --收藏表(favorite_records)
-create table tbl_favorite_records(
+create table `tbl_favorite_records`(
     `id`               int           not null comment `收藏记录序号`,
     `collector_id`     int           not null comment `收藏者id`,
     `idea_id`          int           not null comment `想法id`,
@@ -67,7 +67,7 @@ foreign key (`idea_id`)
 
  
 ----想法点赞记录表(like_record_idea)
-create table tbl_like_record_idea(
+create table `tbl_like_record_idea`(
     `id`               int            not null comment `点赞记录序号`,
     `idea_id`          int            not null comment `想法id`,
     `likers_id`        int            not null comment `点赞者id`,
@@ -83,7 +83,7 @@ foreign key (`beliked_id`)
 
 
 --评论点赞记录表(comment_record_idea)
-create table tbl_comment_record_idea(
+create table `tbl_comment_record_idea`(
     `id`               int            not null comment `点赞记录序号`,
     `comment_id`       int            not null comment `评论id`,
     `likers_id`        int            not null comment `点赞者id`,
