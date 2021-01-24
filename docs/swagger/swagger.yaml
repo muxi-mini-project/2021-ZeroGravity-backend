@@ -1,0 +1,696 @@
+swagger: '2.0'
+
+info:
+
+  description:  This is the "zero gravity" API interface
+  version: 1.0.0
+  title: ZeroGravity 用户接口
+  
+host: localhost
+basePath: /api/v1
+tags: 
+  - name: user
+    description: 用户
+  
+  - name: idea
+    description: 想法
+  
+  - name: searcher
+    description: 查找
+  
+  - name: comment
+    description: 评论
+  
+  - name: like
+    description: 点赞
+schemes: 
+  - http
+  - https
+paths:
+  /register:
+    post:
+      tags:
+        - user
+      summary: 注册用户
+      description: 直接输入账号和密码注册
+      parameters:
+        - name: data
+          in: body
+          description: 所有数据
+        
+          schema:
+            required:
+              - QQaccount
+              - password
+            properties:
+              QQaccount:
+                type: string
+                description: QQ账号
+              password:
+                type: string
+                description: 账号密码
+      responses: 
+        200:
+          description: 注册成功,留住用户id
+          schema:
+            properties:
+              QQaccount: 
+                type: string
+        400:
+          description: 参数不全,客户端语法有问题
+        401:
+          description: 用户名或密码错误
+          
+  /login: 
+    post:
+      tags: 
+        - user
+      summary: 登录
+      description: 用户输入账号密码登录
+      parameters:
+        - name: data 
+          in: body
+          description: 所有数据
+          schema:
+            required:  
+               - QQaccount
+               - password
+            properties:
+              QQaccount:
+                type: string
+                description: 用户账号
+              password:
+                type: string
+                description: 用户密码
+      responses:
+        200:
+          description: 登录成功
+          schema:
+            properties:
+              token:
+                type: string
+                description: 通过给前端一个token，下次登录时，不用前端再次输入账号和密码
+        400:
+          description: 参数不全
+        401:
+          description: 用户名或密码错误
+          
+          
+  /idea/{user_id}/increase:
+    post: 
+      tags: 
+        - idea
+      summary: 新增想法
+      parameters:
+        - $ref: "#/parameters/token"
+        - $ref: "#/parameters/idea_content"
+        - $ref: "#/parameters/idea_title"
+        - name: user_id
+          in: path
+          required: true
+          type: string
+          schema:
+            properties:
+              title: 
+                type: string
+                description: 想法标题
+              content:
+                type: string
+                description: 想法内容
+              picture:
+                type: string
+                description: 配图
+              user_id: 
+                type: string
+                description: 用户id
+                
+    responses:
+        200:
+          description: 发布成功
+          schema:
+            properties:
+              user_id:
+                type: string
+              title: 
+                type: string
+              content:
+                type: string
+              picture:
+                type: string
+        400:
+          description: 参数不全
+        401:
+          description: token错了, 权限不够
+          
+          
+  /idea/{user_id}/reduction:   
+    delete: 
+      tags: 
+        - idea
+      summary: 删除想法
+      parameters: 
+        - $ref: "#/parameters/token"
+        - name: user_id
+          in: path
+          required: true
+          type: string
+        - name: idea_id
+          in: body
+          schema:
+            type: array
+            items:
+              properties:
+                idea_id:
+                  type: integer
+                  description: 想法的ID
+      responses:
+        200:
+          description: 删除成功
+        404:
+          description: 删除失败
+        401:
+          description: 请先登录
+   
+  /like/{user_id}/idea:
+    post:
+      tag:
+        -like
+      summary: 新增想法点赞记录
+      parameters:
+        - $ref: "#/parameters/token"
+        - name: user_id
+          in: path
+          required: true
+          type: string
+        - name: idea_id
+          in: body
+          schema:
+            properties:
+              idea_id:
+                type: number
+                description: 想法的id
+              beliked_id:
+                type: string
+                description: 被点赞者的id
+      responses:
+        200:
+          description: 点赞成功
+        404:
+          description: 点赞失败
+        401:
+          description: 请先登陆
+   
+  /like/{user_id}/comment:     
+    post:
+      tag:
+        -like
+      summary: 新增评论点赞记录
+      parameters:
+        - $ref: "#/parameters/token"
+        - $ref: "#/parameters/belike_id"
+        - name: user_id
+          in: path
+          required: true
+          type: string
+        - name: comment_id
+          in: body
+          schema:
+            properties:
+              comment_id:
+                type: number
+                description: 评论的ID
+              beliked_id:
+                type: string
+                description: 被点赞者的ID
+      responses:
+        200:
+          description: 点赞成功
+        404:
+          description: 点赞失败
+        401:
+          description: 请先登陆
+        
+        
+        
+  /like/{user_id}/idea_record: 
+    delete: 
+      tags: 
+        - like
+      summary: 删除想法点赞记录
+      parameters: 
+        - $ref: "#/parameters/token"
+        - name: user_id
+          in: path
+          required: true
+          type: string
+        - name: idea_id
+          in: body
+        - name: belike_id
+          in: body
+          schema:
+            type: array
+            items:
+              properties:
+                idea_id:
+                  type: string
+                  description: 想法的ID
+                beliked_id:
+                type: string
+                description: 被点赞者的ID
+                
+                
+      responses:
+        200:
+          description: 删除成功
+        404:
+          description: 删除失败
+        401:
+          description: 请先登录
+          
+  /like/{user_id}/comment_record:                  
+    delete: 
+      tags: 
+        - like
+      summary: 删除评论点赞记录
+      parameters: 
+        - $ref: "#/parameters/token"
+        - name: user_id
+          in: path
+          required: true
+          type: string
+        - name: beliked_id
+          in: body
+        - name: comment_id
+          in: body
+          schema:
+            type: array
+            items:
+              properties:
+                comment_id:
+                  type: string
+                  description: 评论的ID
+                beliked_id:
+                  type: string
+                  description: 被点赞者的ID
+                
+      responses:
+        200:
+          description: 删除成功
+        404:
+          description: 删除失败
+        401:
+          description: 请先登录
+          
+                            
+    
+          
+          
+    
+  /comment/{user_id}/increase:     
+    post:
+      tags:
+        - comment
+      summary: 新增评论
+      parameters: 
+        - $ref: "#/parameters/token"
+        - $ref: "#/parameters/comment_content"
+        - name: user_id
+          in: path
+          required: true
+          type: string
+        - name: commented_id
+          in: body
+          description: 被评论的用户ID
+          required: true
+          schema:
+            properties: 
+              content :
+                  type: string
+                  description: 评论的内容
+              commented_id:
+                  type: string
+                  description: 被评论者的ID
+              
+      responses:
+        200:
+          description: 评论发布成功
+        404:
+          description: 评论发布失败
+        401:
+          description: 请先登录
+          
+  /comment/{user_id}/reduction:   
+    delete: 
+      tags: 
+        - comment
+      summary: 删除评论记录
+      parameters: 
+        - $ref: "#/parameters/token"
+        - name: user_id
+          in: path
+          required: true
+          type: string
+        - name: comment_id
+          in: body
+          schema:
+            type: array
+            items:
+              properties:
+                comment_id:
+                  type: integer
+                  description: 评论的ID
+      responses:
+        200:
+          description: 删除成功
+        404:
+          description: 删除失败
+        401:
+          description: 请先登录
+
+  /user/{user_id}/collection:
+    get:
+      tags: 
+        - user
+      summary: 用户收藏
+      parameters: 
+        - $ref: "#/parameters/token"
+        - name: user_id
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: 收藏成功
+          schema:   
+            type: array
+            items:
+              $ref: "#/definitions/user_collection"
+        404:
+          description: 没有该资源
+        401:
+          description: 请先登陆
+  /user/{user_id}/idea:
+    get:
+      tags: 
+        - user
+      summary: 用户主页-我的想法
+      parameters: 
+        - name: user_id
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: 获取成功
+          schema:   
+            type: array
+            items:
+              $ref: "#/definitions/user_idea"
+        404:
+          description: 没有该资源   
+          
+  /user/{user_id}/:  
+    get:
+      tags:
+        - user
+      summary: 用户主页-我的账号，我的昵称，我的头像，我的能量值，
+      parameters:
+        - $ref: "#/parameters/token"
+        - $ref: "#/parameters/avater"
+        - $ref: "#/parameters/nickname"
+        - name: user_id
+          in: path
+          required: true
+          type: string
+        - name: user_id
+          in: body
+          required: true
+          type: string
+      responses:
+        200:
+          description: 获取成功
+          schema:
+            properties:
+              user_id:
+                type: string
+              nickname: 
+                type: string
+              avater:
+                type: string
+              energy:
+                type: number
+        404:
+          description: 没有该资源
+        401:
+          description: token错误，没有权限
+          
+  /user/{user_id}/comment:
+    get:
+      tags:
+        - user
+      summary: 用户主页-我的评论
+      parameters: 
+        - name: user_id
+          in: path
+          required: true
+          type: string
+        - name: comment_id
+          in: body
+          required: true
+          type: string 
+      responses:
+        200:
+          description: 获取成功
+          schema:   
+            type: array
+            items:
+              $ref: "#/definitions/user_comment"
+        404:
+          description: 没有该资源    
+          
+  /user/{user_id}/information:
+    put:
+      tags:
+        - user
+      summary: 修改用户信息
+      parameters:
+        - $ref: "#/parameters/token"
+        - name: user_id
+          in: path
+          required: true
+          type: string
+        - password:
+          in: body
+          schema:
+            properties:
+              user_id:
+                type: string
+              avater:
+                type: string
+                description: 头像图片的url
+              nickname:
+                type: string 
+              password:
+                type: string
+      responses:
+        200:
+          description: OK
+        401:
+          description: token错了,权限不够
+  /searcher:
+    get:
+      tags: 
+        - searcher
+      summary: 想法查询
+      parameters: 
+        - $ref: "#/parameters/token"
+        - name: idea_id
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: 查询成功
+          schema:
+            properties:
+              comments:
+                type: array
+                items:
+                  $ref: "#/definitions/user_idea"
+        401:
+        description: 请先登录
+        404:
+      description: 您所查找资源不存在
+
+
+          
+                    
+
+definitions:
+        
+  user_idea:
+      description: 一个信息块，同时显示想法和用户信息
+      required:
+      - idea_id
+      - user_id
+      properties:
+      user_id:    #　这是路径里面user_id
+        type: string
+      nickname:
+        type: string
+      avater:
+        type: string
+      idea_id:
+        type: integer
+      title: 
+        type: string
+        description: 想法标题
+      content:
+        type: string
+        description: 内容
+      publiser_time: 
+        type: string
+        description: 发布时间
+      picture:
+        type: string
+        description: 配图
+      comment_sum:
+        type: integer
+        description: 评论数
+      like_sum:
+        type: integer
+        description: 点赞数    
+  
+  idea:
+    description: 想法信息
+    
+    properties:
+      idea_id:
+        type: integer
+      content:
+        type: string
+      piblisher_time:
+        type: integer
+      publisher_id:
+        type: integer
+      likes_sum:
+        type: integer
+      comments_sum:
+        type: integer
+      collection_sum:
+        type: integer
+        
+  comment:
+     description: 评论信息
+    
+     properties:
+      comment_id:
+        type: integer
+      content:
+        type: string
+      piblisher_time:
+        type: integer
+      publisher_id:
+        type: integer
+      likes_sum:
+        type: integer
+    
+
+  user_comment:
+      description: 用户信息和评论的表
+      required:
+        - comment_id
+        - user_id
+      properties:
+        user_id:
+          type: string
+        nickname:
+          type: string
+        avater:
+          type: string
+        Comment_id:
+          type: integer
+        Content:
+          type: string
+        Time:
+          type: string
+        like_sum:
+          type: integer
+        Comment_like:
+          description: 本用户是否点赞
+          type: boolean
+          
+      user_idea:
+       description: 用户信息和想法的表
+       required:
+        - idea_id
+        - user_id
+       properties:
+        user_id:
+          type: string
+        nickname:
+          type: string
+        avater:
+          type: string
+        idea_id:
+          type: integer
+        content:
+          type: string
+        publisher_time:
+          type: string
+        like_sum:
+          type: integer
+        idea_like:
+          description: 本用户是否点赞
+          type: boolean
+          
+  
+        
+          
+parameters:
+  token:
+      name: token 
+      in: header
+      required: true
+      type: string  
+
+          
+          
+      
+
+parameters:   
+  idea_content:
+      name: idea_content
+      in: body
+      required: true
+      
+parameters:   
+  idea_title:
+      name: idea_title
+      in: body
+      required: true
+                
+parameters:   
+  beliked_id:
+      name: beliked_id:
+      in: body
+      required: true
+                               
+parameters:   
+  comment_content:
+      name: comment_content
+      in: body
+      required: true
+                                
+parameters:   
+  nickname:
+      name: nickname
+      in: body
+      required: true
+parameters:   
+  avater:
+      name: avater
+      in: body
+      required: true
+           
+                
