@@ -34,12 +34,10 @@ paths:
       summary: 注册用户
       description: 直接输入账号和密码注册
       parameters:
-        - name: QQaccount
+        - name: data
           in: body
-          description: QQ账号
-        - name: password
-          in: body
-          description: 账号密码
+          description: 所有数据
+        
           schema:
             required:
               - QQaccount
@@ -70,13 +68,13 @@ paths:
       summary: 登录
       description: 用户输入账号密码登录
       parameters:
-        - name: QQaccount
+        - name: data 
           in: body
-          description: QQ账号
+          description: 所有数据
           schema:
             required:  
-              - QQaccount: 
-              - password:
+               - QQaccount
+               - password
             properties:
               QQaccount:
                 type: string
@@ -98,29 +96,19 @@ paths:
           description: 用户名或密码错误
           
           
-  /idea/{user_id}:
+  /idea/{user_id}/increase:
     post: 
       tags: 
         - idea
       summary: 新增想法
       parameters:
         - $ref: "#/parameters/token"
+        - $ref: "#/parameters/idea_content"
+        - $ref: "#/parameters/idea_title"
         - name: user_id
           in: path
           required: true
           type: string
-        - name: content
-          in: body
-        - name: likes_sum
-          in: body
-        - name: collection_sum
-          in: body
-        - name: comments_sum
-          in: body
-        - name: title
-          in: body
-        - name: picture
-          in: body 
           schema:
             properties:
               title: 
@@ -136,7 +124,7 @@ paths:
                 type: string
                 description: 用户id
                 
-      responses:
+    responses:
         200:
           description: 发布成功
           schema:
@@ -155,8 +143,8 @@ paths:
           description: token错了, 权限不够
           
           
-  /idea/{user_id}/idea_delete:   
-    put: 
+  /idea/{user_id}/reduction:   
+    delete: 
       tags: 
         - idea
       summary: 删除想法
@@ -219,13 +207,12 @@ paths:
       summary: 新增评论点赞记录
       parameters:
         - $ref: "#/parameters/token"
+        - $ref: "#/parameters/belike_id"
         - name: user_id
           in: path
           required: true
           type: string
         - name: comment_id
-          in: body
-        - beliked_id:
           in: body
           schema:
             properties:
@@ -245,7 +232,7 @@ paths:
         
         
         
-  /like/{user_id}/idea_delete:  
+  /like/{user_id}/idea_record: 
     delete: 
       tags: 
         - like
@@ -280,8 +267,8 @@ paths:
         401:
           description: 请先登录
           
-  /like/{user_id}/comment_delete:                  
-    put: 
+  /like/{user_id}/comment_record:                  
+    delete: 
       tags: 
         - like
       summary: 删除评论点赞记录
@@ -319,21 +306,18 @@ paths:
           
           
     
-  /comment/{user_id}:     
+  /comment/{user_id}/increase:     
     post:
       tags:
         - comment
       summary: 新增评论
       parameters: 
         - $ref: "#/parameters/token"
+        - $ref: "#/parameters/comment_content"
         - name: user_id
           in: path
           required: true
           type: string
-        - name: content
-          in: body
-          description: 评论内容
-          required: true
         - name: commented_id
           in: body
           description: 被评论的用户ID
@@ -343,7 +327,7 @@ paths:
               content :
                   type: string
                   description: 评论的内容
-                commented_id:
+              commented_id:
                   type: string
                   description: 被评论者的ID
               
@@ -355,8 +339,8 @@ paths:
         401:
           description: 请先登录
           
-  /comment/{user_id}/comment_delete:   
-    put: 
+  /comment/{user_id}/reduction:   
+    delete: 
       tags: 
         - comment
       summary: 删除评论记录
@@ -405,7 +389,7 @@ paths:
           description: 没有该资源
         401:
           description: 请先登陆
-  /user/{user_id}/my_idea:
+  /user/{user_id}/idea:
     get:
       tags: 
         - user
@@ -425,29 +409,23 @@ paths:
         404:
           description: 没有该资源   
           
-  /user/{user_id}/my_information:  
+  /user/{user_id}/:  
     get:
       tags:
         - user
       summary: 用户主页-我的账号，我的昵称，我的头像，我的能量值，
       parameters:
         - $ref: "#/parameters/token"
+        - $ref: "#/parameters/avater"
+        - $ref: "#/parameters/nickname"
         - name: user_id
           in: path
           required: true
           type: string
-        - name: nickname
+        - name: user_id
           in: body
           required: true
           type: string
-        - name: avater
-          in: body
-          required: true
-          type: string
-        - name: energy
-          in: body
-          required: true
-          type: number
       responses:
         200:
           description: 获取成功
@@ -466,7 +444,7 @@ paths:
         401:
           description: token错误，没有权限
           
-  /user/{user_id}/my_comment:
+  /user/{user_id}/comment:
     get:
       tags:
         - user
@@ -476,7 +454,7 @@ paths:
           in: path
           required: true
           type: string
-         - name: comment_id
+        - name: comment_id
           in: body
           required: true
           type: string 
@@ -490,7 +468,7 @@ paths:
         404:
           description: 没有该资源    
           
-  /user/{user_id}/information_change:
+  /user/{user_id}/information:
     put:
       tags:
         - user
@@ -501,10 +479,6 @@ paths:
           in: path
           required: true
           type: string
-        - name: nickname
-          in: body
-        - name: avater
-          in: body
         - password:
           in: body
           schema:
@@ -546,7 +520,7 @@ paths:
         401:
         description: 请先登录
         404:
-        description: 您所查找资源不存在
+      description: 您所查找资源不存在
 
 
           
@@ -556,10 +530,10 @@ definitions:
         
   user_idea:
       description: 一个信息块，同时显示想法和用户信息
-    required:
+      required:
       - idea_id
       - user_id
-    properties:
+      properties:
       user_id:    #　这是路径里面user_id
         type: string
       nickname:
@@ -596,30 +570,30 @@ definitions:
       content:
         type: string
       piblisher_time:
-        type: data
+        type: integer
       publisher_id:
-        type: interger
+        type: integer
       likes_sum:
-        type: interger
+        type: integer
       comments_sum:
-        type: interger
+        type: integer
       collection_sum:
-        type: interger
+        type: integer
         
   comment:
      description: 评论信息
     
-    properties:
+     properties:
       comment_id:
         type: integer
       content:
         type: string
       piblisher_time:
-        type: data
+        type: integer
       publisher_id:
-        type: interger
+        type: integer
       likes_sum:
-        type: interger
+        type: integer
     
 
   user_comment:
@@ -646,12 +620,12 @@ definitions:
           description: 本用户是否点赞
           type: boolean
           
-  user_idea:
-      description: 用户信息和想法的表
-      required:
+      user_idea:
+       description: 用户信息和想法的表
+       required:
         - idea_id
         - user_id
-      properties:
+       properties:
         user_id:
           type: string
         nickname:
@@ -670,22 +644,7 @@ definitions:
           description: 本用户是否点赞
           type: boolean
           
-  user_like:
-      description: 用户信息和点赞的表
-      required:
-        - like_id
-        - user_id
-        properties:
-        user_id:
-          type: string
-        nickname:
-          type: string
-        avater:
-          type: string
-        idea_id:
-          type: integer
-        comment_id:
-          type: integer
+  
         
           
 parameters:
@@ -694,4 +653,44 @@ parameters:
       in: header
       required: true
       type: string  
-            
+
+          
+          
+      
+
+parameters:   
+  idea_content:
+      name: idea_content
+      in: body
+      required: true
+      
+parameters:   
+  idea_title:
+      name: idea_title
+      in: body
+      required: true
+                
+parameters:   
+  beliked_id:
+      name: beliked_id:
+      in: body
+      required: true
+                               
+parameters:   
+  comment_content:
+      name: comment_content
+      in: body
+      required: true
+                                
+parameters:   
+  nickname:
+      name: nickname
+      in: body
+      required: true
+parameters:   
+  avater:
+      name: avater
+      in: body
+      required: true
+           
+                

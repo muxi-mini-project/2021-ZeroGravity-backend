@@ -1,94 +1,39 @@
-package main
+func main() {
+	defer database.DB.Close()
+	router := gin.Default()
 
-import (
-	"context"
-	"path/filepath"
+	router.POST("/api/v1/register", Handler.Register)
+	router.POST("/api/v1/login", Handler.Login)
 
-	"github.com/gin"
-)
-  func main (){
-  engine:=gin.Default()
- 
-  engine.POST("/register",func (context *gin.Context) {
-	  fmt.Println("context.FullPath"())
-	  user_name:=context.Query("user_name")
-	  fmt.Println(user_name)
-	  context.Writer.Writer([]byte("用户注册" + user_name))
-  })
-   
-  engine.POST("/login",func (context *gin.Context)  {
-	fmt.Println("context.FullPath"()) 
-	user_name,exist := context.GetPostForm("user_name")
-	password,exist := context.GetPostForm("password")
-	if exist{
-	    fmt.Println(user_name)
-	    fmt.Println(password)
+	g1 := router.Group("/api/v1/user")
+	{
+		g1.GET("/:user_id/collection", Handler.UserCollection)
+		g1.GET("/:user_id/idea", Handler.UserIdea)
+		g1.GET("/:user_id/", Handler.UserInfo)
+		g1.GET("/:user_id/comment", Handler.UserComment)
+		g1.PUT("/:user_id/information", Handler.ChangeUserInfo)
+	}	
+    g2 := router.Group("/api/v1/idea")
+	{
+		g2.GET("/:user_id/increase", Handler.IncreaseIdea)
+		g2.DELETE("/:user_id/reduction", Handler.DeleteIdea)
+		
+	}	
+	g3 := router.Group("/api/v1/comment"){
+        g3.POST("/:user_id/increase", Handler.IncreaseComment)
+		g3.DELETE("/:user_id/reduction", Handler.DeleteComment)
+    }
+	g4 := router.Group("/api/v1/like"){
+        g4.DELETE("/:user_id/idea_record", Handler.DeleteIdeaLike)
+		g4.DELETE("/:user_id/comment_record", Handler.DeleteCommentLike)
+		g4.POST("/:user_id/idea", Handler.NewIdeaLike)
+		g4.POST("/:user_id/comment", Handler.NewCommentLike)
+
+	}
+	g5 :=router.Group("/api/v1/search"){
+		g5.GET("/:user_id/idea_search", Handler.IdeaSearch) 
     }
 	
-	context.Writer.Writer([]byte("用户登录" +user_name))
-	  
-  })
-  engine.DELETE("/user/:user_id",func(c *gin.Context) {
-		user_id:=context.Param("user_id")
-		context.Writer.Writer([]byte("delete用户ID：" +user_id ))
 
-
-  })
-   
-
-    engine.POST("/login",func (context *gin.Context) {
-
-	fmt.Println("context.FullPath"()) 
-	user_name,exist := context.GetPostForm("user_name")
-	password,exist := context.GetPostForm("password")
-    if exist{
-	    fmt.Println(user_name)
-	    fmt.Println(password)
-    }
-	
-	context.Writer.Writer([]byte("用户登录" +user_name))
-
-})
-
-	
-    engine.POST("/register",func (context *gin.Context) {
-	  
-	fmt.Println("context.FullPath"()) 
-	user_name,exist := context.GetPostForm("user_name")
-	password,exist := context.GetPostForm("password")
-    if exist{
-	    fmt.Println(user_name)
-	    fmt.Println(password)
-    }
-	
-	context.Writer.Writer([]byte("用户注册" +user_name))
-
-})
-	
-
-    engine.DELETE("/user/:user_id",func(c *gin.Context) {
-	user_id:=context.Param("user_id")
-	context.Writer.Writer([]byte("delete用户ID：" +user_id ))
-
-
-})
-	
-
-    engine.POST("/idea",func (context *gin.Context) {
-	  
-	fmt.Println("context.FullPath"()) 
-	user_name,exist := context.GetPostForm("user_name")
-	password,exist := context.GetPostForm("password")
-    if exist{
-	    fmt.Println(user_name)
-	    fmt.Println(password)
-    }
-	
-	context.Writer.Writer([]byte("用户注册" +user_name))
-
-})
-	
-
-
-  engine.Run()
+    router.Run(":9091")
 }
