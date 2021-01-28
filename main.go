@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"2021-ZeroGravity-backend/router"
+	"github.com/2021-ZeroGravity-backend/router"
 
 	"github.com/gin-gonic/gin"
 )
@@ -51,5 +51,5 @@ func pingServer() error {
 		log.Print("Waiting for the router, retry in 1 second.")
 		time.Sleep(time.Second)
 	}
-	return errors.New("cannot connect to the router")
+	return errors.New("Cannot connect to the router.")
 }

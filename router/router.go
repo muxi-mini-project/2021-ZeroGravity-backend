@@ -3,8 +3,8 @@ package router
 import (
 	"net/http"
 
-	"2021-ZeroGravity-backend/handler/sd"
-	"2021-ZeroGravity-backend/router/middleware"
+	"github.com/2021-ZeroGravity-backend/handler/sd"
+	"github.com/2021-ZeroGravity-backend/router/middleware"
 
 	"github.com/gin-gonic/gin"
 )
