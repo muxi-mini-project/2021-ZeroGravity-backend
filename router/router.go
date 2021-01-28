@@ -1,39 +1,35 @@
-func main() {
-	defer database.DB.Close()
-	router := gin.Default()
+package router
 
-	router.POST("/api/v1/register", Handler.Register)
-	router.POST("/api/v1/login", Handler.Login)
+import (
+	"net/http"
 
-	g1 := router.Group("/api/v1/user")
+	"2021-ZeroGravity-backend/handler/sd"
+	"2021-ZeroGravity-backend/router/middleware"
+
+	"github.com/gin-gonic/gin"
+)
+
+// Load loads the middlewares, routes, handlers.
+func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
+	// Middlewares.
+	g.Use(gin.Recovery())
+	g.Use(middleware.NoCache)
+	g.Use(middleware.Options)
+	g.Use(middleware.Secure)
+	g.Use(mw...)
+	// 404 Handler.
+	g.NoRoute(func(c *gin.Context) {
+		c.String(http.StatusNotFound, "The incorrect API route.")
+	})
+
+	// The health check handlers
+	svcd := g.Group("/sd")
 	{
-		g1.GET("/:user_id/collection", Handler.UserCollection)
-		g1.GET("/:user_id/idea", Handler.UserIdea)
-		g1.GET("/:user_id/", Handler.UserInfo)
-		g1.GET("/:user_id/comment", Handler.UserComment)
-		g1.PUT("/:user_id/information", Handler.ChangeUserInfo)
-	}	
-    g2 := router.Group("/api/v1/idea")
-	{
-		g2.GET("/:user_id/increase", Handler.IncreaseIdea)
-		g2.DELETE("/:user_id/reduction", Handler.DeleteIdea)
-		
-	}	
-	g3 := router.Group("/api/v1/comment"){
-        g3.POST("/:user_id/increase", Handler.IncreaseComment)
-		g3.DELETE("/:user_id/reduction", Handler.DeleteComment)
-    }
-	g4 := router.Group("/api/v1/like"){
-        g4.DELETE("/:user_id/idea_record", Handler.DeleteIdeaLike)
-		g4.DELETE("/:user_id/comment_record", Handler.DeleteCommentLike)
-		g4.POST("/:user_id/idea", Handler.NewIdeaLike)
-		g4.POST("/:user_id/comment", Handler.NewCommentLike)
-
+		svcd.GET("/health", sd.HealthCheck)
+		svcd.GET("/disk", sd.DiskCheck)
+		svcd.GET("/cpu", sd.CPUCheck)
+		svcd.GET("/ram", sd.RAMCheck)
 	}
-	g5 :=router.Group("/api/v1/search"){
-		g5.GET("/:user_id/idea_search", Handler.IdeaSearch) 
-    }
-	
 
-    router.Run(":9091")
+	return g
 }
