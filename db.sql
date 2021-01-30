@@ -99,7 +99,7 @@ key             `beliked_id`          (`beliked_id`)
 
 
 -- 评论点赞记录表(comment_record_idea)
-create table `tbl_comment_record_idea`(
+create table `tbl_like_record_comment`(
     `id`               int            not null comment "点赞记录序号",
     `comment_id`       int                null comment "评论id",
     `likers_id`        int                null comment "点赞者id",
