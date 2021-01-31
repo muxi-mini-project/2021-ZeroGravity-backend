@@ -100,7 +100,15 @@ func NewIdea (idea Idea) int {
 }
 
 
+func DeleteIdea (idea Idea) string {
+	const result = "删除成功"
+	if err := database.DB.Table("tbl_idea").Delete((&idea,1).Error; err != nil {
+		log.Println("DeleteIdea " + err.Error())
+		return 
+	}
+	return   result
 
+}
 
 
 
