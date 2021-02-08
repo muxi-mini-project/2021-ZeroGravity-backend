@@ -2,23 +2,20 @@ package user
 
 import (
 	"github.com/2021-ZeroGravity-backend/model"
-	"log"
+
 	"errors"
-	"github.com/dgrijalva/jwt-go"
+	
 
 	"github.com/gin-gonic/gin"
-	"github.com/lexkong/log"
-	"github.com/lexkong/log/lager"
+	
+	
 )
 
 
 // Register creates a new user account.新增用户
 func Register (c *gin.Context) {
 	var  user model.User
-	if err != nil {
-		c.JSON(401, gin.H{"message": err.Error()})
-		return
-	}
+	
 	if err := c.BindJSON(&user); err != nil {
 		c.JSON(400, gin.H{"message": "输入有误，格式错误"})
 		return
@@ -30,22 +27,6 @@ func Register (c *gin.Context) {
 
 
 	
-
-
-
-//Login is used for user login 用户登录
-    func Login (c *gin.Context) {
-	    var  login  model.User
-
-}
-
-
-
-
-
-
-
-
 
 
 
@@ -73,12 +54,6 @@ func Register (c *gin.Context) {
 
 
 
-
-
-
-
-
-
 //IncreaseIdea is used to post ideas 新增想法
     func IncreaseIdea (c *gin.Context) {
 		var  increaseIdea model.Idea
@@ -88,11 +63,11 @@ func Register (c *gin.Context) {
 			c.JSON(401, gin.H{"message": err.Error()})
 			return
 		}
-		if err := c.BindJSON(&increaseidea); err != nil {
+		if err := c.BindJSON(&increaseIdea); err != nil {
 			c.JSON(400, gin.H{"message": "输入有误，格式错误"})
 			return
 		}
-	idea_id:= model.NewIdeaLike(increaseIdea)
+	idea_id:= model.NewIdea(increaseIdea)
 	c.JSON(200, gin.H{"idea_id": idea_id})
 
 }
@@ -114,7 +89,7 @@ func Register (c *gin.Context) {
 			c.JSON(400, gin.H{"message": "输入有误，格式错误"})
 			return
 		}
-	id:= model.NewIdeaLike(ideaLikeRecord)
+	id:= model.NewIdeaLike(increaseIdeaLike)
 	c.JSON(200, gin.H{"id": id})
 
 }
@@ -147,7 +122,7 @@ func Register (c *gin.Context) {
     func IncreaseCollection(c *gin.Context) {
 	var  increaseCollection  model.Collection
     token := c.Request.Header.Get("token")
-		claims, err := model.VerifyToken(token)
+	claims, err := model.VerifyToken(token)
 		if err != nil {
 			c.JSON(401, gin.H{"message": err.Error()})
 			return

@@ -4,7 +4,7 @@ import(
 	
 	"errors"
 
-	"fmt"
+	
 	"log"
 
 
@@ -12,7 +12,6 @@ import(
 	"github.com/2021-ZeroGravity-backend/model"
 )
 
-JwtCliams...
 type JwtClaims struct {
 	jwt.StandardClaims
 	UserID string `json:"user_id"`

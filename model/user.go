@@ -1,7 +1,8 @@
 package model
 
 import(
-	"strconv"
+	"github.com/2021-ZeroGravity-backend/model"
+
 	"github.com/gin-gonic/gin"
 	"log"
 )
@@ -19,9 +20,8 @@ type User struct {
 
 func NewUser(user User) string {
 	
-	if err := database.DB.Table("tbl_user").Create(&user); err != nil {
-		log.Println("NewUser" + err.Error())
-	     return
+	if err := DB.Table("tbl_user").Create(&user); err != nil {
+		log.Println("NewUser" ) 
 	}
 	return user.Nickname
 }
@@ -31,49 +31,7 @@ func NewUser(user User) string {
 
 
 
-//登录验证
-func VerifyPassword(id string, password string) bool {
-	var user = User
-	if err := database.DB.Table("tbl_user").Where("account=?", id).First(&user).Error; err != nil {
-		log.Println("VerifyPasswordError" + err.Error())
-		return false
-	}
-	if user.Password == password {
-		return true
-	}
-	log.Println(user.Password)
-	log.Println(password)
-	return false
-}
 
-const (
-	ErrorReason_ServerBusy = "服务器繁忙"
-	ErrorReason_ReLogin    = "请重新登陆"
-)
-
-
-//解析token
-func VerifyToken(strToken string) (*JwtClaims, error) {
-	//	strToken := c.Param("token")    //c.Param()可以获取单个参数,路径的也行
-
-	//解析
-	token, err := jwt.ParseWithClaims(strToken, &JwtClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte(Secret), nil
-	})
-
-	if err != nil {
-		return nil, errors.New(ErrorReason_ServerBusy + ",或token解析失败")
-	}
-	claims, ok := token.Claims.(*JwtClaims)
-	if !ok {
-		return nil, errors.New(ErrorReason_ReLogin)
-	}
-	if err := token.Claims.Valid(); err != nil {
-		return nil, errors.New(ErrorReason_ReLogin)
-	}
-
-	return claims, nil //JwtClaims结构体类型
-}
 
 
 
@@ -92,8 +50,8 @@ type Idea struct{
 
 func NewIdea (idea Idea) int {
 	
-	if err := database.DB.Table("tbl_idea").Create(&idea).Error; err != nil {
-		log.Println("NewIdea " + err.Error())
+	if err := DB.Table("tbl_idea").Create(&idea); err != nil {
+		log.Println("NewIdea")
 		return 0
 	}
 	return idea.IdeaId
@@ -102,9 +60,9 @@ func NewIdea (idea Idea) int {
 
 func DeleteIdea (idea Idea) string {
 	const result = "删除成功"
-	if err := database.DB.Table("tbl_idea").Delete((&idea,1).Error; err != nil {
-		log.Println("DeleteIdea " + err.Error())
-		return 
+	if err := DB.Table("tbl_idea").Delete((&idea),1); err != nil {
+		log.Println("DeleteIdea " )
+		
 	}
 	return   result
 
@@ -125,11 +83,11 @@ type Comment struct{
 
 func NewComment(comment  Comment) int {
 	
-	if err := database.DB.Table("tbl_comments").Create(&comment); err != nil {
-		log.Println("NewComment" + err.Error())
+	if err := DB.Table("tbl_comments").Create(&comment); err != nil {
+		log.Println("NewComment")
 		return 0
 	}
-	return Comment.Id
+	return comment.Id
 }
 
 
@@ -146,8 +104,8 @@ type Collection struct{
 
 func NewCollection(collection Collection) int {
 	
-	if err := database.DB.Table("tbl_favorite_records").Create(&collection); err != nil {
-		log.Println("NewCollection" + err.Error())
+	if err := DB.Table("tbl_favorite_records").Create(&collection); err != nil {
+		log.Println("NewCollection")
 		return 0
 	}
 	return collection.Id
@@ -168,8 +126,8 @@ type IdeaLikeRecord  struct{
 
 func NewIdeaLike(ideaLikeRecord IdeaLikeRecord) int {
 	
-	if err := database.DB.Table("tbl_like_record_idea").Create(&ideaLikeRecord); err != nil {
-		log.Println("NewIdeaLike" + err.Error())
+	if err := DB.Table("tbl_like_record_idea").Create(&ideaLikeRecord); err != nil {
+		log.Println("NewIdeaLike" )
 		return 0
 	}
 	return ideaLikeRecord.Id
@@ -188,8 +146,8 @@ type CommentLikeRecord  struct{
 
 func NewCommentLike(commentLikeRecord CommentLikeRecord) int {
 	
-	if err := database.DB.Table("tbl_like_record_comment").Create(&commentLikeRecord); err != nil {
-		log.Println("NewCommentLike" + err.Error())
+	if err :=DB.Table("tbl_like_record_comment").Create(&commentLikeRecord); err != nil {
+		log.Println("NewCommentLike" )
 		return 0
 	}
 	return commentLikeRecord.Id
@@ -202,47 +160,4 @@ func NewCommentLike(commentLikeRecord CommentLikeRecord) int {
 
 
 
-JwtCliams...
-type JwtClaims struct {
-	jwt.StandardClaims
-	UserID string `json:"user_id"`
-}
 
-var Secret = "sault" //加盐
-
-func GetToken(claims *JwtClaims) string {
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	signedToken, err := token.SignedString([]byte(Secret))
-	if err != nil {
-		log.Println(err)
-		return ""
-	}
-	return signedToken
-}
-
-const (
-	ErrorReason_ServerBusy = "服务器繁忙"
-	ErrorReason_ReLogin    = "请重新登陆"
-)
-
-func VerifyToken(strToken string) (*JwtClaims, error) {
-	//	strToken := c.Param("token")    //c.Param()可以获取单个参数,路径的也行
-
-	//解析
-	token, err := jwt.ParseWithClaims(strToken, &JwtClaims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte(Secret), nil
-	})
-
-	if err != nil {
-		return nil, errors.New(ErrorReason_ServerBusy + ",或token解析失败")
-	}
-	claims, ok := token.Claims.(*JwtClaims)
-	if !ok {
-		return nil, errors.New(ErrorReason_ReLogin)
-	}
-	if err := token.Claims.Valid(); err != nil {
-		return nil, errors.New(ErrorReason_ReLogin)
-	}
-
-	return claims, nil //JwtClaims结构体类型
-}

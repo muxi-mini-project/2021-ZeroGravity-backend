@@ -1,8 +1,10 @@
 package router
   
   import (
-	  
+	"github.com/2021-ZeroGravity-backend/model"
+	"github.com/2021-ZeroGravity-backend/handler/user"
 	"github.com/gin-gonic/gin"
+
   )
  func Router (r *gin.Engine)  {
 	 
@@ -11,7 +13,7 @@ package router
 
 
 	router.POST("/api/v1/register", Handler.Register)
-	router.POST("/api/v1/login", Handler.Login)
+	router.POST("/api/v1/login",Handler.Login)
 
 	g1 := router.Group("/api/v1/user")
 	{
@@ -29,18 +31,21 @@ package router
 		g2.DELETE("/:user_id/reduction", Handler.DecreaseIdea)
 		
 	}	
-	g3 := router.Group("/api/v1/comment"){
+	g3 := router.Group("/api/v1/comment")
+	{
         g3.POST("/:user_id/increase", Handler.IncreaseComment)
 		g3.DELETE("/:user_id/reduction", Handler.DecreaseComment)
     }
-	g4 := router.Group("/api/v1/like"){
+	g4 := router.Group("/api/v1/like")
+	{
         g4.DELETE("/:user_id/idea_record", Handler.DecreaseIdeaLike)
 		g4.DELETE("/:user_id/comment_record", Handler.DecreaseCommentLike)
 		g4.POST("/:user_id/idea", Handler.IncreaseIdeaLike)
 		g4.POST("/:user_id/comment", Handler.IncreaseCommentLike)
 
 	}
-	g5 :=router.Group("/api/v1/search"){
+	g5 :=router.Group("/api/v1/search")
+	{
 		g5.GET("/:user_id/idea_search", Handler.IdeaSearch) 
     }
 	
