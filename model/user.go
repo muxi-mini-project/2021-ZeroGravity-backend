@@ -12,7 +12,7 @@ type User struct {
 	Id             string    `json:"id"`
 	Account        string    `json:"account"`
 	Nickname       string    `json:"nickname"`
-	Password       string    `json:"password"`
+	Account        string    `json:"account"`
 	Avatar         string    `json:"avatar"`
 	Energy         int       `json:"energy"`
 }
@@ -20,7 +20,7 @@ type User struct {
 
 func NewUser(user User) string {
 	
-	if err := DB.Table("tbl_user").Create(&user); err != nil {
+	if err := model.DB.Table("tbl_user").Create(&user); err != nil {
 		log.Println("NewUser" ) 
 	}
 	return user.Nickname
@@ -48,19 +48,19 @@ type Idea struct{
  
 
 
-func NewIdea (idea Idea) int {
+func NewIdea (idea Idea) string {
 	
-	if err := DB.Table("tbl_idea").Create(&idea); err != nil {
+	if err := model.DB.Table("tbl_idea").Create(&idea); err != nil {
 		log.Println("NewIdea")
-		return 0
+		
 	}
-	return idea.IdeaId
+	return idea.Content
 }
 
 
 func DeleteIdea (idea Idea) string {
 	const result = "删除成功"
-	if err := DB.Table("tbl_idea").Delete((&idea),1); err != nil {
+	if err := model.DB.Table("tbl_idea").Delete((&idea),1); err != nil {
 		log.Println("DeleteIdea " )
 		
 	}
@@ -81,13 +81,13 @@ type Comment struct{
 }
 
 
-func NewComment(comment  Comment) int {
+func NewComment(comment  Comment) string {
 	
-	if err := DB.Table("tbl_comments").Create(&comment); err != nil {
+	if err := model.DB.Table("tbl_comments").Create(&comment); err != nil {
 		log.Println("NewComment")
-		return 0
+		
 	}
-	return comment.Id
+	return comment.Content 
 }
 
 
@@ -104,9 +104,9 @@ type Collection struct{
 
 func NewCollection(collection Collection) int {
 	
-	if err := DB.Table("tbl_favorite_records").Create(&collection); err != nil {
+	if err := model.DB.Table("tbl_favorite_records").Create(&collection); err != nil {
 		log.Println("NewCollection")
-		return 0
+		
 	}
 	return collection.Id
 }
@@ -124,13 +124,13 @@ type IdeaLikeRecord  struct{
     
 }
 
-func NewIdeaLike(ideaLikeRecord IdeaLikeRecord) int {
+func NewIdeaLike(ideaLikeRecord IdeaLikeRecord) string {
 	
-	if err := DB.Table("tbl_like_record_idea").Create(&ideaLikeRecord); err != nil {
+	if err := model.DB.Table("tbl_like_record_idea").Create(&ideaLikeRecord); err != nil {
 		log.Println("NewIdeaLike" )
-		return 0
+	
 	}
-	return ideaLikeRecord.Id
+	return ideaLikeRecord.BelikedId
 }
 
 
@@ -144,13 +144,13 @@ type CommentLikeRecord  struct{
 }
 
 
-func NewCommentLike(commentLikeRecord CommentLikeRecord) int {
+func NewCommentLike(commentLikeRecord CommentLikeRecord) string  {
 	
-	if err :=DB.Table("tbl_like_record_comment").Create(&commentLikeRecord); err != nil {
+	if err :=model.DB.Table("tbl_like_record_comment").Create(&commentLikeRecord); err != nil {
 		log.Println("NewCommentLike" )
-		return 0
+		
 	}
-	return commentLikeRecord.Id
+	return commentLikeRecord.BelikedId
 }
 
 

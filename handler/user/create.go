@@ -34,7 +34,7 @@ func Register (c *gin.Context) {
     func IncreaseComment (c *gin.Context) {
 		var  increasecomment  model.Comment
 		token := c.Request.Header.Get("token")
-		claims, err := model.VerifyToken(token)
+		_, err := model.VerifyToken(token)
 		if err != nil {
 			c.JSON(401, gin.H{"message": err.Error()})
 			return
@@ -43,8 +43,8 @@ func Register (c *gin.Context) {
 			c.JSON(400, gin.H{"message": "输入有误，格式错误"})
 			return
 		}
-	id:= model.NewComment(increasecomment)
-	c.JSON(200, gin.H{"id": id})
+	Content:= model.NewComment(increasecomment)
+	c.JSON(200, gin.H{"Content": Content})
 
 }
 
@@ -58,7 +58,7 @@ func Register (c *gin.Context) {
     func IncreaseIdea (c *gin.Context) {
 		var  increaseIdea model.Idea
 		token := c.Request.Header.Get("token")
-		claims, err := model.VerifyToken(token)
+		_, err := model.VerifyToken(token)
 		if err != nil {
 			c.JSON(401, gin.H{"message": err.Error()})
 			return
@@ -67,8 +67,8 @@ func Register (c *gin.Context) {
 			c.JSON(400, gin.H{"message": "输入有误，格式错误"})
 			return
 		}
-	idea_id:= model.NewIdea(increaseIdea)
-	c.JSON(200, gin.H{"idea_id": idea_id})
+		Content:= model.NewIdea(increaseIdea)
+	c.JSON(200, gin.H{"Content": Content})
 
 }
   
@@ -80,7 +80,7 @@ func Register (c *gin.Context) {
     func IncreaseIdeaLike (c *gin.Context) {
 	    var  increaseIdeaLike  model.IdeaLikeRecord
 		token := c.Request.Header.Get("token")
-		claims, err := model.VerifyToken(token)
+		_, err := model.VerifyToken(token)
 		if err != nil {
 			c.JSON(401, gin.H{"message": err.Error()})
 			return
@@ -89,8 +89,8 @@ func Register (c *gin.Context) {
 			c.JSON(400, gin.H{"message": "输入有误，格式错误"})
 			return
 		}
-	id:= model.NewIdeaLike(increaseIdeaLike)
-	c.JSON(200, gin.H{"id": id})
+	BelikedId:= model.NewIdeaLike(increaseIdeaLike)
+	c.JSON(200, gin.H{"BelikedId": BelikedId})
 
 }
 
@@ -101,7 +101,7 @@ func Register (c *gin.Context) {
     func IncreaseCommentLike (c *gin.Context) {
 	    var  increaseCommentLike  model.CommentLikeRecord
 		token := c.Request.Header.Get("token")
-		claims, err := model.VerifyToken(token)
+		_, err := model.VerifyToken(token)
 		if err != nil {
 			c.JSON(401, gin.H{"message": err.Error()})
 			return
@@ -110,8 +110,8 @@ func Register (c *gin.Context) {
 			c.JSON(400, gin.H{"message": "输入有误，格式错误"})
 			return
 		}
-	id:= model.NewCommentLike(increaseCommentLike)
-	c.JSON(200, gin.H{"id": id})
+	BelikedId:= model.NewCommentLike(increaseCommentLike)
+	c.JSON(200, gin.H{"BelikedId": BelikedId})
 
 }
 
@@ -122,7 +122,7 @@ func Register (c *gin.Context) {
     func IncreaseCollection(c *gin.Context) {
 	var  increaseCollection  model.Collection
     token := c.Request.Header.Get("token")
-	claims, err := model.VerifyToken(token)
+	_, err := model.VerifyToken(token)
 		if err != nil {
 			c.JSON(401, gin.H{"message": err.Error()})
 			return

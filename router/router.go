@@ -23,23 +23,23 @@ package router
 		g1.GET("/:user_id/", Handler.UserInfo)
 		g1.GET("/:user_id/comment", Handler.UserComment)
 		g1.PUT("/:user_id/information", Handler.ChangeUserInfo)
-		g1.DELETE("/:user_id/cancel_collection",Handler.DecreaseCollection)
+		g1.DELETE("/:id/cancel_collection",Handler.DecreaseCollection)
 	}	
     g2 := router.Group("/api/v1/idea")
 	{
 		g2.POST("/:user_id/increase", Handler.IncreaseIdea)
-		g2.DELETE("/:user_id/reduction", Handler.DecreaseIdea)
+		g2.DELETE("/:idea_id/reduction", Handler.DecreaseIdea)
 		
 	}	
 	g3 := router.Group("/api/v1/comment")
 	{
         g3.POST("/:user_id/increase", Handler.IncreaseComment)
-		g3.DELETE("/:user_id/reduction", Handler.DecreaseComment)
+		g3.DELETE("/:id/reduction", Handler.DecreaseComment)
     }
 	g4 := router.Group("/api/v1/like")
 	{
-        g4.DELETE("/:user_id/idea_record", Handler.DecreaseIdeaLike)
-		g4.DELETE("/:user_id/comment_record", Handler.DecreaseCommentLike)
+        g4.DELETE("/:id/idea_record", Handler.DecreaseIdeaLike)
+		g4.DELETE("/:id/comment_record", Handler.DecreaseCommentLike)
 		g4.POST("/:user_id/idea", Handler.IncreaseIdeaLike)
 		g4.POST("/:user_id/comment", Handler.IncreaseCommentLike)
 
