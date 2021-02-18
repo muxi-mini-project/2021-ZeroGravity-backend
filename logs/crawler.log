@@ -1,0 +1,15 @@
+{"level":"fatal","time":"2021-02-18T12:19:18.141+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:74","msg":"Open database failed","serviceName":"server","reason":"Error 1045: Access denied for user ''@'localhost' (using password: NO)","detail":"Database connection failed. Database name: "}
+{"level":"info","time":"2021-02-18T12:21:21.889+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"Start to listening the incoming requests on http address: 0.0.0.0:8899","serviceName":"server"}
+{"level":"info","time":"2021-02-18T12:21:21.890+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"Waiting for the router, retry in 1 second.","serviceName":"server"}
+{"level":"info","time":"2021-02-18T12:21:22.892+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"Waiting for the router, retry in 1 second.","serviceName":"server"}
+{"level":"info","time":"2021-02-18T12:21:23.893+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"Waiting for the router, retry in 1 second.","serviceName":"server"}
+{"level":"info","time":"2021-02-18T12:21:24.894+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"Waiting for the router, retry in 1 second.","serviceName":"server"}
+{"level":"info","time":"2021-02-18T12:21:25.896+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"Waiting for the router, retry in 1 second.","serviceName":"server"}
+{"level":"info","time":"2021-02-18T12:21:26.897+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"Waiting for the router, retry in 1 second.","serviceName":"server"}
+{"level":"info","time":"2021-02-18T12:21:27.898+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"Waiting for the router, retry in 1 second.","serviceName":"server"}
+{"level":"info","time":"2021-02-18T12:21:28.900+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"Waiting for the router, retry in 1 second.","serviceName":"server"}
+{"level":"info","time":"2021-02-18T12:21:29.901+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"Waiting for the router, retry in 1 second.","serviceName":"server"}
+{"level":"info","time":"2021-02-18T12:21:30.903+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"Waiting for the router, retry in 1 second.","serviceName":"server"}
+{"level":"fatal","time":"2021-02-18T12:21:31.903+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:74","msg":"The router has no response, or it might took too long to start up.","serviceName":"server","reason":"Cannot connect to the router."}
+{"level":"info","time":"2021-02-18T12:23:20.470+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"Start to listening the incoming requests on http address: 0.0.0.0:8899","serviceName":"server"}
+{"level":"info","time":"2021-02-18T12:23:20.471+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"The router has been deployed successfully.","serviceName":"server"}

@@ -1,0 +1,19 @@
+local_name: zero_gravity 
+runmode: debug                 
+addr: 0.0.0.0:8899             
+url: http://0.0.0.0:8899 
+max_ping_count: 10 
+log:
+  writers: file,stdout         
+  logger_level: DEBUG          
+  logger_file: log/data.log    
+  log_format_text: false       
+  rollingPolicy: size          
+  log_rotate_date: 1           
+  log_rotate_size: 1           
+  log_backup_count: 7          
+db:  # DB 配置 部署时环境变量覆盖
+  name: ZeroGravity
+  addr: 127.0.0.1                       
+  username:  # 拉到本地自己设置，不要推上github
+  password: 
