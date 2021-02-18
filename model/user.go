@@ -1,113 +1,50 @@
 package model
 
-import "log"
+// --Model--
 
-type User struct {
-	Id       string `json:"id"`
-	Account  string `json:"account"`
-	Nickname string `json:"nickname"`
-	Avatar   string `json:"avatar"`
-	Energy   int    `json:"energy"`
+type UserModel struct {
+	Id              string `json:"id" gorm:"column:id;" binding:"required"`
+	Account         string `json:"account" gorm:"column:account;" binding:"required"`
+	AccountPassword string `json:"account_password" gorm:"column:account_password;" binding:"required"`
+	NickName        string `json:"nickname" gorm:"column:nickname;" binding:"required`
+	Avatar          string `json:"avatar" gorm:"column:avatar;" binding:"required"`
+	Energy          int    `json:"energy" gorm:"column:energy;" binding:"required"`
 }
 
-func NewUser(user User) string {
-
-	if err := DB.Self.Table("tbl_user").Create(&user); err != nil {
-		log.Println("NewUser")
-	}
-	return user.Nickname
+func (u *UserModel) TableName() string {
+	return "tbl_user"
 }
 
-type Idea struct {
-	IdeaId        int    `json:"idea_id"`
-	Content       string `json:"content"`
-	ReleaseDate   string `json:"releaseDate"`
-	PublisherId   string `json:"publisher_id"`
-	likessum      int    `json:"likes_sum"`
-	CommentSum    int    `json:"comment_sum"`
-	CollectionSum int    `json:"collection_sum"`
+func (u *UserModel) Create() error {
+	return DB.Self.Create(u).Error
 }
 
-func NewIdea(idea Idea) string {
-
-	if err := DB.Self.Table("tbl_idea").Create(&idea); err != nil {
-		log.Println("NewIdea")
-
-	}
-	return idea.Content
+func GetUserByAccount(account string) (*UserModel, error) {
+	u := &UserModel{}
+	d := DB.Self.Table("tbl_user").Where("account = ?", account).First(u)
+	return u, d.Error
 }
 
-func DeleteIdea(idea Idea) string {
-	const result = "删除成功"
-	if err := DB.Self.Table("tbl_idea").Delete((&idea), 1); err != nil {
-		log.Println("DeleteIdea ")
-
-	}
-	return result
-
+func GetUserByAccountAndPassword(req *LoginRequest) (*UserModel, error) {
+	u := &UserModel{}
+	d := DB.Self.Table("tbl_user").Where("account = ? AND account_password = ?", req.Account, req.AccountPassword).First(u)
+	return u, d.Error
 }
 
-type Comment struct {
-	Id          int    `json:"id"`
-	CommenterId string `json:"commenter_id"`
-	CommentedId string `json:"commented_id"`
-	likessum    string `json:"likes_sum"`
-	ReleaseDate string `json:"release_date"`
-	Content     string `json:"content"`
+// --Request&Response--
+
+type CreateUserRequest struct {
+	Account         string `json:"account"`
+	AccountPassword string `json:"account_password"`
+	NickName        string `json:"nickname"`
+	Avatar          string `json:"avatar"`
 }
 
-func NewComment(comment Comment) string {
-
-	if err := DB.Self.Table("tbl_comments").Create(&comment); err != nil {
-		log.Println("NewComment")
-
-	}
-	return comment.Content
+type LoginRequest struct {
+	Account         string `json:"account"`
+	AccountPassword string `json:"account_password"`
 }
 
-type Collection struct {
-	Id          int `json:"id"`
-	CollectorId int `json:"collector_id"`
-	IdeaId      int `json:"idea_id"`
-}
-
-func NewCollection(collection Collection) int {
-
-	if err := DB.Self.Table("tbl_favorite_records").Create(&collection); err != nil {
-		log.Println("NewCollection")
-
-	}
-	return collection.Id
-}
-
-type IdeaLikeRecord struct {
-	Id        int    `json:"id"`
-	IdeaId    int    `json:"idea_id"`
-	LikersId  string `json:"likers_id"`
-	BelikedId string `json:"beliked_id"`
-}
-
-func NewIdeaLike(ideaLikeRecord IdeaLikeRecord) string {
-
-	if err := DB.Self.Table("tbl_like_record_idea").Create(&ideaLikeRecord); err != nil {
-		log.Println("NewIdeaLike")
-
-	}
-	return ideaLikeRecord.BelikedId
-}
-
-type CommentLikeRecord struct {
-	Id        int    `json:"id"`
-	CommentId int    `json:"comment_id"`
-	LikersId  string `json:"likers_id"`
-	BelikedId string `json:"beliked_id"`
-}
-
-func NewCommentLike(commentLikeRecord CommentLikeRecord) string {
-
-	if err := DB.Self.Table("tbl_like_record_comment").Create(&commentLikeRecord); err != nil {
-		log.Println("NewCommentLike")
-
-	}
-	return commentLikeRecord.BelikedId
+type LoginResponse struct {
+	Token string `json:"token"`
 }

@@ -17,3 +17,5 @@ db:  # DB 配置 部署时环境变量覆盖
   addr: 127.0.0.1                       
   username:  # 拉到本地自己设置，不要推上github
   password: 
+token:
+  expired: 30 # 过期时间 30 天

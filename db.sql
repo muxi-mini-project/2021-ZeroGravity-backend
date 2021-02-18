@@ -7,12 +7,12 @@ use  `ZeroGravity`;
 
 -- 用户信息表(user)
 create table `tbl_user` (
-   `id`               int           not null               comment "用户id" ,       
-   `account_password` varchar(20)       null               comment "账户密码",
-   `account`          varchar(20)       null               comment "Q Q账号",
-   `nickname`         varchar(20)       null               comment "昵称",
-   `avatar`           varchar(255)      null               comment "头像",
-   `energy`           int               null  default 0    comment "能量值"  ,   
+   `id`               int           not null  AUTO_INCREMENT             comment "用户id" ,       
+   `account_password` varchar(20)       null                             comment "账户密码",
+   `account`          varchar(20)       null                             comment "Q Q账号",
+   `nickname`         varchar(20)       null                             comment "昵称",
+   `avatar`           varchar(255)      null                             comment "头像",
+   `energy`           int               null  default 0                  comment "能量值"  ,   
 -- 添加约束
 primary key                         (`id`),
 key  `account_password`             (`account_password`),
@@ -27,7 +27,7 @@ key  `energy`                       (`energy`)
 
 -- 想法表(idea)
 create table `tbl_idea` (
-    `idea_id`         int           not null comment "想法id",
+    `idea_id`         int           not null AUTO_INCREMENT comment "想法id",
     `content`         varchar(255)      null comment "想法内容",
     `releaseDate`     date              null comment "发布日期",
     `publisher_id`    int           null comment "发布者id",
@@ -50,7 +50,7 @@ key   `collection_sum`              (`collection_sum`)
 
 -- 评论表(comments)
 create table `tbl_comments`(
-    `id`               int          not null comment "评论id" ,
+    `id`               int          not null AUTO_INCREMENT comment "评论id" ,
     `commenter_id`     int              null comment "评论者id",
     `commented_id`     int              null comment "被评论者id",
     `likes_sum`        int              null comment "赞数",
@@ -70,7 +70,7 @@ key           `content`              (`content`)
 
 -- 收藏表(favorite_records)
 create table `tbl_favorite_records`(
-    `id`               int           not null comment "收藏记录序号",
+    `id`               int           not null AUTO_INCREMENT comment "收藏记录序号",
     `collector_id`     int               null comment "收藏者id",
     `idea_id`          int               null comment "想法id",
 -- 添加约束
@@ -84,7 +84,7 @@ key            `idea_id`              (`idea_id`)
 
 -- 想法点赞记录表(like_record_idea)
 create table `tbl_like_record_idea`(
-    `id`               int            not null comment "点赞记录序号",
+    `id`               int            not null AUTO_INCREMENT comment "点赞记录序号",
     `idea_id`          int                     comment "想法id",
     `likers_id`        int                     comment "点赞者id",
     `beliked_id`       int                     comment "被点赞者id",
@@ -100,7 +100,7 @@ key             `beliked_id`          (`beliked_id`)
 
 -- 评论点赞记录表(comment_record_idea)
 create table `tbl_like_record_comment`(
-    `id`               int            not null comment "点赞记录序号",
+    `id`               int            not null AUTO_INCREMENT comment "点赞记录序号",
     `comment_id`       int                null comment "评论id",
     `likers_id`        int                null comment "点赞者id",
     `beliked_id`       int                null comment "被点赞者id",

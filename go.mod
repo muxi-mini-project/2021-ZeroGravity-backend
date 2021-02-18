@@ -4,6 +4,7 @@ go 1.14
 
 require (
 	github.com/asynccnu/table_service_v2 v0.0.0-20200221123157-903dbef07cc1 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.6.3
 	github.com/jinzhu/gorm v1.9.16
 	github.com/lexkong/log v0.0.0-20180607165131-972f9cd951fc

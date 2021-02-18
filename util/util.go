@@ -1,7 +1,10 @@
 package util
 
 import (
+	"time"
+
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
 	"github.com/teris-io/shortid"
 )
 
@@ -18,4 +21,10 @@ func GetReqID(c *gin.Context) string {
 		return requestID
 	}
 	return ""
+}
+
+// GetExpiredTime get token expired time from env or config file.
+func GetExpiredTime() time.Duration {
+	day := viper.GetInt("token.expired")
+	return time.Hour * 24 * time.Duration(day)
 }

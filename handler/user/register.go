@@ -11,26 +11,23 @@ import (
 	"go.uber.org/zap"
 )
 
-func Login(c *gin.Context) {
-	log.Info("User login function called.",
+// Register creates a new user account.新增用户
+func Register(c *gin.Context) {
+	log.Info("User register function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
 
-	var req model.LoginRequest
-	// 获取账号和密码
-	if err := c.Bind(&req); err != nil {
+	var req model.CreateUserRequest
+
+	if err := c.ShouldBindJSON(&req); err != nil {
 		SendBadRequest(c, errno.ErrBind, nil, err.Error(), GetLine())
 		return
 	}
 
 	// 调用服务
-	var token string
-	token, err := user.Login(&req)
-	if err != nil {
-		SendError(c, errno.ErrPasswordIncorrect, nil, err.Error(), GetLine())
+	if err := user.Register(&req); err != nil {
+		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}
 
-	SendResponse(c, errno.OK, &model.LoginResponse{
-		Token: token,
-	})
+	SendResponse(c, errno.OK, nil)
 }
