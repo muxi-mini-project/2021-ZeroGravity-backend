@@ -1,4 +1,4 @@
-package idea
+package service
 
 import (
 	. "github.com/2021-ZeroGravity-backend/handler"
