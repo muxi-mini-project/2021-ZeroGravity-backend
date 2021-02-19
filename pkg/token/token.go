@@ -27,13 +27,13 @@ func getJwtKey() string {
 	return jwtKey
 }
 
-// TokenPayload is a required payload when generates token.
+// TokenPayload is a required payload when generates token. 令牌生成时，TokenPayload是必需的有效负载。
 type TokenPayload struct {
 	ID      string        `json:"id"`
 	Expired time.Duration `json:"expired"` // 有效时间（nanosecond）
 }
 
-// TokenResolve means returned payload when resolves token.
+// TokenResolve means returned payload when resolves token. TokenResolve表示解析令牌时返回的有效负载。
 type TokenResolve struct {
 	ID        string `json:"id"`
 	ExpiresAt int64  `json:"expires_at"` // 过期时间（时间戳，10位）

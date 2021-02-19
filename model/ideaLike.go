@@ -14,3 +14,24 @@ func (u *IdeaLikeModel) TableName() string {
 func (u *IdeaLikeModel) Create() error {
 	return DB.Self.Create(u).Error
 }
+
+func DeleteIdeaLike(id int , uid string) error {
+	u := &IdeaLikeModel{}
+	u.Id = id
+	d := DB.Self.Where("likers_id = ?", uid).Delete(u)
+	return d.Error
+}
+type CreateIdeaLikeRequest struct {
+	IdeaId    int    `json:"idea_id"`
+	LikersId  string `json:"likers_id"`
+	BelikedId string `json:"beliked_id"`
+	
+}
+
+
+type DeleteIdeaLikeRequest struct {
+	IdeaId    int    `json:"idea_id"`
+	LikersId  string `json:"likers_id"`
+	
+	
+}

@@ -14,3 +14,24 @@ func (u *CommentLikeModel) TableName() string {
 func (u *CommentLikeModel) Create() error {
 	return DB.Self.Create(u).Error
 }
+
+func DeleteCommentLike(id int, uid string) error {
+	u := &CommentLikeModel{}
+	u.Id = id
+	d := DB.Self.Where("likers_id = ?", uid).Delete(u)
+	return d.Error
+}
+type CreateCommentLikeRequest struct {
+	CommentId int    `json:"comment_id"`
+	LikersId  string `json:"likers_id"`
+	BelikedId string `json:"beliked_id"`
+
+	
+}
+
+type DeleteCommentLikeRequest struct {
+	CommentId int    `json:"comment_id"`
+	LikersId  string `json:"likers_id"`
+
+	
+}

@@ -16,3 +16,25 @@ func (u *CommentModel) TableName() string {
 func (u *CommentModel) Create() error {
 	return DB.Self.Create(u).Error
 }
+func DeleteComment(id int, uid string) error {
+	u := &CommentModel{}
+	u.Id = id
+	d := DB.Self.Where("commenter_id = ?", uid).Delete(u)
+	return d.Error
+}
+// --Request&Response--
+ 
+type CreateCommentRequest struct {
+	CommenterId string `json:"commenter_id`
+	CommentedId string `json:"commented_id"`
+	Content     string `json:"content"`
+
+	
+}
+
+type DeleteCommentRequest struct {
+	CommenterId string `json:"commenter_id`
+	Id          int    `json:"id"`
+
+
+}

@@ -1,36 +1,35 @@
-package idea
+package user
 
 import (
 	. "github.com/2021-ZeroGravity-backend/handler"
-	"github.com/2021-ZeroGravity-backend/model"
-	"github.com/2021-ZeroGravity-backend/service"
 	"github.com/gin-gonic/gin"
+	"github.com/2021-ZeroGravity-backend/service"
+	"github.com/2021-ZeroGravity-backend/model"
 	"github.com/2021-ZeroGravity-backend/pkg/errno"
 	"github.com/2021-ZeroGravity-backend/log"
 	"github.com/2021-ZeroGravity-backend/util"
 	"go.uber.org/zap"
 
+
 )
 
-// UpdateCommentLike is used to add a like record of comment 新增评论点赞记录
-func UpdateCommentLike(c *gin.Context) {
-	
-	log.Info("Update Comment Like function called.",
+// DeleteCollection  is used to add a collection record of idea 删除收藏记录
+func DeleteCollection(c *gin.Context) {
+	log.Info("Delete Collection function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
-	
-	var req model.CreateCommentLikeRequest
-	
+		
+		var req model.DeleteCollectionRequest
+		
 	if err := c.ShouldBindJSON(&req); err != nil {
 		SendBadRequest(c, errno.ErrBind, nil, err.Error(), GetLine())
 		return
+	   
 	}
-	
 	// 调用服务
-	if err :=  service.UpdateCommentLike(&req); err != nil {
+	if err := service.DeleteCollection (&req); err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}
-
+	
 	SendResponse(c, errno.OK, nil)
-
 }

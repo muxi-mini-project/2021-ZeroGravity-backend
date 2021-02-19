@@ -18,9 +18,26 @@ func (u *IdeaModel) Create() error {
 	return DB.Self.Create(u).Error
 }
 
-func DeleteIdea(id, uid int) error {
+func DeleteIdea(id int , uid string) error {
 	u := &IdeaModel{}
 	u.IdeaId = id
 	d := DB.Self.Where("publisher_id = ?", uid).Delete(u)
 	return d.Error
+}
+
+
+// --Request&Response--
+type CreateIdeaRequest struct {
+	PublisherId     string `json:"publisher_id"`
+	Content         string `json:"content"`
+	ReleaseDate     string `json:"releaseDate"`
+	
+}
+
+
+type DeleteIdeaRequest struct {
+	PublisherId     string  `json:"publisher_id"`
+	IdeaId          int       `json:"idea_id"`
+	
+	
 }
