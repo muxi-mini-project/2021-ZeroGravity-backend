@@ -24,7 +24,7 @@ func Register(c *gin.Context) {
 	}
 
 	// 调用服务
-	if err := user.Register(&req); err != nil {
+	if err := service.Register(&req); err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}

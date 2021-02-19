@@ -24,7 +24,7 @@ func Login(c *gin.Context) {
 
 	// 调用服务
 	var token string
-	token, err := user.Login(&req)
+	token, err := service.Login(&req)
 	if err != nil {
 		SendError(c, errno.ErrPasswordIncorrect, nil, err.Error(), GetLine())
 		return
