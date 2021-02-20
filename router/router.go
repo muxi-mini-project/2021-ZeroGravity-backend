@@ -29,13 +29,13 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	g1 := g.Group("/api/v1/user")
 	g.Use(middleware.AuthMiddleware)
 	{
-		g1.POST("/:user_id/collection", user.CreateCollection)
-		g1.GET("/:user_id/collection", user.UserCollection)
-		g1.GET("/:user_id/idea", user.UserIdea)
-		g1.GET("/:user_id/", user.UserInfo)
-		g1.GET("/:user_id/comment", user.UserComment)
+		g1.POST("/collection", user.CreateCollection)
+		g1.GET("/collection", user.GetCollection)
+		// g1.GET("/:user_id/idea", user.GetIdea)
+		// g1.GET("/:user_id/", user.UserInfo)
+		// g1.GET("/:user_id/comment", user.UserComment)
 		// g1.PUT("/:user_id/information", user.ChangeUserInfo)
-		g1.DELETE("/:id/collection", user.DeleteCollection)
+		g1.DELETE("/collection", user.DeleteCollection)
 	}
 	g2 := g.Group("/api/v1/idea")
 	g.Use(middleware.AuthMiddleware)
@@ -57,11 +57,11 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		g4.PUT("/comment/:comment_id", idea.UpdateCommentLike)
 
 	}
-	g5 := g.Group("/api/v1/search")
+	/*g5 := g.Group("/api/v1/search")
 	g.Use(middleware.AuthMiddleware)
 	{
 		g5.GET("/:user_id/idea_search", user.IdeaSearch)
-	}
+	}*/
 
 	// The health check handlers
 	svcd := g.Group("/sd")

@@ -8,20 +8,20 @@ import (
 	"github.com/2021-ZeroGravity-backend/model"
 )
 
-func Register(req *model.CreateUserRequest) error {
-	if req.Account == "" || req.AccountPassword == "" || req.NickName == "" {
+func Register(account, accountPassword, nickName, avatar string) error {
+	if account == "" || accountPassword == "" || nickName == "" {
 		return errors.New("lack for information")
 	}
 
 	// 判断用户是否存在
-	user, err := model.GetUserByAccount(req.Account)
+	user, err := model.GetUserByAccount(account)
 
 	if errors.Is(err, gorm.ErrRecordNotFound) {
 		user = &model.UserModel{
-			Account:         req.Account,
-			AccountPassword: req.AccountPassword,
-			NickName:        req.NickName,
-			Avatar:          req.Avatar,
+			Account:         account,
+			AccountPassword: accountPassword,
+			NickName:        nickName,
+			Avatar:          avatar,
 		}
 	} else if err == nil {
 		return errors.New("user had existed")

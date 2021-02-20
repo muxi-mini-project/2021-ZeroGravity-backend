@@ -10,8 +10,8 @@ import (
 	"github.com/2021-ZeroGravity-backend/util"
 )
 
-func Login(req *model.LoginRequest) (string, error) {
-	user, err := model.GetUserByAccountAndPassword(req)
+func Login(account, accountPassword string) (string, error) {
+	user, err := model.GetUserByAccountAndPassword(account, accountPassword)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return "", errors.New("user doesn't exist")

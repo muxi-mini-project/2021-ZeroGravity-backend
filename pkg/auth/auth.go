@@ -17,7 +17,7 @@ var (
 
 // Context is the context of the JSON web token.
 type Context struct {
-	ID        string
+	ID        int
 	ExpiresAt int64 // 过期时间（时间戳，10位）
 }
 

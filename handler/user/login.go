@@ -4,7 +4,6 @@ import (
 
 	. "github.com/2021-ZeroGravity-backend/handler"
 	"github.com/2021-ZeroGravity-backend/log"
-	"github.com/2021-ZeroGravity-backend/model"
 	"github.com/2021-ZeroGravity-backend/pkg/errno"
 	"github.com/2021-ZeroGravity-backend/service/user"
 	"github.com/2021-ZeroGravity-backend/util"
@@ -16,7 +15,7 @@ func Login(c *gin.Context) {
 	log.Info("login function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
 
-	var req model.LoginRequest
+	var req LoginRequest
 	// 获取账号和密码
 	if err := c.Bind(&req); err != nil {
 		SendBadRequest(c, errno.ErrBind, nil, err.Error(), GetLine())
@@ -25,13 +24,13 @@ func Login(c *gin.Context) {
 
 	// 调用服务
 	var token string
-	token, err := user.Login(&req)
+	token, err := user.Login(req.Account, req.AccountPassword)
 	if err != nil {
 		SendError(c, errno.ErrPasswordIncorrect, nil, err.Error(), GetLine())
 		return
 	}
 
-	SendResponse(c, errno.OK, &model.LoginResponse{
+	SendResponse(c, errno.OK, &LoginResponse{
 		Token: token,
 	})
 }
