@@ -7,7 +7,7 @@ type IdeaModel struct {
 	PublisherId   string `json:"publisher_id" gorm:"column:publisher_id;" binding:"required"`
 	likessum      int    `json:"likes_sum" gorm:"column:likes_sum;" binding:"required"`
 	CommentSum    int    `json:"comment_sum" gorm:"column:comment_sum;" binding:"required"`
-	CollectionSum int    `json:"collection_sum" gorm:"column:collection_sum;" binding:"required"`
+	
 }
 
 func (u *IdeaModel) TableName() string {

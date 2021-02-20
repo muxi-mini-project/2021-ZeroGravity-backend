@@ -1,4 +1,4 @@
-package service
+package idea
 import (
    "fmt"
    "github.com/2021-ZeroGravity-backend/model"
@@ -6,9 +6,9 @@ import (
 )
 
 //DeleteIdeaLike   is used to delete idea like
-    func DeleteIdeaLike (req *model.DeleteIdeaRequest) error {
+    func DeleteIdeaLike (req *model.DeleteIdeaLikeRequest) error {
 
-	  uid := req.PublisherId;
+	  uid := req.LikersId;
 	  id  := req.IdeaId;
 	  err := model.DeleteIdeaLike(id, uid )
 	  if err != nil {

@@ -1,4 +1,4 @@
-package service
+package idea
 
 import (
    "fmt"

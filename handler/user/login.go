@@ -1,6 +1,7 @@
 package user
 
 import (
+
 	. "github.com/2021-ZeroGravity-backend/handler"
 	"github.com/2021-ZeroGravity-backend/log"
 	"github.com/2021-ZeroGravity-backend/model"
@@ -12,7 +13,7 @@ import (
 )
 
 func Login(c *gin.Context) {
-	log.Info("User login function called.",
+	log.Info("login function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
 
 	var req model.LoginRequest
@@ -24,7 +25,7 @@ func Login(c *gin.Context) {
 
 	// 调用服务
 	var token string
-	token, err := service.Login(&req)
+	token, err := user.Login(&req)
 	if err != nil {
 		SendError(c, errno.ErrPasswordIncorrect, nil, err.Error(), GetLine())
 		return

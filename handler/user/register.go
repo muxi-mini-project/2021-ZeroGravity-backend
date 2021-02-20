@@ -1,6 +1,8 @@
 package user
 
 import (
+
+
 	. "github.com/2021-ZeroGravity-backend/handler"
 	"github.com/2021-ZeroGravity-backend/log"
 	"github.com/2021-ZeroGravity-backend/model"
@@ -24,7 +26,7 @@ func Register(c *gin.Context) {
 	}
 
 	// 调用服务
-	if err := service.Register(&req); err != nil {
+	if err := user.Register(&req); err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}

@@ -1,4 +1,4 @@
-package service
+package idea
 
 import (
    "fmt"
@@ -7,10 +7,10 @@ import (
 )
 
 //DeleteCommentLike   is used to delete comment like
-    func DeleteCommentLike (req *model.DeleteCommentRequest) error {
+    func DeleteCommentLike (req *model.DeleteCommentLikeRequest) error {
 
-	  uid := req.CommenterId;
-	  id  := req.Id;
+	  uid := req.LikersId;
+	  id  := req.CommentId;
 	  err := model.DeleteCommentLike(id, uid )
 	  if err != nil {
 	
