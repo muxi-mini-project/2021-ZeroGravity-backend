@@ -6,13 +6,14 @@ use  `ZeroGravity`;
 
 
 -- 用户信息表(user)
-create table `tbl_user` (
+create table `tbl_user`(
    `id`               int           not null  AUTO_INCREMENT             comment "用户id" ,       
    `account_password` varchar(20)       null                             comment "账户密码",
    `account`          varchar(20)       null                             comment "Q Q账号",
    `nickname`         varchar(20)       null                             comment "昵称",
    `avatar`           varchar(255)      null                             comment "头像",
    `energy`           int               null  default 0                  comment "能量值"  ,   
+
 -- 添加约束
 primary key                         (`id`),
 key  `account_password`             (`account_password`),
@@ -20,7 +21,7 @@ key  `account`                      (`account`),
 key  `nickname`                     (`nickname`),
 key  `avatar`                       (`avatar`),
 key  `energy`                       (`energy`)
-)ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 
 
@@ -30,16 +31,15 @@ create table `tbl_idea` (
     `idea_id`         int           not null AUTO_INCREMENT comment "想法id",
     `content`         varchar(255)      null comment "想法内容",
     `releaseDate`     date              null comment "发布日期",
-    `publisher_id`    int           null comment "发布者id",
+    `publisher_id`    varchar(255)      null comment "发布者id",
     `likes_sum`       int               null comment "点赞数",
     `comments_sum`    int               null comment "评论数",
 -- 添加约束
 primary key                         (`idea_id`),
 key   `content`                     (`content`),
 key   `publisher_id`                (`publisher_id`),
-key   `releaseDate`                 (`releaseDate`),
 key   `likes_sum`                   (`likes_sum`),
-key   `comments_sum`                (`comments_sum`),
+key   `comments_sum`                (`comments_sum`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 

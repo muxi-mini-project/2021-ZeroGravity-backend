@@ -1,16 +1,16 @@
 package user
 
 import (
+	
+
 	. "github.com/2021-ZeroGravity-backend/handler"
-	"github.com/gin-gonic/gin"
-	"github.com/2021-ZeroGravity-backend/service"
+	"github.com/2021-ZeroGravity-backend/log"
 	"github.com/2021-ZeroGravity-backend/model"
 	"github.com/2021-ZeroGravity-backend/pkg/errno"
-	"github.com/2021-ZeroGravity-backend/log"
+	"github.com/2021-ZeroGravity-backend/service/user"
 	"github.com/2021-ZeroGravity-backend/util"
+	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-
-
 )
 
 // DeleteCollection  is used to add a collection record of idea 删除收藏记录
@@ -26,7 +26,7 @@ func DeleteCollection(c *gin.Context) {
 	   
 	}
 	// 调用服务
-	if err := service.DeleteCollection (&req); err != nil {
+	if err := user.DeleteCollection(&req); err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}

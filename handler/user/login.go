@@ -1,6 +1,7 @@
 package user
 
 import (
+
 	. "github.com/2021-ZeroGravity-backend/handler"
 	"github.com/2021-ZeroGravity-backend/log"
 	"github.com/2021-ZeroGravity-backend/pkg/errno"
@@ -11,7 +12,7 @@ import (
 )
 
 func Login(c *gin.Context) {
-	log.Info("User login function called.",
+	log.Info("login function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
 
 	var req LoginRequest

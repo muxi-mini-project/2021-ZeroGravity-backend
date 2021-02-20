@@ -4,7 +4,7 @@ import (
 	. "github.com/2021-ZeroGravity-backend/handler"
 	"github.com/2021-ZeroGravity-backend/model"
 	"github.com/gin-gonic/gin"
-	"github.com/2021-ZeroGravity-backend/service"
+	"github.com/2021-ZeroGravity-backend/service/user"
 	"github.com/2021-ZeroGravity-backend/pkg/errno"
 	"github.com/2021-ZeroGravity-backend/log"
 	"github.com/2021-ZeroGravity-backend/util"
@@ -26,7 +26,7 @@ func CreateCollection (c *gin.Context) {
 	   
 	}
 	// 调用服务
-	if err := service.CreateCollection (&req); err != nil {
+	if err := user.CreateCollection (&req); err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}
