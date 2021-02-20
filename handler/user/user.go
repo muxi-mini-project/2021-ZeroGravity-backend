@@ -24,3 +24,12 @@ type LoginRequest struct {
 type LoginResponse struct {
 	Token string `json:"token"`
 }
+
+type CreateCollectionRequest struct {
+	CollectorId int `json:"collector_id"`
+	IdeaId      int `json:"idea_id"`
+}
+type DeleteCollectionRequest struct {
+	CollectorId int `json:"collector_id"`
+	IdeaId      int `json:"idea_id"`
+}

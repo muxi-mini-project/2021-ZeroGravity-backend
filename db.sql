@@ -50,7 +50,7 @@ key   `comments_sum`                (`comments_sum`)
 create table `tbl_comments`(
     `id`               int          not null AUTO_INCREMENT comment "评论id" ,
     `commenter_id`     int              null comment "评论者id",
-    `commented_id`     int              null comment "被评论者id",
+    `commented_id`     int              null comment "idea_id",
     `likes_sum`        int              null comment "赞数",
     `release_date`     date             null comment "发布日期",
     `content`          varchar(255)     null comment "内容",
