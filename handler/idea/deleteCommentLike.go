@@ -11,14 +11,13 @@ import (
 	"github.com/2021-ZeroGravity-backend/util"
 	"go.uber.org/zap"
 )
-
-//DeleteComment  is used to delete comments  删除评论
-func DeleteComment(c *gin.Context) {
+//DeleteCommentLike  is used to delete comments  删除评论
+func DeleteCommentLike(c *gin.Context) {
 	
-	log.Info("Delete Comment function called.",
+	log.Info("Delete Comment like function called.",
 	zap.String("X-Request-Id", util.GetReqID(c)))
 		
-	var req model.DeleteCommentRequest
+	var req model.DeleteCommentLikeRequest
 		
 	if err := c.ShouldBindJSON(&req); err != nil {
 		SendBadRequest(c, errno.ErrBind, nil, err.Error(), GetLine())
@@ -26,7 +25,7 @@ func DeleteComment(c *gin.Context) {
 	}
 		
 	// 调用服务
-	if err := idea.DeleteComment(&req); err != nil {
+	if err := idea.DeleteCommentLike(&req); err != nil {
 			SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 			return
 		}
