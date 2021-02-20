@@ -33,7 +33,6 @@ create table `tbl_idea` (
     `publisher_id`    int           null comment "发布者id",
     `likes_sum`       int               null comment "点赞数",
     `comments_sum`    int               null comment "评论数",
-    `collection_sum`  int               null comment "收藏数",
 -- 添加约束
 primary key                         (`idea_id`),
 key   `content`                     (`content`),
@@ -41,7 +40,6 @@ key   `publisher_id`                (`publisher_id`),
 key   `releaseDate`                 (`releaseDate`),
 key   `likes_sum`                   (`likes_sum`),
 key   `comments_sum`                (`comments_sum`),
-key   `collection_sum`              (`collection_sum`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 
