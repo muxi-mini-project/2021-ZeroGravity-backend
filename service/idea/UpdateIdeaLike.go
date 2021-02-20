@@ -1,25 +1,20 @@
 package idea
 
 import (
-
-"github.com/2021-ZeroGravity-backend/model"
-
+	"github.com/2021-ZeroGravity-backend/model"
 )
 
 //UpdateIdeaLike is used to update idea like
-func UpdateIdeaLike (req *model.CreateIdeaLikeRequest) error {
-	
-	var IdeaLike   *model.IdeaLikeModel 
+func UpdateIdeaLike(id, uid, uid2 int) error {
 
-	IdeaLike  = &model.IdeaLikeModel {
+	var IdeaLike *model.IdeaLikeModel
 
-	  IdeaId:                 req.IdeaId,
-	  LikersId:               req.LikersId,
-	  BelikedId:              req.BelikedId,
-						   
+	IdeaLike = &model.IdeaLikeModel{
+		IdeaId:    id,
+		LikersId:  uid,
+		BelikedId: uid2,
+	}
 
-}
-
-    return  IdeaLike.Create()
+	return IdeaLike.Create()
 
 }

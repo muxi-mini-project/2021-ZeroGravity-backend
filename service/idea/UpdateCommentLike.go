@@ -1,25 +1,20 @@
 package idea
 
 import (
-
-"github.com/2021-ZeroGravity-backend/model"
-
+	"github.com/2021-ZeroGravity-backend/model"
 )
 
 //UpdateCommentLike is used to update comment like
-    func UpdateCommentLike (req *model.CreateCommentLikeRequest) error {
-	
-	    var CommentLike   *model.CommentLikeModel 
+func UpdateCommentLike(id, uid, uid2 int) error {
 
-	    CommentLike  = &model.CommentLikeModel {
-  
-          CommentId:              req.CommentId,
-	      LikersId:               req.LikersId,
-	      BelikedId:              req.BelikedId,
-	                           
+	var CommentLike *model.CommentLikeModel
 
-    }
+	CommentLike = &model.CommentLikeModel{
+		CommentId: id,
+		LikersId:  uid,
+		BelikedId: uid2,
+	}
 
-    return  CommentLike.Create()
+	return CommentLike.Create()
 
 }

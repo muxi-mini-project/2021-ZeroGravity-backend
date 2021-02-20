@@ -6,3 +6,10 @@
 {"level":"info","time":"2021-02-20T21:47:13.991+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"Waiting for the router, retry in 1 second.","serviceName":"server"}
 {"level":"info","time":"2021-02-20T21:47:14.992+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"The token was invalid.","serviceName":"server","X-Request-Id":"9ab507c6-54b7-4ecf-8851-17758eb66d29"}
 {"level":"info","time":"2021-02-20T21:47:14.993+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"The router has been deployed successfully.","serviceName":"server"}
+{"level":"info","time":"2021-02-20T22:06:35.404+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"Start to listening the incoming requests on http address: 0.0.0.0:8899","serviceName":"server"}
+{"level":"info","time":"2021-02-20T22:06:35.405+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"The token was invalid.","serviceName":"server","X-Request-Id":"244041ce-cee8-4262-a5ad-29348e2ef09d"}
+{"level":"info","time":"2021-02-20T22:06:35.405+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"The router has been deployed successfully.","serviceName":"server"}
+{"level":"info","time":"2021-02-20T22:38:50.851+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"Start to listening the incoming requests on http address: 0.0.0.0:8899","serviceName":"server"}
+{"level":"info","time":"2021-02-20T22:38:50.851+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"Waiting for the router, retry in 1 second.","serviceName":"server"}
+{"level":"info","time":"2021-02-20T22:38:51.853+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"The token was invalid.","serviceName":"server","X-Request-Id":"b05e7b4c-2b98-4a8d-96b0-313868be23a9"}
+{"level":"info","time":"2021-02-20T22:38:51.854+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"The router has been deployed successfully.","serviceName":"server"}

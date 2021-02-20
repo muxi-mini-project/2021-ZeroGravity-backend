@@ -40,14 +40,3 @@ func GetCollectionByUserId(id, offset, limit int) ([]*IdeaInfo, []int, error) {
 
 	return ideaList, idList, nil
 }
-
-// --Request&Response--
-
-type CreateCollectionRequest struct {
-	CollectorId int `json:"collector_id"`
-	IdeaId      int `json:"idea_id"`
-}
-type DeleteCollectionRequest struct {
-	CollectorId int `json:"collector_id"`
-	IdeaId      int `json:"idea_id"`
-}
