@@ -24,6 +24,10 @@ func DeleteCommentLike(id int, uid string) error {
 
 func GetCommentLikeForUser(uid int, scope []int) ([]*CommentLikeModel, error) {
 	u := make([]*CommentLikeModel, 0)
-	d := DB.Self.Table("tbl_like_record_comment").Where("likers_id = ? AND comment_id in (?)", uid, scope).Order("comment_id desc").Scan(&u)
+
+	d := DB.Self.Table("tbl_like_record_comment").
+		Where("likers_id = ? AND comment_id in (?)", uid, scope).
+		Order("comment_id desc").Scan(&u)
+
 	return u, d.Error
 }

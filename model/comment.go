@@ -48,7 +48,13 @@ func DeleteComment(id, uid int) error {
 
 func GetCommentListByIdeaId(id, offset, limit int) ([]*CommentInfo, []int, error) {
 	var commentList = make([]*CommentInfo, 0)
-	query := DB.Self.Table("tbl_comments").Select("tbl_comments.*,tbl_user.nickname,tbl_user.avatar").Where("tbl_comments.commeted_id = ?", id).Joins("left join tbl_user on tbl_user.id = tbl_comments.commenter_id").Order("tbl_comments.id desc")
+
+	query := DB.Self.Table("tbl_comments").
+		Select("tbl_comments.*,tbl_user.nickname,tbl_user.avatar").
+		Where("tbl_comments.commeted_id = ?", id).
+		Joins("left join tbl_user on tbl_user.id = tbl_comments.commenter_id").
+		Order("tbl_comments.id desc")
+
 	if err := query.Scan(&commentList).Error; err != nil {
 		return nil, nil, err
 	}

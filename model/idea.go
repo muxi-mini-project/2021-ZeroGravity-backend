@@ -49,7 +49,11 @@ func DeleteIdea(id, uid int) error {
 
 func GetIdeaList(uid, offset, limit, privicy, index, userId int) ([]*IdeaInfo, error) {
 	item := make([]*IdeaInfo, 0)
-	query := DB.Self.Table("tbl_idea").Select("tbl_idea.*,tbl_user.nickname,tbl_user.avatar").Joins("left join tbl_user on tbl_user.id = tbl_idea.publisher_id").Offset(offset).Limit(limit)
+
+	query := DB.Self.Table("tbl_idea").
+		Select("tbl_idea.*,tbl_user.nickname,tbl_user.avatar").
+		Joins("left join tbl_user on tbl_user.id = tbl_idea.publisher_id").
+		Offset(offset).Limit(limit)
 
 	// 判断是否为获取用户自身想法
 	if privicy != 1 {

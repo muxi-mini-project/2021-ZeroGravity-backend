@@ -30,7 +30,12 @@ func GetIdeaLikeRecordForUser(id int, scope []int) ([]*IdeaLikeModel, error) {
 
 func GetIdeaLikeByUserId(id, offset, limit int) ([]*IdeaInfo, error) {
 	item := make([]*IdeaLikeModel, 0)
-	d := DB.Self.Table("tbl_Like_record_idea").Where("likers_id  = ?", id).Offset(offset).Limit(limit).Order("id desc").Scan(&item)
+
+	d := DB.Self.Table("tbl_Like_record_idea").
+		Where("likers_id  = ?", id).
+		Offset(offset).Limit(limit).
+		Order("id desc").Scan(&item)
+
 	if d.Error != nil {
 		return nil, d.Error
 	}
@@ -41,7 +46,13 @@ func GetIdeaLikeByUserId(id, offset, limit int) ([]*IdeaInfo, error) {
 	}
 
 	var ideaList = make([]*IdeaInfo, 0)
-	query := DB.Self.Table("tbl_idea").Select("tbl_idea.*,tbl_user.nickname,tbl_user.avatar").Where("tbl_idea.idea_id IN ?", idList).Joins("left join tbl_user on tbl_user.id = tbl_idea.publisher_id").Order("tbl_idea.id desc")
+
+	query := DB.Self.Table("tbl_idea").
+		Select("tbl_idea.*,tbl_user.nickname,tbl_user.avatar").
+		Where("tbl_idea.idea_id IN ?", idList).
+		Joins("left join tbl_user on tbl_user.id = tbl_idea.publisher_id").
+		Order("tbl_idea.id desc")
+
 	if err := query.Scan(&ideaList).Error; err != nil {
 		return nil, err
 	}

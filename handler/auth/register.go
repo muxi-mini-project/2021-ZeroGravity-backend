@@ -1,8 +1,6 @@
-package user
+package auth
 
 import (
-
-
 	. "github.com/2021-ZeroGravity-backend/handler"
 	"github.com/2021-ZeroGravity-backend/log"
 	"github.com/2021-ZeroGravity-backend/pkg/errno"

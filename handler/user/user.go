@@ -7,15 +7,6 @@ type CreateUserRequest struct {
 	Avatar          string `json:"avatar"`
 }
 
-type LoginRequest struct {
-	Account         string `json:"account"`
-	AccountPassword string `json:"account_password"`
-}
-
-type LoginResponse struct {
-	Token string `json:"token"`
-}
-
 type GetUserInfoResponse struct {
 	Id       int    `json:"id"`
 	Avatar   string `json:"avatar"`

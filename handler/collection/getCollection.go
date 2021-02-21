@@ -1,4 +1,4 @@
-package idea
+package collection
 
 import (
 	"strconv"
