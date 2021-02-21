@@ -34,6 +34,7 @@ create table `tbl_idea` (
     `publisher_id`    varchar(255)      null comment "发布者id",
     `likes_sum`       int               null comment "点赞数",
     `comments_sum`    int               null comment "评论数",
+    `privacy`         tinyint(1)      DEFAULT NULL,
 -- 添加约束
 primary key                         (`idea_id`),
 key   `content`                     (`content`),

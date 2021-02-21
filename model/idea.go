@@ -46,3 +46,31 @@ func DeleteIdea(id, uid int) error {
 	d := DB.Self.Where("publisher_id = ?", uid).Delete(u)
 	return d.Error
 }
+
+func GetIdeaList(uid, offset, limit, privicy, index, userId int) ([]*IdeaInfo, error) {
+	item := make([]*IdeaInfo, 0)
+	query := DB.Self.Table("tbl_idea").Select("tbl_idea.*,tbl_user.nickname,tbl_user.avatar").Joins("left join tbl_user on tbl_user.id = tbl_idea.publisher_id").Offset(offset).Limit(limit)
+
+	// 判断是否为获取用户自身想法
+	if privicy != 1 {
+		query = query.Where("tbl_idea.privicy = ?", 0)
+	}
+
+	// 判断是否选择用户
+	if userId != 0 && privicy == 1 {
+		query = query.Where("tbl_idea.publisher_id = ?", userId)
+	}
+
+	// 判断排序顺序
+	if index == 0 {
+		query = query.Order("tbl_idea.idea_id desc")
+	} else {
+		query = query.Order("tbl_idea.likes_sum desc")
+	}
+
+	if err := query.Scan(&item).Error; err != nil {
+		return nil, err
+	}
+
+	return item, nil
+}

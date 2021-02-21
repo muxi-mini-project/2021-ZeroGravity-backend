@@ -27,40 +27,46 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	g.POST("/api/v1/login", user.Login)
 
 	g1 := g.Group("/api/v1/user")
-	g.Use(middleware.AuthMiddleware)
+	g1.Use(middleware.AuthMiddleware)
 	{
-		g1.POST("/collection", user.CreateCollection)
-		g1.GET("/collection", user.GetCollection)
-		// g1.GET("/:user_id/idea", user.GetIdea)
-		// g1.GET("/:user_id/", user.UserInfo)
-		// g1.GET("/:user_id/comment", user.UserComment)
-		// g1.PUT("/:user_id/information", user.ChangeUserInfo)
-		g1.DELETE("/collection", user.DeleteCollection)
+		g1.GET("/detail/:id", user.GetUserInfo)
+		g1.PUT("", user.UpdateUserInfo)
+		// g1.GET("/notice",user.GetNotice)
 	}
+
 	g2 := g.Group("/api/v1/idea")
-	g.Use(middleware.AuthMiddleware)
+	g2.Use(middleware.AuthMiddleware)
 	{
 		g2.POST("", idea.CreateIdea)
-		g2.DELETE("/:idea_id", idea.DeleteIdea)
-
+		g2.DELETE("detail/:idea_id", idea.DeleteIdea)
+		g2.GET("/collection", idea.GetCollection)
+		g2.GET("/like", idea.GetIdeaLike)
+		g2.POST("/collection", idea.CreateCollection)
+		g2.DELETE("/collection", idea.DeleteCollection)
+		g2.GET("/list", idea.GetIdeaList)
+		g2.GET("/detail/:id/comment", idea.GetCommentList)
+		// g2.GET("/detail/:id",idea.GetIdea) 获取单个 idea
 	}
+
 	g3 := g.Group("/api/v1/comment")
-	g.Use(middleware.AuthMiddleware)
+	g3.Use(middleware.AuthMiddleware)
 	{
 		g3.POST("", idea.CreateComment)
 		g3.DELETE("/:comment_id", idea.DeleteComment)
 	}
+
 	g4 := g.Group("/api/v1/like")
-	g.Use(middleware.AuthMiddleware)
+	g4.Use(middleware.AuthMiddleware)
 	{
 		g4.PUT("/idea/:idea_id", idea.UpdateIdeaLike)
 		g4.PUT("/comment/:comment_id", idea.UpdateCommentLike)
 
 	}
+
 	/*g5 := g.Group("/api/v1/search")
-	g.Use(middleware.AuthMiddleware)
+	g5.Use(middleware.AuthMiddleware)
 	{
-		g5.GET("/:user_id/idea_search", user.IdeaSearch)
+		g5.GET("", user.Search)
 	}*/
 
 	// The health check handlers

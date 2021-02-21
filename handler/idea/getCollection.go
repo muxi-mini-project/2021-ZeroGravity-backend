@@ -1,4 +1,4 @@
-package user
+package idea
 
 import (
 	"strconv"
@@ -6,7 +6,7 @@ import (
 	. "github.com/2021-ZeroGravity-backend/handler"
 	"github.com/2021-ZeroGravity-backend/log"
 	"github.com/2021-ZeroGravity-backend/pkg/errno"
-	"github.com/2021-ZeroGravity-backend/service/user"
+	"github.com/2021-ZeroGravity-backend/service/idea"
 	"github.com/2021-ZeroGravity-backend/util"
 
 	"github.com/gin-gonic/gin"
@@ -15,7 +15,7 @@ import (
 
 // GetCollection ... 获取某个用户的收藏
 func GetCollection(c *gin.Context) {
-	log.Info("User getCollection function called.",
+	log.Info("Idea getCollection function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
 
 	var id, limit, page int
@@ -37,15 +37,26 @@ func GetCollection(c *gin.Context) {
 	}
 
 	// 调用服务
-	item, err := user.GetCollection(id, page*limit, limit)
+	item, err := idea.GetCollection(id, page*limit, limit)
 	if err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}
 
-	resp := &IdeaResponse{
-		Count: len(item),
-		List:  item,
+	resp := &IdeaResponse{}
+	resp.Count = len(item)
+	for _, v := range item {
+		resp.List = append(resp.List, &IdeaListItem{
+			Id:          v.Id,
+			Content:     v.Content,
+			ReleaseDate: v.ReleaseDate,
+			LikesSum:    v.LikesSum,
+			CommentSum:  v.CommentSum,
+			UserId:      v.UserId,
+			Avatar:      v.Avatar,
+			NickName:    v.NickName,
+			Liked:       v.Liked,
+		})
 	}
 
 	SendResponse(c, errno.OK, resp)

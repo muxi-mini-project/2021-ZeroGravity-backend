@@ -1,14 +1,5 @@
 package user
 
-import (
-	"github.com/2021-ZeroGravity-backend/model"
-)
-
-type IdeaResponse struct {
-	Count int                   `json:"count"`
-	List  []*model.IdeaListItem `json:"list"`
-}
-
 type CreateUserRequest struct {
 	Account         string `json:"account"`
 	AccountPassword string `json:"account_password"`
@@ -25,11 +16,14 @@ type LoginResponse struct {
 	Token string `json:"token"`
 }
 
-type CreateCollectionRequest struct {
-	CollectorId int `json:"collector_id"`
-	IdeaId      int `json:"idea_id"`
+type GetUserInfoResponse struct {
+	Id       int    `json:"id"`
+	Avatar   string `json:"avatar"`
+	NickName string `json:"nickname"`
+	Energy   int    `json:"energy"`
 }
-type DeleteCollectionRequest struct {
-	CollectorId int `json:"collector_id"`
-	IdeaId      int `json:"idea_id"`
+
+type UpdateUserInfoRequest struct {
+	Avatar   string `json:"avatar"`
+	NickName string `json:"nickname"`
 }

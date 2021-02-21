@@ -33,7 +33,7 @@ func GetCollectionByUserId(id, offset, limit int) ([]*IdeaInfo, []int, error) {
 	}
 
 	var ideaList = make([]*IdeaInfo, 0)
-	query := DB.Self.Table("tbl_idea").Select("tbl_idea.*,tbl_user.nickname,tbl_user.avatar").Where("tbl_idea.idea_id IN ?", item).Joins("left join tbl_user on tbl_user.id = tbl_idea.publisher_id").Order("tbl_idea.id desc")
+	query := DB.Self.Table("tbl_idea").Select("tbl_idea.*,tbl_user.nickname,tbl_user.avatar").Where("tbl_idea.idea_id IN ?", idList).Joins("left join tbl_user on tbl_user.id = tbl_idea.publisher_id").Order("tbl_idea.id desc")
 	if err := query.Scan(&ideaList).Error; err != nil {
 		return nil, nil, err
 	}
