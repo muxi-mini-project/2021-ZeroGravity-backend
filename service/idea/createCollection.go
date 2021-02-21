@@ -1,4 +1,4 @@
-package user
+package idea
 
 import (
 	"github.com/2021-ZeroGravity-backend/model"

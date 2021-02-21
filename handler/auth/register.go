@@ -1,4 +1,4 @@
-package user
+package auth
 
 import (
 	. "github.com/2021-ZeroGravity-backend/handler"
@@ -10,20 +10,20 @@ import (
 	"go.uber.org/zap"
 )
 
-// CreateCollection  is used to add a collection record of idea 新增收藏记录
-func CreateCollection(c *gin.Context) {
-	log.Info("Create Collection function called.",
+// Register creates a new user account.新增用户
+func Register(c *gin.Context) {
+	log.Info("User register function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
 
-	var req CreateCollectionRequest
+	var req CreateUserRequest
 
 	if err := c.ShouldBindJSON(&req); err != nil {
 		SendBadRequest(c, errno.ErrBind, nil, err.Error(), GetLine())
 		return
-
 	}
+
 	// 调用服务
-	if err := user.CreateCollection(req.IdeaId, req.CollectorId); err != nil {
+	if err := user.Register(req.Account, req.AccountPassword, req.NickName, req.Avatar); err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}

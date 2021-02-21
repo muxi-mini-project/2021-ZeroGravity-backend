@@ -19,6 +19,10 @@ func (u *UserModel) Create() error {
 	return DB.Self.Create(u).Error
 }
 
+func (u *UserModel) Update() error {
+	return DB.Self.Save(u).Error
+}
+
 func GetUserByAccount(account string) (*UserModel, error) {
 	u := &UserModel{}
 	d := DB.Self.Table("tbl_user").Where("account = ?", account).First(u)
@@ -28,5 +32,11 @@ func GetUserByAccount(account string) (*UserModel, error) {
 func GetUserByAccountAndPassword(account, accountPassword string) (*UserModel, error) {
 	u := &UserModel{}
 	d := DB.Self.Table("tbl_user").Where("account = ? AND account_password = ?", account, accountPassword).First(u)
+	return u, d.Error
+}
+
+func GetUserById(uid int) (*UserModel, error) {
+	u := &UserModel{}
+	d := DB.Self.Table("tbl_user").Where("id = ?", uid).First(u)
 	return u, d.Error
 }
