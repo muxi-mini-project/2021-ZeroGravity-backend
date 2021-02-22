@@ -10,12 +10,16 @@ var (
 
 	ErrValidation = &Errno{Code: 20001, Message: "Validation failed."}
 	ErrDatabase   = &Errno{Code: 20002, Message: "Database error."}
+	ErrDecoding   = &Errno{Code: 20003, Message: "Base64 decoding error."}
 
 	// auth errors
-	ErrTokenInvalid     = &Errno{Code: 20101, Message: "The token was invalid."}
-	ErrPermissionDenied = &Errno{Code: 20102, Message: "Permission denied."}
+	ErrTokenInvalid     = &Errno{Code: 30001, Message: "The token was invalid."}
+	ErrPermissionDenied = &Errno{Code: 30002, Message: "Permission denied."}
 
 	// user errors
-	ErrUserNotFound      = &Errno{Code: 20201, Message: "The user was not found."}
-	ErrPasswordIncorrect = &Errno{Code: 20202, Message: "The password was incorrect."}
+	ErrUserNotFound      = &Errno{Code: 40001, Message: "The user was not found."}
+	ErrPasswordIncorrect = &Errno{Code: 40002, Message: "The password was incorrect."}
+
+	// search errors
+	ErrSearch = &Errno{Code: 50001, Message: "Search not found"}
 )

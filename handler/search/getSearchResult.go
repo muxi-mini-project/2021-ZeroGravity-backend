@@ -53,7 +53,7 @@ func GetSearchResult(c *gin.Context) {
 
 		item, err := search.GetSearchIdeaResult(uid, page*limit, limit, keyword)
 		if err != nil {
-			SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
+			SendError(c, errno.ErrSearch, nil, err.Error(), GetLine())
 			return
 		}
 
@@ -80,7 +80,7 @@ func GetSearchResult(c *gin.Context) {
 		// 搜索用户
 		item, err := search.GetSearchUserResult(page*limit, limit, keyword)
 		if err != nil {
-			SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
+			SendError(c, errno.ErrSearch, nil, err.Error(), GetLine())
 			return
 		}
 
