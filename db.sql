@@ -17,13 +17,9 @@ create table `tbl_user`(
 -- 添加约束
 primary key                         (`id`),
 key  `account_password`             (`account_password`),
-key  `account`                      (`account`),
-key  `nickname`                     (`nickname`),
-key  `avatar`                       (`avatar`),
-key  `energy`                       (`energy`)
+key  `account`                      (`account`)
+FULLTEXT (`nickname`) WITH PARSER ngram
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
-
-
 
 
 -- 想法表(idea)
@@ -36,15 +32,9 @@ create table `tbl_idea` (
     `comments_sum`    int               null comment "评论数",
     `privacy`         tinyint(1)      DEFAULT NULL,
 -- 添加约束
-primary key                         (`idea_id`),
-key   `content`                     (`content`),
-key   `publisher_id`                (`publisher_id`),
-key   `likes_sum`                   (`likes_sum`),
-key   `comments_sum`                (`comments_sum`)
+primary key                         (`idea_id`)
+FULLTEXT (`content`) WITH PARSER ngram
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
-
-
-
 
 
 -- 评论表(comments)
@@ -58,13 +48,8 @@ create table `tbl_comments`(
 -- 添加约束
 primary key                          (`id`),
 key           `commenter_id`         (`commenter_id`),
-key           `commented_id`         (`commented_id`),
-key           `likes_sum`            (`likes_sum`),
-key           `release_date`         (`release_date`),
-key           `content`              (`content`)
+key           `commented_id`         (`commented_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
-
-
 
 
 -- 收藏表(favorite_records)
@@ -79,8 +64,6 @@ key            `idea_id`              (`idea_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 
- 
-
 -- 想法点赞记录表(like_record_idea)
 create table `tbl_like_record_idea`(
     `id`               int            not null AUTO_INCREMENT comment "点赞记录序号",
@@ -90,11 +73,8 @@ create table `tbl_like_record_idea`(
 -- 添加约束
 primary key                           (`id`),
 key             `idea_id`             (`idea_id`),
-key             `likers_id`           (`likers_id`),
-key             `beliked_id`          (`beliked_id`)
-
+key             `likers_id`           (`likers_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
-
 
 
 -- 评论点赞记录表(comment_record_idea)
@@ -106,7 +86,5 @@ create table `tbl_like_record_comment`(
 -- 添加约束
 primary key                            (`id`),
 key                `comment_id`        (`comment_id`),
-key                `likers_id`         (`likers_id`),
-key                `beliked_id`        (`beliked_id`)
+key                `likers_id`         (`likers_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
-

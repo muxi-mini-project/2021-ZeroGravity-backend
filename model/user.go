@@ -1,7 +1,5 @@
 package model
 
-// --Model--
-
 type UserModel struct {
 	Id              int    `json:"id" gorm:"column:id;" binding:"required"`
 	Account         string `json:"account" gorm:"column:account;" binding:"required"`
