@@ -3,6 +3,8 @@ package router
 import (
 	"net/http"
 
+	"github.com/2021-ZeroGravity-backend/handler/search"
+
 	"github.com/2021-ZeroGravity-backend/handler/auth"
 	"github.com/2021-ZeroGravity-backend/handler/collection"
 	"github.com/2021-ZeroGravity-backend/handler/idea"
@@ -68,11 +70,17 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		collectionRouter.DELETE("/collection", collection.DeleteCollection)
 	}
 
-	/*g5 := g.Group("/api/v1/search")
-	g5.Use(middleware.AuthMiddleware)
+	searchRouter := g.Group("/api/v1/search")
+	searchRouter.Use(middleware.AuthMiddleware)
 	{
-		g5.GET("", user.Search)
-	}*/
+		searchRouter.GET("", search.GetSearchResult)
+	}
+
+	// reportRouter := g.Group("/api/v1/report")
+	// reportRouter.Use(middleware.AuthMiddleware)
+	// {
+	//		reportRouter.POST("",report.CreateReport)
+	// }
 
 	// The health check handlers
 	svcd := g.Group("/sd")
