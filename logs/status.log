@@ -26,3 +26,5 @@
 {"level":"info","time":"2021-02-21T20:57:05.396+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"The router has been deployed successfully.","serviceName":"server"}
 {"level":"info","time":"2021-02-22T17:21:43.311+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"Start to listening the incoming requests on http address: 0.0.0.0:8899","serviceName":"server"}
 {"level":"info","time":"2021-02-22T17:21:43.312+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"The router has been deployed successfully.","serviceName":"server"}
+{"level":"info","time":"2021-02-22T17:43:39.008+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"Start to listening the incoming requests on http address: 0.0.0.0:8899","serviceName":"server"}
+{"level":"info","time":"2021-02-22T17:43:39.009+0800","linenum":"/home/jacksie/2021-ZeroGravity-backend/log/log.go:69","msg":"The router has been deployed successfully.","serviceName":"server"}

@@ -1,6 +1,9 @@
 package auth
 
 import (
+	"encoding/base64"
+
+	"github.com/2021-ZeroGravity-backend/handler"
 	. "github.com/2021-ZeroGravity-backend/handler"
 	"github.com/2021-ZeroGravity-backend/log"
 	"github.com/2021-ZeroGravity-backend/pkg/errno"
@@ -21,9 +24,16 @@ func Login(c *gin.Context) {
 		return
 	}
 
+	decodePassword, err := base64.StdEncoding.DecodeString(req.AccountPassword)
+	if err != nil {
+		handler.SendError(c, errno.ErrDecoding, nil, err.Error(), "")
+		c.Abort()
+		return
+	}
+
 	// 调用服务
 	var token string
-	token, err := user.Login(req.Account, req.AccountPassword)
+	token, err = user.Login(req.Account, string(decodePassword))
 	if err != nil {
 		SendError(c, errno.ErrPasswordIncorrect, nil, err.Error(), GetLine())
 		return
