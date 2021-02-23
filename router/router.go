@@ -3,6 +3,8 @@ package router
 import (
 	"net/http"
 
+	"github.com/2021-ZeroGravity-backend/handler/message"
+	"github.com/2021-ZeroGravity-backend/handler/report"
 	"github.com/2021-ZeroGravity-backend/handler/search"
 
 	"github.com/2021-ZeroGravity-backend/handler/auth"
@@ -38,7 +40,6 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	{
 		userRouter.GET("/detail/:id", user.GetUserInfo)
 		userRouter.PUT("", user.UpdateUserInfo)
-		// userRouter.GET("/notice",user.GetNotice)
 	}
 
 	ideaRouter := g.Group("/api/v1/idea")
@@ -48,7 +49,7 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		ideaRouter.POST("", idea.CreateIdea)
 		ideaRouter.DELETE("detail/:idea_id", idea.DeleteIdea)
 		ideaRouter.GET("/list", idea.GetIdeaList)
-		// ideaRouter.GET("/detail/:id",idea.GetIdea) 获取单个 idea
+		ideaRouter.GET("/detail/:id", idea.GetIdea)
 
 		ideaRouter.GET("/liked", idea.GetIdeaLike)
 
@@ -76,11 +77,23 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		searchRouter.GET("", search.GetSearchResult)
 	}
 
-	// reportRouter := g.Group("/api/v1/report")
-	// reportRouter.Use(middleware.AuthMiddleware)
-	// {
-	//		reportRouter.POST("",report.CreateReport)
-	// }
+	// 举报
+	reportRouter := g.Group("/api/v1/report")
+	reportRouter.Use(middleware.AuthMiddleware)
+	{
+		reportRouter.POST("", report.CreateReport)
+	}
+
+	// 消息
+	messageRouter := g.Group("api/v1/message")
+	messageRouter.Use(middleware.AuthMiddleware)
+	{
+		messageRouter.GET("/tip", message.GetMessageTip)
+		messageRouter.PUT("/readall", message.UpdateMessageReadAll)
+		// messageRouter.GET("/like",message.GetMessageForLikeList)
+		// messageRouter.GET("/comment",message.GetMessageForCommentList)
+		// messageRouter.GET("/notice",message.GetMessageForNoticeList) 系统通知，先不写
+	}
 
 	// The health check handlers
 	svcd := g.Group("/sd")
