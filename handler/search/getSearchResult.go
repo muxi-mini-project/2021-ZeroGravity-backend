@@ -3,6 +3,7 @@ package search
 import (
 	"strconv"
 
+	"github.com/2021-ZeroGravity-backend/model"
 	"github.com/2021-ZeroGravity-backend/service/search"
 
 	. "github.com/2021-ZeroGravity-backend/handler"
@@ -44,7 +45,15 @@ func GetSearchResult(c *gin.Context) {
 	}
 
 	keyword = c.DefaultQuery("page", "")
-
+	//
+	//
+	//
+	//获取用户id以创建搜索历史
+	id := c.Param("id")
+	model.CreateHistory(id, keyword)
+	//
+	//
+	//
 	// 调用服务
 	if target == 0 {
 		// 搜索想法
@@ -98,4 +107,25 @@ func GetSearchResult(c *gin.Context) {
 		SendResponse(c, errno.OK, resp)
 		return
 	}
+}
+
+func DeleteHistory(c *gin.Context) {
+	var h model.History
+	c.BindJSON(&h)
+	err := model.DeleteHistory(h)
+	if err != nil {
+		c.JSON(400, gin.H{"message": "Fail."})
+		return
+	}
+	c.JSON(200, gin.H{"message": "删除成功"})
+}
+
+func GetHistories(c *gin.Context) {
+	id := c.Param("id")
+	histories, err := model.GetHistories(id)
+	if err != nil {
+		c.JSON(400, gin.H{"message": "Fail."})
+		return
+	}
+	c.JSON(200, histories)
 }

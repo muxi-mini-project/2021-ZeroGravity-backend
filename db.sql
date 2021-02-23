@@ -88,3 +88,11 @@ primary key                            (`id`),
 key                `comment_id`        (`comment_id`),
 key                `likers_id`         (`likers_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
+
+DROP TABLE IF EXISTS histories;
+create table histories(
+    id      int          not null auto_increment ,
+    name    varchar(100) not null ,
+    user_id varchar(100) not null ,
+    primary key (id)
+)ENGINE=InnoDB;
