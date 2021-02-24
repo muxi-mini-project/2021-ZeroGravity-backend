@@ -40,6 +40,7 @@ FULLTEXT (`content`) WITH PARSER ngram
 -- 评论表(comments)
 create table `tbl_comments`(
     `id`               int          not null AUTO_INCREMENT comment "评论id" ,
+    `idea_id`          int          not null ,
     `commenter_id`     int              null comment "评论者id",
     `commented_id`     int              null comment "idea_id",
     `likes_sum`        int          not null DEFAULT 0 comment "赞数",

@@ -23,15 +23,20 @@ func DeleteComment(c *gin.Context) {
 		SendBadRequest(c, errno.ErrBind, nil, err.Error(), GetLine())
 		return
 	}
-
+	uid := c.MustGet("userID").(int)
 	// 调用服务
-	if err := model.DeleteComment(req.Id, req.CommenterId); err != nil {
+	if err := model.DeleteComment(req.Id, uid); err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}
 
 	// TODO:评论数减 1
 
+	var i model.IdeaInfo
+	model.DB.Self.Where("idea_id = ? ", req.Id).First(&i)
+	i2 := i
+	i2.CommentSum--
+	model.DB.Self.Model(&i).Update(i2)
 	SendResponse(c, errno.OK, nil)
 
 }

@@ -94,6 +94,8 @@ func GetSearchResult(c *gin.Context) {
 }
 
 func DeleteHistory(c *gin.Context) {
+	log.Info("Message getMessageForComment function called.",
+		zap.String("X-Request-Id", util.GetReqID(c)))
 	var h model.History
 	c.BindJSON(&h)
 	err := model.DeleteHistory(h)
@@ -105,6 +107,8 @@ func DeleteHistory(c *gin.Context) {
 }
 
 func GetHistories(c *gin.Context) {
+	log.Info("Message getMessageForComment function called.",
+		zap.String("X-Request-Id", util.GetReqID(c)))
 	id := c.Param("id")
 	histories, err := model.GetHistories(id)
 	if err != nil {

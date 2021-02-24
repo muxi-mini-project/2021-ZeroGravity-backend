@@ -3,8 +3,10 @@ package idea
 import (
 	. "github.com/2021-ZeroGravity-backend/handler"
 	"github.com/2021-ZeroGravity-backend/log"
+	"github.com/2021-ZeroGravity-backend/model"
 	"github.com/2021-ZeroGravity-backend/pkg/errno"
 	"github.com/2021-ZeroGravity-backend/service/idea"
+	"github.com/2021-ZeroGravity-backend/service/message"
 	"github.com/2021-ZeroGravity-backend/util"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -16,7 +18,7 @@ func CreateComment(c *gin.Context) {
 	log.Info("Create Comment function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
 
-	var req CreateCommentRequest
+	var req model.CommentModel
 
 	if err := c.ShouldBindJSON(&req); err != nil {
 		SendBadRequest(c, errno.ErrBind, nil, err.Error(), GetLine())
@@ -24,13 +26,23 @@ func CreateComment(c *gin.Context) {
 
 	}
 	// 调用服务
-	if err := idea.CreateComment(req.CommentedId, req.CommenterId, req.Content); err != nil {
+	err := idea.CreateComment(req.CommentedId, req.CommenterId, req.Content, req.IdeaId)
+	if err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}
-
 	// TODO:评论数增加 1 和 create message
 
+	var i model.IdeaInfo
+	model.DB.Self.Where("idea_id = ? ", req.IdeaId).First(&i)
+	i2 := i
+	i2.CommentSum++
+	model.DB.Self.Model(&i).Update(i2)
+
+	if err := message.CreateMessage(req.CommentedId, req.CommenterId, 1, req.IdeaId, 0, i.Content, req.Content); err != nil {
+		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
+		return
+	}
 	SendResponse(c, errno.OK, nil)
 
 }
