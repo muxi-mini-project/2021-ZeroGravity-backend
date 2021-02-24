@@ -75,6 +75,8 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	searchRouter.Use(middleware.AuthMiddleware)
 	{
 		searchRouter.GET("", search.GetSearchResult)
+		searchRouter.DELETE("", search.DeleteHistory)
+		searchRouter.GET("/histories", search.GetHistories)
 	}
 
 	// 举报

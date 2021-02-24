@@ -89,7 +89,6 @@ key                `comment_id`        (`comment_id`),
 key                `likers_id`         (`likers_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
-
 -- 黑名单
 create table `tbl_report`(
     `id` int not null AUTO_INCREMENT,
@@ -122,3 +121,12 @@ primary key (`id`),
 key `pub_user_id` (`pub_user_id`),
 key `sub_user_id` (`sub_user_id`),
 )
+
+
+DROP TABLE IF EXISTS histories;
+create table histories(
+    id      int          not null auto_increment ,
+    name    varchar(100) not null ,
+    user_id varchar(100) not null ,
+    primary key (id)
+)ENGINE=InnoDB;

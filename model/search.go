@@ -35,3 +35,31 @@ func AgainstAndMatchUser(offset, limit int, kw string) ([]*UserModel, error) {
 
 	return userList, nil
 }
+
+func CreateHistory(id string, name string) error {
+	var h History
+	h.Name = name
+	h.UserID = id
+	if result := DB.Self.Create(&h); result.Error != nil {
+		return result.Error
+	}
+	return nil
+}
+func GetHistories(id string) ([]History, error) {
+	var histories []History
+	if result := DB.Self.Where("student_id = ? ", id).Find(&histories); result.Error != nil {
+		return histories, result.Error
+	}
+	return histories, nil
+}
+func DeleteHistory(h History) error {
+	if result := DB.Self.Where("student_id = ? AND name = ? ", h.UserID, h.Name).Delete(&h); result.Error != nil {
+		return result.Error
+	}
+	return nil
+}
+
+type History struct {
+	Name   string `json:"name"`
+	UserID string `json:"user_id"`
+}
