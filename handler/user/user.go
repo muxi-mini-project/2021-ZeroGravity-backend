@@ -1,12 +1,6 @@
 package user
 
-type CreateUserRequest struct {
-	Account         string `json:"account"`
-	AccountPassword string `json:"account_password"`
-	NickName        string `json:"nickname"`
-	Avatar          string `json:"avatar"`
-}
-
+// GetUserInfoResponse ... 单个用户
 type GetUserInfoResponse struct {
 	Id       int    `json:"id"`
 	Avatar   string `json:"avatar"`
@@ -14,6 +8,7 @@ type GetUserInfoResponse struct {
 	Energy   int    `json:"energy"`
 }
 
+// UpdateUserInfoRequest ... 更改用户信息请求
 type UpdateUserInfoRequest struct {
 	Avatar   string `json:"avatar"`
 	NickName string `json:"nickname"`

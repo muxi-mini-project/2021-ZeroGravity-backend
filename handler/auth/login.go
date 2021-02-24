@@ -13,6 +13,7 @@ import (
 	"go.uber.org/zap"
 )
 
+// Login ... 登陆
 func Login(c *gin.Context) {
 	log.Info("login function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
@@ -27,7 +28,6 @@ func Login(c *gin.Context) {
 	decodePassword, err := base64.StdEncoding.DecodeString(req.AccountPassword)
 	if err != nil {
 		handler.SendError(c, errno.ErrDecoding, nil, err.Error(), "")
-		c.Abort()
 		return
 	}
 

@@ -67,19 +67,7 @@ func GetIdeaList(c *gin.Context) {
 
 	resp := &IdeaResponse{}
 	resp.Count = len(item)
-	for _, v := range item {
-		resp.List = append(resp.List, &IdeaListItem{
-			Id:          v.Id,
-			Content:     v.Content,
-			ReleaseDate: v.ReleaseDate,
-			LikesSum:    v.LikesSum,
-			CommentSum:  v.CommentSum,
-			UserId:      v.UserId,
-			Avatar:      v.Avatar,
-			NickName:    v.NickName,
-			Liked:       v.Liked,
-		})
-	}
+	resp.List = item
 
 	SendResponse(c, errno.OK, resp)
 }

@@ -13,8 +13,8 @@ import (
 	"go.uber.org/zap"
 )
 
-// GetIdeaLike ... 获取某个用户点赞的想法列表
-func GetIdeaLike(c *gin.Context) {
+// GetIdeaLikedList ... 获取某个用户点赞的想法列表
+func GetIdeaLikedList(c *gin.Context) {
 	log.Info("Idea getIdeaLike function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
 
@@ -37,7 +37,7 @@ func GetIdeaLike(c *gin.Context) {
 	}
 
 	// 调用服务
-	item, err := idea.GetIdeaLike(id, page*limit, limit)
+	item, err := idea.GetIdeaLikedList(id, page*limit, limit)
 	if err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
@@ -45,19 +45,7 @@ func GetIdeaLike(c *gin.Context) {
 
 	resp := &IdeaResponse{}
 	resp.Count = len(item)
-	for _, v := range item {
-		resp.List = append(resp.List, &IdeaListItem{
-			Id:          v.Id,
-			Content:     v.Content,
-			ReleaseDate: v.ReleaseDate,
-			LikesSum:    v.LikesSum,
-			CommentSum:  v.CommentSum,
-			UserId:      v.UserId,
-			Avatar:      v.Avatar,
-			NickName:    v.NickName,
-			Liked:       v.Liked,
-		})
-	}
+	resp.List = item
 
 	SendResponse(c, errno.OK, resp)
 }

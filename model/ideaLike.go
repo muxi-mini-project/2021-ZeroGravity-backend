@@ -22,12 +22,14 @@ func DeleteIdeaLike(id int, uid string) error {
 	return d.Error
 }
 
+// GetIdeaLikeRecordForUser ... 根据范围获取用户点赞记录
 func GetIdeaLikeRecordForUser(id int, scope []int) ([]*IdeaLikeModel, error) {
 	ideaLikeList := make([]*IdeaLikeModel, 0)
 	d := DB.Self.Table("tbl_like_record_idea").Where("likers_id = ? AND idea_id in (?)", id, scope).Order("idea_id desc").Scan(&ideaLikeList)
 	return ideaLikeList, d.Error
 }
 
+// GetIdeaLikeByUserId ... 获取用户过去点赞记录
 func GetIdeaLikeByUserId(id, offset, limit int) ([]*IdeaInfo, error) {
 	item := make([]*IdeaLikeModel, 0)
 

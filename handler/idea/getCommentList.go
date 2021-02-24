@@ -52,19 +52,7 @@ func GetCommentList(c *gin.Context) {
 
 	resp := &CommentResponse{}
 	resp.Count = len(item)
-	for _, v := range item {
-		resp.List = append(resp.List, &CommentListItem{
-			Id:          v.Id,
-			CommentedId: v.CommentedId,
-			LikesSum:    v.LikesSum,
-			ReleaseDate: v.ReleaseDate,
-			Content:     v.Content,
-			UserId:      v.UserId,
-			Avatar:      v.Avatar,
-			NickName:    v.NickName,
-			Liked:       v.Liked,
-		})
-	}
+	resp.List = item
 
 	SendResponse(c, errno.OK, resp)
 }

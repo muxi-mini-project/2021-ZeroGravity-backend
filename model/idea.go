@@ -7,6 +7,7 @@ type IdeaModel struct {
 	PublisherId int    `json:"publisher_id" gorm:"column:publisher_id;" binding:"required"`
 	LikesSum    int    `json:"likes_sum" gorm:"column:likes_sum;" binding:"required"`
 	CommentSum  int    `json:"comment_sum" gorm:"column:comment_sum;" binding:"required"`
+	Privicy     int    `json:"privicy" gorm:"column:privicy;" binding:"required"` // 0->公有 1->私有
 }
 
 type IdeaInfo struct {
@@ -15,6 +16,7 @@ type IdeaInfo struct {
 	ReleaseDate string `json:"release_date" gorm:"column:release_date;" binding:"required"`
 	LikesSum    int    `json:"likes_sum" gorm:"column:likes_sum;" binding:"required"`
 	CommentSum  int    `json:"comment_sum" gorm:"column:comment_sum;" binding:"required"`
+	Privicy     int    `json:"privicy" gorm:"column:privicy;" binding:"required"`
 	UserId      int    `json:"publisher_id" gorm:"column:publisher_id;" binding:"required"`
 	Avatar      string `json:"avatar" gorm:"column:avatar;" binding:"required"`
 	NickName    string `json:"nickname" gorm:"column:nickname;" binding:"required"`
@@ -47,6 +49,21 @@ func DeleteIdea(id, uid int) error {
 	return d.Error
 }
 
+func GetIdeaById(id int) (*IdeaInfo, error) {
+	u := &IdeaInfo{}
+
+	query := DB.Self.Table("tbl_idea").
+		Select("tbl_idea.*,tbl_user.nickname,tbl_user.avatar").
+		Joins("left join tbl_user on tbl_user.id = tbl_idea.publisher_id").
+		Where("tbl_idea.tbl_idea_id = ?", id)
+
+	if err := query.Scan(u).Error; err != nil {
+		return nil, err
+	}
+
+	return u, nil
+}
+
 func GetIdeaList(uid, offset, limit, privicy, index, userId int) ([]*IdeaInfo, error) {
 	item := make([]*IdeaInfo, 0)
 
@@ -55,14 +72,18 @@ func GetIdeaList(uid, offset, limit, privicy, index, userId int) ([]*IdeaInfo, e
 		Joins("left join tbl_user on tbl_user.id = tbl_idea.publisher_id").
 		Offset(offset).Limit(limit)
 
-	// 判断是否为获取用户自身想法
-	if privicy != 1 {
+	// privicy 判断
+	if privicy == 0 {
+		// 获取他人想法
 		query = query.Where("tbl_idea.privicy = ?", 0)
-	}
 
-	// 判断是否选择用户
-	if userId != 0 && privicy == 1 {
-		query = query.Where("tbl_idea.publisher_id = ?", userId)
+		// 判断是否选择用户
+		if userId != 0 {
+			query = query.Where("tbl_idea.publisher_id = ?", userId)
+		}
+	} else {
+		// 获取用户自己的想法
+		query = query.Where("tbl_idea.publisher_id = ?", uid)
 	}
 
 	// 判断排序顺序

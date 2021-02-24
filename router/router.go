@@ -3,6 +3,8 @@ package router
 import (
 	"net/http"
 
+	"github.com/2021-ZeroGravity-backend/handler/message"
+	"github.com/2021-ZeroGravity-backend/handler/report"
 	"github.com/2021-ZeroGravity-backend/handler/search"
 
 	"github.com/2021-ZeroGravity-backend/handler/auth"
@@ -38,7 +40,6 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	{
 		userRouter.GET("/detail/:id", user.GetUserInfo)
 		userRouter.PUT("", user.UpdateUserInfo)
-		// userRouter.GET("/notice",user.GetNotice)
 	}
 
 	ideaRouter := g.Group("/api/v1/idea")
@@ -46,20 +47,20 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	{
 		// idea
 		ideaRouter.POST("", idea.CreateIdea)
-		ideaRouter.DELETE("detail/:idea_id", idea.DeleteIdea)
+		ideaRouter.DELETE("detail/:id", idea.DeleteIdea)
 		ideaRouter.GET("/list", idea.GetIdeaList)
-		// ideaRouter.GET("/detail/:id",idea.GetIdea) 获取单个 idea
+		ideaRouter.GET("/detail/:id", idea.GetIdea)
 
-		ideaRouter.GET("/liked", idea.GetIdeaLike)
+		ideaRouter.GET("/liked", idea.GetIdeaLikedList)
 
 		// comment
-		ideaRouter.POST("/comment", idea.CreateComment)
-		ideaRouter.DELETE("/comment/:comment_id", idea.DeleteComment)
+		ideaRouter.POST("/detail/:id/comment", idea.CreateComment)
+		ideaRouter.DELETE("/detail/:id/comment/:comment_id", idea.DeleteComment)
 		ideaRouter.GET("/detail/:id/comment", idea.GetCommentList)
 
 		// like
-		ideaRouter.PUT("/detail/:idea_id/like", idea.UpdateIdeaLike)
-		ideaRouter.PUT("/comment/:comment_id/like", idea.UpdateCommentLike)
+		ideaRouter.PUT("/detail/:id/like", idea.UpdateIdeaLike)
+		ideaRouter.PUT("/comment/:id/like", idea.UpdateCommentLike)
 	}
 
 	collectionRouter := g.Group("/api/v1/collection")
@@ -78,11 +79,25 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		searchRouter.GET("/histories", search.GetHistories)
 	}
 
-	// reportRouter := g.Group("/api/v1/report")
-	// reportRouter.Use(middleware.AuthMiddleware)
-	// {
-	//		reportRouter.POST("",report.CreateReport)
-	// }
+	// 举报
+	reportRouter := g.Group("/api/v1/report")
+	reportRouter.Use(middleware.AuthMiddleware)
+	{
+		reportRouter.POST("", report.CreateReport)
+	}
+
+	// 消息
+	messageRouter := g.Group("api/v1/message")
+	messageRouter.Use(middleware.AuthMiddleware)
+	{
+		messageRouter.GET("/tip", message.GetMessageTip)
+		messageRouter.PUT("/readall", message.UpdateMessageReadAll)
+		messageRouter.GET("/like", message.GetMessageForLike)
+		messageRouter.GET("/comment", message.GetMessageForComment)
+
+		// 系统通知，先不做
+		// messageRouter.GET("/notice",message.GetMessageForNotice)
+	}
 
 	// The health check handlers
 	svcd := g.Group("/sd")

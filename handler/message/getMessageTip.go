@@ -1,4 +1,4 @@
-package idea
+package message
 
 import (
 	. "github.com/2021-ZeroGravity-backend/handler"
@@ -10,25 +10,24 @@ import (
 	"go.uber.org/zap"
 )
 
-// DeleteIdea is used to delete ideas 删除想法
-func DeleteIdea(c *gin.Context) {
-
-	log.Info("Delete Idea function called.",
+// GetMessageTip ... 获取消息提示
+func GetMessageTip(c *gin.Context) {
+	log.Info("Message getMessageTip function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
 
-	var req DeleteIdeaRequest
+	uid := c.MustGet("userID").(int)
 
-	if err := c.ShouldBindJSON(&req); err != nil {
-		SendBadRequest(c, errno.ErrBind, nil, err.Error(), GetLine())
-		return
-	}
-
-	// 调用服务
-	if err := model.DeleteIdea(req.IdeaId, req.PublisherId); err != nil {
+	// service
+	count, err := model.GetMessageTipByUserId(uid)
+	if err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}
 
-	SendResponse(c, errno.OK, nil)
+	var resp *GetMessageTipResponse
+	if count != 0 {
+		resp.HaveMessage = true
+	}
 
+	SendResponse(c, errno.OK, resp)
 }

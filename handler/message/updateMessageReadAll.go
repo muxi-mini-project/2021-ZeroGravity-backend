@@ -1,4 +1,4 @@
-package collection
+package message
 
 import (
 	. "github.com/2021-ZeroGravity-backend/handler"
@@ -10,20 +10,15 @@ import (
 	"go.uber.org/zap"
 )
 
-// DeleteCollection  is used to add a collection record of idea 删除收藏记录
-func DeleteCollection(c *gin.Context) {
-	log.Info("Delete Collection function called.",
+// UpdateMessageReadAll ... 修改信息为已读
+func UpdateMessageReadAll(c *gin.Context) {
+	log.Info("Message getMessageTip function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
 
-	var req DeleteCollectionRequest
+	uid := c.MustGet("userID").(int)
 
-	if err := c.ShouldBindJSON(&req); err != nil {
-		SendBadRequest(c, errno.ErrBind, nil, err.Error(), GetLine())
-		return
-
-	}
-	// 调用服务
-	if err := model.DeleteCollection(req.IdeaId, req.CollectorId); err != nil {
+	// service
+	if err := model.ReadAll(uid); err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}
