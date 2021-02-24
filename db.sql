@@ -113,7 +113,7 @@ create table `tbl_message`(
     `kind` tinyint(1) not null DEFAULT 0 comment "消息类型 0-点赞 1-评论 2-通知/举报",
     `is_read` tinyint(1) not null DEFAULT 0 comment "是否已读",
     `date` varchar(50) DEFAULT null,
-    `comment_id` int DEFAULT 0,
+    `comment_id` int DEFAULT 0 comment "判断点赞情况下是点赞评论还是点赞想法",
     `reply` varchar(255) DEFAULT null comment "评论内容",
     `idea_id` int DEFAULT 0,
     `content` varchar(255) DEFAULT null comment "idea内容"

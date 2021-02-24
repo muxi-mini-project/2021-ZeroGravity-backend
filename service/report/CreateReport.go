@@ -15,9 +15,5 @@ func CreatReport(uid, userId, kind, commentId, ideaId int, reason string) error 
 		IdeaId:    ideaId,
 	}
 
-	if err := report.Create(); err != nil {
-		return err
-	}
-
-	return nil
+	return report.Create()
 }

@@ -13,13 +13,15 @@ func (u *CollectionModel) TableName() string {
 func (u *CollectionModel) Create() error {
 	return DB.Self.Create(u).Error
 }
-func DeleteCollion(id, uid int) error {
+
+func DeleteCollection(id, uid int) error {
 	u := &CollectionModel{}
 	u.Id = id
 	d := DB.Self.Where("collector_id = ?", uid).Delete(u)
 	return d.Error
 }
 
+// GetCollectionByUserId ... 通过 id 获取收藏
 func GetCollectionByUserId(id, offset, limit int) ([]*IdeaInfo, []int, error) {
 	item := make([]*CollectionModel, 0)
 

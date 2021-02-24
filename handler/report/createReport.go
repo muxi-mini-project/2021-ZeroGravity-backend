@@ -29,7 +29,5 @@ func CreateReport(c *gin.Context) {
 		return
 	}
 
-	// TODO:发送邮件
-
 	SendResponse(c, errno.OK, nil)
 }

@@ -29,6 +29,8 @@ func CreateComment(c *gin.Context) {
 		return
 	}
 
+	// TODO:评论数增加 1 和 create message
+
 	SendResponse(c, errno.OK, nil)
 
 }

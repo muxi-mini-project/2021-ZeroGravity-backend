@@ -34,17 +34,5 @@ func GetIdea(c *gin.Context) {
 		return
 	}
 
-	resp := &IdeaListItem{
-		Id:          item.Id,
-		Content:     item.Content,
-		ReleaseDate: item.ReleaseDate,
-		LikesSum:    item.LikesSum,
-		CommentSum:  item.CommentSum,
-		UserId:      item.UserId,
-		Avatar:      item.Avatar,
-		NickName:    item.NickName,
-		Liked:       item.Liked,
-	}
-
-	SendResponse(c, errno.OK, resp)
+	SendResponse(c, errno.OK, item)
 }

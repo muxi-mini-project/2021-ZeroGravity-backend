@@ -7,7 +7,9 @@ import (
 )
 
 // CreateMessage ... 别的服务调用，不单独列 api
-func CreateMessage(pub, sub, kind, commentId, IdeaId int) error {
+// 点赞消息传 pub sub kind commentId ideaId content
+// 评论消息传 pub sub kind ideaId content reply
+func CreateMessage(pub, sub, kind, commentId, ideaId int, content, reply string) error {
 	t := time.Now()
 
 	var message *model.MessageModel
@@ -17,13 +19,12 @@ func CreateMessage(pub, sub, kind, commentId, IdeaId int) error {
 		SubUserId: sub,
 		Kind:      kind,
 		CommentId: commentId,
-		IdeaId:    IdeaId,
+		Reply:     reply,
+		IdeaId:    ideaId,
+		Content:   content,
 		Date:      t.Format("2006-01-02 15:04:05"),
 	}
 
-	if err := message.Create(); err != nil {
-		return err
-	}
+	return message.Create()
 
-	return nil
 }

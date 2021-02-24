@@ -12,8 +12,29 @@ type MessageModel struct {
 	IsRead    int    `json:"is_read" gorm:"column:"is_read;" binding:"required""`
 	Date      string `json:"date" gorm:"column:date;" binding:"required"`
 	CommentId int    `json:"comment_id" gorm:"column:comment_id;" binding:"required"`
-	Content   string `json:""`
+	Reply     string `json:"reply" gorm:"column:reply;" binding:"required"`
+	Content   string `json:"content" gorm:"column:content;" binding:"required"`
 	IdeaId    int    `json:"idea_id" gorm:"column:idea_id;" binding:"required"`
+}
+
+type MessageForCommentItem struct {
+	IdeaId   int    `json:"idea_id" gorm:"column:idea_id;" binding:"required"`
+	Content  string `json:"content" gorm:"column:content;" binding:"required"`
+	Reply    string `json:"reply" gorm:"column:reply;" binding:"required"`
+	UserId   int    `json:"user_id" gorm:"column:pub_user_id;" binding:"required"`
+	Date     string `json:"date" gorm:"column:date;" binding:"requried"`
+	Avatar   string `json:"avatar" gorm:"column:avatar;" binding:"required"`
+	NickName string `json:"nickname" gorm:"column:nickname;" binding:"required"`
+}
+
+type MessageForLikeItem struct {
+	IdeaId    int    `json:"idea_id" gorm:"column:idea_id;" binding:"required"`
+	Content   string `json:"content" gorm:"column:content;" binding:"required"`
+	CommentId int    `json:"comment_id" gorm:"column:comment_id;" binding:"required"`
+	UserId    int    `json:"user_id" gorm:"column:pub_user_id;" binding:"required"`
+	Date      string `json:"date" gorm:"column:date;" binding:"requried"`
+	Avatar    string `json:"avatar" gorm:"column:avatar;" binding:"required"`
+	NickName  string `json:"nickname" gorm:"column:nickname;" binding:"required"`
 }
 
 func (u *MessageModel) TableName() string {
@@ -35,12 +56,31 @@ func ReadAll(uid int) error {
 	return d.Error
 }
 
-// GetMessageForComment ... 拉取评论我的 idList
-func GetMessageForComment(uid, offset, limit int) ([]*MessageModel, error) {
-	message := make([]*MessageModel, 0)
+// GetMessageForComment ... 拉取评论我的消息
+func GetMessageForComment(uid, offset, limit int) ([]*MessageForCommentItem, error) {
+	message := make([]*MessageForCommentItem, 0)
 
 	query := DB.Self.Table("tbl_message").
+		Select("tbl_message.idea_id,tbl_message.content,tbl_message.reply,tbl_message.pub_user_id,tbl_message.date,tbl_user.nickname,tbl_user.avatar").
 		Where("sub_user_id = ? AND kind = ?", uid, constvar.CommentMessage).
+		Joins("left join tbl_user on tbl_user.id = tbl_message.pub_user_id").
+		Offset(offset).Limit(limit)
+
+	if err := query.Scan(&message).Error; err != nil {
+		return nil, err
+	}
+
+	return message, nil
+}
+
+// GetMessageForLike ... 拉取点赞我的消息
+func GetMessageForLike(uid, offset, limit int) ([]*MessageForLikeItem, error) {
+	message := make([]*MessageForLikeItem, 0)
+
+	query := DB.Self.Table("tbl_message").
+		Select("tbl_message.idea_id,tbl_message.content,tbl_message.comment_id,tbl_message.pub_user_id,tbl_message.date,tbl_user.nickname,tbl_user.avatar").
+		Where("sub_user_id = ? AND kind = ?", uid, constvar.CommentMessage).
+		Joins("left join tbl_user on tbl_user.id = tbl_message.pub_user_id").
 		Offset(offset).Limit(limit)
 
 	if err := query.Scan(&message).Error; err != nil {

@@ -4,7 +4,7 @@ import (
 	"github.com/2021-ZeroGravity-backend/model"
 )
 
-func GetIdeaLike(id, offset, limit int) ([]*model.IdeaListItem, error) {
+func GetIdeaLikedList(id, offset, limit int) ([]*model.IdeaListItem, error) {
 	list, err := model.GetIdeaLikeByUserId(id, offset, limit)
 	if err != nil {
 		return nil, err

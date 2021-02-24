@@ -29,6 +29,8 @@ func UpdateIdeaLike(c *gin.Context) {
 		return
 	}
 
+	// TODO:likesum 增减和 creae message
+
 	SendResponse(c, errno.OK, nil)
 
 }

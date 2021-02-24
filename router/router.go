@@ -47,20 +47,20 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	{
 		// idea
 		ideaRouter.POST("", idea.CreateIdea)
-		ideaRouter.DELETE("detail/:idea_id", idea.DeleteIdea)
+		ideaRouter.DELETE("detail/:id", idea.DeleteIdea)
 		ideaRouter.GET("/list", idea.GetIdeaList)
 		ideaRouter.GET("/detail/:id", idea.GetIdea)
 
-		ideaRouter.GET("/liked", idea.GetIdeaLike)
+		ideaRouter.GET("/liked", idea.GetIdeaLikedList)
 
 		// comment
-		ideaRouter.POST("/comment", idea.CreateComment)
-		ideaRouter.DELETE("/comment/:comment_id", idea.DeleteComment)
+		ideaRouter.POST("/detail/:id/comment", idea.CreateComment)
+		ideaRouter.DELETE("/detail/:id/comment/:comment_id", idea.DeleteComment)
 		ideaRouter.GET("/detail/:id/comment", idea.GetCommentList)
 
 		// like
-		ideaRouter.PUT("/detail/:idea_id/like", idea.UpdateIdeaLike)
-		ideaRouter.PUT("/comment/:comment_id/like", idea.UpdateCommentLike)
+		ideaRouter.PUT("/detail/:id/like", idea.UpdateIdeaLike)
+		ideaRouter.PUT("/comment/:id/like", idea.UpdateCommentLike)
 	}
 
 	collectionRouter := g.Group("/api/v1/collection")
@@ -90,9 +90,11 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	{
 		messageRouter.GET("/tip", message.GetMessageTip)
 		messageRouter.PUT("/readall", message.UpdateMessageReadAll)
-		// messageRouter.GET("/like",message.GetMessageForLikeList)
-		// messageRouter.GET("/comment",message.GetMessageForCommentList)
-		// messageRouter.GET("/notice",message.GetMessageForNoticeList) 系统通知，先不写
+		messageRouter.GET("/like", message.GetMessageForLike)
+		messageRouter.GET("/comment", message.GetMessageForComment)
+
+		// 系统通知，先不做
+		// messageRouter.GET("/notice",message.GetMessageForNotice)
 	}
 
 	// The health check handlers

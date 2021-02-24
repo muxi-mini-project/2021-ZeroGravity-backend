@@ -22,6 +22,7 @@ func DeleteCommentLike(id int, uid string) error {
 	return d.Error
 }
 
+// GetCommentLikeForUser ... 通过 用户 id 和 id 范围 获取用户点赞列表
 func GetCommentLikeForUser(uid int, scope []int) ([]*CommentLikeModel, error) {
 	u := make([]*CommentLikeModel, 0)
 
