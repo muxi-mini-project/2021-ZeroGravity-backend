@@ -17,7 +17,7 @@ create table `tbl_user`(
 -- 添加约束
 primary key                         (`id`),
 key  `account_password`             (`account_password`),
-key  `account`                      (`account`)
+key  `account`                      (`account`),
 FULLTEXT (`nickname`) WITH PARSER ngram
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
@@ -32,7 +32,7 @@ create table `tbl_idea` (
     `comments_sum`    int           not null DEFAULT 0 comment "评论数",
     `privacy`         tinyint(1)    not null DEFAULT 0,
 -- 添加约束
-primary key                         (`idea_id`)
+primary key                         (`idea_id`),
 FULLTEXT (`content`) WITH PARSER ngram
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
@@ -94,7 +94,7 @@ create table `tbl_report`(
     `id` int not null AUTO_INCREMENT,
     `user_id` int not null,
     `reporter` int not null,
-    `kind` int DEFAULT 0 comment "种类，0-想法 1-评论 2-用户"，
+    `kind` int DEFAULT 0 comment "种类，0-想法 1-评论 2-用户",
     `reason` varchar(100) DEFAULT null,
     `idea_id` int DEFAULT 0,
     `comment_id` int DEFAULT 0,
@@ -115,15 +115,15 @@ create table `tbl_message`(
     `comment_id` int DEFAULT 0 comment "判断点赞情况下是点赞评论还是点赞想法",
     `reply` varchar(255) DEFAULT null comment "评论内容",
     `idea_id` int DEFAULT 0,
-    `content` varchar(255) DEFAULT null comment "idea内容"
+    `content` varchar(255) DEFAULT null comment "idea内容",
 -- 添加约束
 primary key (`id`),
 key `pub_user_id` (`pub_user_id`),
-key `sub_user_id` (`sub_user_id`),
-)
+key `sub_user_id` (`sub_user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 
-DROP TABLE IF EXISTS histories;
+DROP TABLE IF EXISTS `histories`;
 create table histories(
     id      int          not null auto_increment ,
     name    varchar(100) not null ,
