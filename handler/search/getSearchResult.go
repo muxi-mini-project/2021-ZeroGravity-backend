@@ -100,10 +100,10 @@ func DeleteHistory(c *gin.Context) {
 	c.BindJSON(&h)
 	err := model.DeleteHistory(h)
 	if err != nil {
-		c.JSON(400, gin.H{"message": "Fail."})
+		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}
-	c.JSON(200, gin.H{"message": "删除成功"})
+	SendResponse(c, errno.OK, nil)
 }
 
 func GetHistories(c *gin.Context) {
@@ -112,8 +112,8 @@ func GetHistories(c *gin.Context) {
 	id := c.Param("id")
 	histories, err := model.GetHistories(id)
 	if err != nil {
-		c.JSON(400, gin.H{"message": "Fail."})
+		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}
-	c.JSON(200, histories)
+	SendResponse(c, errno.OK, histories)
 }

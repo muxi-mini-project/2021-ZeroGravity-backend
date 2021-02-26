@@ -1,6 +1,8 @@
 package idea
 
 import (
+	"strconv"
+
 	. "github.com/2021-ZeroGravity-backend/handler"
 	"github.com/2021-ZeroGravity-backend/log"
 	"github.com/2021-ZeroGravity-backend/model"
@@ -18,28 +20,32 @@ func CreateComment(c *gin.Context) {
 	log.Info("Create Comment function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
 
-	var req model.CommentModel
+	var req CreateCommentRequest
 
 	if err := c.ShouldBindJSON(&req); err != nil {
 		SendBadRequest(c, errno.ErrBind, nil, err.Error(), GetLine())
 		return
 
 	}
+	IdeaId, err := strconv.Atoi(c.Param("idea_id"))
+	if err != nil {
+		SendBadRequest(c, errno.ErrPathParam, nil, err.Error(), GetLine())
+		return
+	}
+
 	// 调用服务
-	err := idea.CreateComment(req.CommentedId, req.CommenterId, req.Content, req.IdeaId)
+	err = idea.CreateComment(req.CommenterId, req.Content, IdeaId)
 	if err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}
-	// TODO:评论数增加 1 和 create message
-
 	var i model.IdeaInfo
-	model.DB.Self.Where("idea_id = ? ", req.IdeaId).First(&i)
+	model.DB.Self.Where("idea_id = ? ", IdeaId).First(&i)
 	i2 := i
 	i2.CommentSum++
 	model.DB.Self.Model(&i).Update(i2)
 
-	if err := message.CreateMessage(req.CommentedId, req.CommenterId, 1, req.IdeaId, 0, i.Content, req.Content); err != nil {
+	if err := message.CreateMessage(req.CommentedId, req.CommenterId, 1, 0, IdeaId, i.Content, req.Content); err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}

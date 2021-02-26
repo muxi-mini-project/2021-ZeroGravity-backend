@@ -54,7 +54,7 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		ideaRouter.GET("/liked", idea.GetIdeaLikedList)
 
 		// comment
-		ideaRouter.POST("/detail/:id/comment", idea.CreateComment)
+		ideaRouter.POST("/detail/:id/comment/:idea_id", idea.CreateComment)
 		ideaRouter.DELETE("/detail/:id/comment/:comment_id", idea.DeleteComment)
 		ideaRouter.GET("/detail/:id/comment", idea.GetCommentList)
 

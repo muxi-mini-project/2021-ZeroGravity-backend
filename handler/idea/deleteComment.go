@@ -1,6 +1,8 @@
 package idea
 
 import (
+	"strconv"
+
 	. "github.com/2021-ZeroGravity-backend/handler"
 	"github.com/2021-ZeroGravity-backend/model"
 
@@ -17,23 +19,19 @@ func DeleteComment(c *gin.Context) {
 	log.Info("Delete Comment function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
 
-	var req DeleteCommentRequest
-
-	if err := c.ShouldBindJSON(&req); err != nil {
-		SendBadRequest(c, errno.ErrBind, nil, err.Error(), GetLine())
+	id, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		SendBadRequest(c, errno.ErrPathParam, nil, err.Error(), GetLine())
 		return
 	}
 	uid := c.MustGet("userID").(int)
 	// 调用服务
-	if err := model.DeleteComment(req.Id, uid); err != nil {
+	if err := model.DeleteComment(id, uid); err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}
-
-	// TODO:评论数减 1
-
 	var i model.IdeaInfo
-	model.DB.Self.Where("idea_id = ? ", req.Id).First(&i)
+	model.DB.Self.Where("idea_id = ? ", id).First(&i)
 	i2 := i
 	i2.CommentSum--
 	model.DB.Self.Model(&i).Update(i2)

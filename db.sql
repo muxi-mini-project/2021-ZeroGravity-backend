@@ -17,7 +17,7 @@ create table `tbl_user`(
 -- 添加约束
 primary key                         (`id`),
 key  `account_password`             (`account_password`),
-key  `account`                      (`account`)
+key  `account`                      (`account`),
 FULLTEXT (`nickname`) WITH PARSER ngram
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
@@ -32,7 +32,7 @@ create table `tbl_idea` (
     `comments_sum`    int           not null DEFAULT 0 comment "评论数",
     `privacy`         tinyint(1)    not null DEFAULT 0,
 -- 添加约束
-primary key                         (`idea_id`)
+primary key                         (`idea_id`),
 FULLTEXT (`content`) WITH PARSER ngram
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
@@ -40,16 +40,15 @@ FULLTEXT (`content`) WITH PARSER ngram
 -- 评论表(comments)
 create table `tbl_comments`(
     `id`               int          not null AUTO_INCREMENT comment "评论id" ,
-    `idea_id`          int          not null ,
     `commenter_id`     int              null comment "评论者id",
-    `commented_id`     int              null comment "idea_id",
+    `idea_id`          int              null comment "idea_id",
     `likes_sum`        int          not null DEFAULT 0 comment "赞数",
     `release_date`     date             null comment "发布日期",
     `content`          varchar(255)     null comment "内容",
 -- 添加约束
 primary key                          (`id`),
 key           `commenter_id`         (`commenter_id`),
-key           `commented_id`         (`commented_id`)
+key           `idea_id`         (`idea_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 
@@ -70,7 +69,6 @@ create table `tbl_like_record_idea`(
     `id`               int            not null AUTO_INCREMENT comment "点赞记录序号",
     `idea_id`          int                     comment "想法id",
     `likers_id`        int                     comment "点赞者id",
-    `beliked_id`       int                     comment "被点赞者id",
 -- 添加约束
 primary key                           (`id`),
 key             `idea_id`             (`idea_id`),
@@ -83,7 +81,6 @@ create table `tbl_like_record_comment`(
     `id`               int            not null AUTO_INCREMENT comment "点赞记录序号",
     `comment_id`       int                null comment "评论id",
     `likers_id`        int                null comment "点赞者id",
-    `beliked_id`       int                null comment "被点赞者id",
 -- 添加约束
 primary key                            (`id`),
 key                `comment_id`        (`comment_id`),
@@ -95,7 +92,7 @@ create table `tbl_report`(
     `id` int not null AUTO_INCREMENT,
     `user_id` int not null,
     `reporter` int not null,
-    `kind` int DEFAULT 0 comment "种类，0-想法 1-评论 2-用户"，
+    `kind` int DEFAULT 0 comment "种类，0-想法 1-评论 2-用户",
     `reason` varchar(100) DEFAULT null,
     `idea_id` int DEFAULT 0,
     `comment_id` int DEFAULT 0,
@@ -116,15 +113,15 @@ create table `tbl_message`(
     `comment_id` int DEFAULT 0 comment "判断点赞情况下是点赞评论还是点赞想法",
     `reply` varchar(255) DEFAULT null comment "评论内容",
     `idea_id` int DEFAULT 0,
-    `content` varchar(255) DEFAULT null comment "idea内容"
+    `content` varchar(255) DEFAULT null comment "idea内容",
 -- 添加约束
 primary key (`id`),
 key `pub_user_id` (`pub_user_id`),
-key `sub_user_id` (`sub_user_id`),
-)
+key `sub_user_id` (`sub_user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 
-DROP TABLE IF EXISTS histories;
+DROP TABLE IF EXISTS `histories`;
 create table histories(
     id      int          not null auto_increment ,
     name    varchar(100) not null ,
