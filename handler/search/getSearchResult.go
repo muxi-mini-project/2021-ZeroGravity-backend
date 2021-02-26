@@ -94,22 +94,26 @@ func GetSearchResult(c *gin.Context) {
 }
 
 func DeleteHistory(c *gin.Context) {
+	log.Info("Message getMessageForComment function called.",
+		zap.String("X-Request-Id", util.GetReqID(c)))
 	var h model.History
 	c.BindJSON(&h)
 	err := model.DeleteHistory(h)
 	if err != nil {
-		c.JSON(400, gin.H{"message": "Fail."})
+		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}
-	c.JSON(200, gin.H{"message": "删除成功"})
+	SendResponse(c, errno.OK, nil)
 }
 
 func GetHistories(c *gin.Context) {
+	log.Info("Message getMessageForComment function called.",
+		zap.String("X-Request-Id", util.GetReqID(c)))
 	id := c.Param("id")
 	histories, err := model.GetHistories(id)
 	if err != nil {
-		c.JSON(400, gin.H{"message": "Fail."})
+		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}
-	c.JSON(200, histories)
+	SendResponse(c, errno.OK, histories)
 }

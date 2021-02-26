@@ -11,15 +11,7 @@ type CreateCommentRequest struct {
 
 // DeleteCommentRequest ... 删除评论请求
 type DeleteCommentRequest struct {
-	CommenterId int `json:"commenter_id"`
-	Id          int `json:"id"`
-}
-
-// UpdateCommentLikeRequest ... 评论点赞/取消请求
-type UpdateCommentLikeRequest struct {
-	CommentId int `json:"comment_id"`
-	LikersId  int `json:"likers_id"`
-	BelikedId int `json:"beliked_id"`
+	Id int `json:"id"`
 }
 
 // CreateIdeaRequest ... 创建想法请求
@@ -36,10 +28,8 @@ type DeleteIdeaRequest struct {
 }
 
 // UpdateIdeaLikeRequest ... 想法点赞/取消请求
-type UpdateIdeaLikeRequest struct {
-	IdeaId    int `json:"idea_id"`
-	LikersId  int `json:"likers_id"`
-	BelikedId int `json:"beliked_id"`
+type UpdateLikeRequest struct {
+	Choice int `json:"choice"`
 }
 
 // IdeaResponse ... 想法列表

@@ -41,14 +41,14 @@ FULLTEXT (`content`) WITH PARSER ngram
 create table `tbl_comments`(
     `id`               int          not null AUTO_INCREMENT comment "评论id" ,
     `commenter_id`     int              null comment "评论者id",
-    `commented_id`     int              null comment "idea_id",
+    `idea_id`          int              null comment "idea_id",
     `likes_sum`        int          not null DEFAULT 0 comment "赞数",
     `release_date`     date             null comment "发布日期",
     `content`          varchar(255)     null comment "内容",
 -- 添加约束
 primary key                          (`id`),
 key           `commenter_id`         (`commenter_id`),
-key           `commented_id`         (`commented_id`)
+key           `idea_id`         (`idea_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8MB4;
 
 
@@ -69,7 +69,6 @@ create table `tbl_like_record_idea`(
     `id`               int            not null AUTO_INCREMENT comment "点赞记录序号",
     `idea_id`          int                     comment "想法id",
     `likers_id`        int                     comment "点赞者id",
-    `beliked_id`       int                     comment "被点赞者id",
 -- 添加约束
 primary key                           (`id`),
 key             `idea_id`             (`idea_id`),
@@ -82,7 +81,6 @@ create table `tbl_like_record_comment`(
     `id`               int            not null AUTO_INCREMENT comment "点赞记录序号",
     `comment_id`       int                null comment "评论id",
     `likers_id`        int                null comment "点赞者id",
-    `beliked_id`       int                null comment "被点赞者id",
 -- 添加约束
 primary key                            (`id`),
 key                `comment_id`        (`comment_id`),

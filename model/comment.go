@@ -4,15 +4,16 @@ type CommentModel struct {
 	Id          int    `json:"id" gorm:"column:id;" binding:"required"`
 	CommenterId int    `json:"commenter_id" gorm:"column:commenter_id;" binding:"required"`
 	CommentedId int    `json:"commented_id" gorm:"column:commented_id;" binding:"required"`
-	LikesSum    string `json:"likes_sum" gorm:"column:likes_sum;" binding:"required"`
+	LikesSum    int    `json:"likes_sum" gorm:"column:likes_sum;" binding:"required"`
 	ReleaseDate string `json:"release_date" gorm:"column:release_date;" binding:"required"`
 	Content     string `json:"content" gorm:"column:content;" binding:"required"`
+	IdeaId      int    `json:"idea_id" gorm:"column:idea_id;" binding:"required"`
 }
 
 type CommentInfo struct {
 	Id          int    `json:"id" gorm:"column:id;" binding:"required"`
 	CommentedId int    `json:"commented_id" gorm:"column:commented_id;" binding:"required"`
-	LikesSum    string `json:"likes_sum" gorm:"column:likes_sum;" binding:"required"`
+	LikesSum    int    `json:"likes_sum" gorm:"column:likes_sum;" binding:"required"`
 	ReleaseDate string `json:"release_date" gorm:"column:release_date;" binding:"required"`
 	Content     string `json:"content" gorm:"column:content;" binding:"required"`
 	UserId      int    `json:"commenter_id" gorm:"column:commenter_id;" binding:"required"`
@@ -23,7 +24,7 @@ type CommentInfo struct {
 type CommentListItem struct {
 	Id          int    `json:"id"`
 	CommentedId int    `json:"commented_id"`
-	LikesSum    string `json:"likes_sum"`
+	LikesSum    int    `json:"likes_sum"`
 	ReleaseDate string `json:"release_date"`
 	Content     string `json:"content"`
 	UserId      int    `json:"commenter_id"`

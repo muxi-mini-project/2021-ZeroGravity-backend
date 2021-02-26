@@ -1,10 +1,14 @@
 package idea
 
 import (
+	"strconv"
+
 	. "github.com/2021-ZeroGravity-backend/handler"
 	"github.com/2021-ZeroGravity-backend/log"
+	"github.com/2021-ZeroGravity-backend/model"
 	"github.com/2021-ZeroGravity-backend/pkg/errno"
 	"github.com/2021-ZeroGravity-backend/service/idea"
+	"github.com/2021-ZeroGravity-backend/service/message"
 	"github.com/2021-ZeroGravity-backend/util"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -16,21 +20,71 @@ func UpdateCommentLike(c *gin.Context) {
 	log.Info("Update Comment Like function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
 
-	var req UpdateCommentLikeRequest
+	LikersId := c.MustGet("userID").(int)
+	var req UpdateLikeRequest
 
 	if err := c.ShouldBindJSON(&req); err != nil {
 		SendBadRequest(c, errno.ErrBind, nil, err.Error(), GetLine())
 		return
 	}
 
-	// 调用服务
-	if err := idea.UpdateCommentLike(req.CommentId, req.LikersId, req.BelikedId); err != nil {
-		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
+	CommentId, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		SendBadRequest(c, errno.ErrPathParam, nil, err.Error(), GetLine())
+		return
+	}
+	if req.Choice > 2 || req.Choice < 1 {
+		SendBadRequest(c, errno.ErrChoice, nil, "", GetLine())
 		return
 	}
 
-	// TODO: likesum增减 和 create message
+	var COMment model.CommentInfo
+	result := model.DB.Self.Where("comment_id = ? ", CommentId).First(&COMment)
+	if result.Error != nil {
+		return
+	}
+	//取消点赞
+	if req.Choice == 2 {
+		var Idea model.IdeaLikeModel
+		if result := model.DB.Self.Where("comment_id = ? AND likers_id = ? ", CommentId, LikersId).First(&Idea); result.Error != nil {
+			//未点赞
+			SendError(c, errno.ErrNotLike, nil, result.Error.Error(), GetLine())
+			return
+		} else {
+			model.DB.Self.Delete(&Idea)
+			var i model.CommentInfo
+			model.DB.Self.Where("comment_id = ? ", CommentId).First(&i)
+			i2 := i
+			i2.LikesSum--
+			model.DB.Self.Model(&i).Update(i2)
+			SendResponse(c, errno.OK, nil)
+			return
+		}
+	}
+	if req.Choice == 1 {
+		if result := model.DB.Self.Where("comment_id = ? AND likers_id = ? ", CommentId, LikersId); result.Error == nil {
+			//已点赞
+			SendError(c, errno.ErrHaveLike, nil, result.Error.Error(), GetLine())
+			return
+		} else {
+			// 调用服务
+			if err := idea.UpdateCommentLike(CommentId, LikersId, COMment.UserId); err != nil {
+				SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
+				return
+			}
+			var i model.CommentInfo
+			model.DB.Self.Where("comment_id = ? ", CommentId).First(&i)
+			i2 := i
+			i2.LikesSum++
+			model.DB.Self.Model(&i).Update(i2)
 
-	SendResponse(c, errno.OK, nil)
-
+			//creae message
+			if err := message.CreateMessage(LikersId, COMment.UserId, 0, CommentId, 0, i.Content, ""); err != nil {
+				SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
+				return
+			}
+			SendResponse(c, errno.OK, nil)
+			return
+		}
+	}
 }

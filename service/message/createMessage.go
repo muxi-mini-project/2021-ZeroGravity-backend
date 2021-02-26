@@ -13,15 +13,14 @@ func CreateMessage(pub, sub, kind, commentId, ideaId int, content, reply string)
 	t := time.Now()
 
 	var message *model.MessageModel
-
 	message = &model.MessageModel{
 		PubUserId: pub,
 		SubUserId: sub,
 		Kind:      kind,
 		CommentId: commentId,
-		Reply:     reply,
 		IdeaId:    ideaId,
 		Content:   content,
+		Reply:     reply,
 		Date:      t.Format("2006-01-02 15:04:05"),
 	}
 

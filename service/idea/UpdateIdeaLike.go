@@ -5,14 +5,13 @@ import (
 )
 
 //UpdateIdeaLike is used to update idea like
-func UpdateIdeaLike(id, uid, uid2 int) error {
+func UpdateIdeaLike(id, uid int) error {
 
 	var IdeaLike *model.IdeaLikeModel
 
 	IdeaLike = &model.IdeaLikeModel{
-		IdeaId:    id,
-		LikersId:  uid,
-		BelikedId: uid2,
+		IdeaId:   id,
+		LikersId: uid,
 	}
 
 	return IdeaLike.Create()
