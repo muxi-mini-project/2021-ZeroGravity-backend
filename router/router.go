@@ -30,7 +30,7 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	g.NoRoute(func(c *gin.Context) {
 		c.String(http.StatusNotFound, "The incorrect API route.")
 	})
-
+    g.GET("/swagger/*any",ginSwagger.WrapHandler(swaggerFiles.Handler))
 	// router
 	authRouter := g.Group("/api/v1/auth")
 	{
@@ -110,6 +110,6 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		svcd.GET("/cpu", sd.CPUCheck)
 		svcd.GET("/ram", sd.RAMCheck)
 	}
-
+    
 	return g
 }
