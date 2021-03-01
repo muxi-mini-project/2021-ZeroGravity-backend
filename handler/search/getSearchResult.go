@@ -15,6 +15,15 @@ import (
 	"go.uber.org/zap"
 )
 
+// @Summary Get search results  
+// @Description Get search results, the result is a list of users or a list of ideas
+// @Tags search
+// @Accept  json
+// @Produce  json
+// @Param  id body string true  "Get search results, the result is a list of users or a list of ideas"
+// @Success 200 {object}  search.UserListResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
+// @Router /api/v1/search [get]
+
 // GetSearchResult ... 获取搜索结果，结果为用户列表或想法列表
 func GetSearchResult(c *gin.Context) {
 	log.Info("Search getSearchResult function called.",

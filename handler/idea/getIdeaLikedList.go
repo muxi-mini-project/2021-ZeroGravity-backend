@@ -13,6 +13,15 @@ import (
 	"go.uber.org/zap"
 )
 
+// @Summary Get a list of ideas liked by users  
+// @Description Return to the list of ideas that the front-end user likes
+// @Tags idea
+// @Accept  json
+// @Produce  json
+// @Param userID head string true  "Return to the list of ideas that the front-end user likes"
+// @Success 200 {object}  idea.IdeaResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
+// @Router/api/v1/idea/liked [get]
+
 // GetIdeaLikedList ... 获取某个用户点赞的想法列表
 func GetIdeaLikedList(c *gin.Context) {
 	log.Info("Idea getIdeaLike function called.",

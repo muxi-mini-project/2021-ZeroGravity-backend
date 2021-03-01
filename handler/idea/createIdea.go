@@ -9,6 +9,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
+// @Summary Add ideas  
+// @Description Add a thought record to the database
+// @Tags idea
+// @Accept  json
+// @Produce  json
+// @Param req body idea.CreateIdeaRequest true  "Add a thought record to the database"
+// @Success 200 "成功"
+// @Router /api/v1/idea [post]
 
 // CreateIdea is used to post ideas 新增想法
 func CreateIdea(c *gin.Context) {

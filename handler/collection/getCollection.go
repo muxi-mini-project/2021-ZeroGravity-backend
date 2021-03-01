@@ -12,6 +12,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
+// @Summary Get a user's favorite record table  
+// @Description Get a user's favorite record table and return it to the front end 
+// @Tags collection
+// @Accept  json
+// @Produce  json
+// @Param userID head string true  "Get a user's favorite record table"
+// @Success 200 {object} collection.IdeaResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
+// @Router /api/v1/collection [get]
 
 // GetCollection ... 获取某个用户的收藏列表
 func GetCollection(c *gin.Context) {

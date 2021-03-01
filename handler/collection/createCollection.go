@@ -9,6 +9,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
+// @Summary Add favorite record  
+// @Description Add a new favorite record to the database
+// @Tags collection
+// @Accept  json
+// @Produce  json
+// @Param req body collection.CreateCollectionRequest  true "Add a new favorite record to the database "
+// @Success 200 "成功"
+// @Router /api/v1/collection [get]
 
 // CreateCollection  is used to add a collection record of idea 新增收藏记录
 func CreateCollection(c *gin.Context) {

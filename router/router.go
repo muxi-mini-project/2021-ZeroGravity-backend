@@ -14,6 +14,9 @@ import (
 	"github.com/2021-ZeroGravity-backend/handler/user"
 	"github.com/2021-ZeroGravity-backend/router/middleware"
 	"github.com/gin-gonic/gin"
+	"github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
+	_"github.com/2021-ZeroGravity-backend/docs"
 )
 
 func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {

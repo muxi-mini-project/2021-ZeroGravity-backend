@@ -1,0 +1,28 @@
+{
+	"folders": [
+		{
+			"path": "../docs"
+		},
+		{
+			"path": "../handler"
+		},
+		{
+			"path": "../logs"
+		},
+		{
+			"path": "../model"
+		},
+		{
+			"path": "../pkg"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "../service"
+		},
+		{
+			"path": "../util"
+		}
+	]
+}

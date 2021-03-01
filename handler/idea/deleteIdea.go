@@ -10,6 +10,15 @@ import (
 	"go.uber.org/zap"
 )
 
+// @Summary Add ideas  
+// @Description Add a thought record to the database
+// @Tags idea
+// @Accept  json
+// @Produce  json
+// @Param req body idea.CreateIdeaRequest true  "Add a thought record to the database"
+// @Success 200 "成功"
+// @Router /api/v1/idea/detail/:id [delete]
+
 // DeleteIdea is used to delete ideas 删除想法
 func DeleteIdea(c *gin.Context) {
 
