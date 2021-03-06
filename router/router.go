@@ -34,8 +34,8 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	// router
 	authRouter := g.Group("/api/v1/auth")
 	{
-		authRouter.POST("/api/v1/register", auth.Register)
-		authRouter.POST("/api/v1/login", auth.Login)
+		authRouter.POST("/register", auth.Register)
+		authRouter.POST("/login", auth.Login)
 	}
 
 	userRouter := g.Group("/api/v1/user")
