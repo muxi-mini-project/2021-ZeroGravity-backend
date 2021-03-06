@@ -25,7 +25,7 @@ func main() {
 	// init config
 	err = config.Init("./conf/config.yaml", "")
 	if err != nil {
-		panic(err)
+		panic(err)w
 	}
 
 	// init db
