@@ -41,3 +41,6 @@
 {"level":"info","time":"2021-02-26T14:29:11.681+0800","linenum":"/home/tao/桌面/2021-ZeroGravity-backend/log/log.go:69","msg":"Start to listening the incoming requests on http address: 0.0.0.0:8899","serviceName":"server"}
 {"level":"info","time":"2021-02-26T14:29:11.682+0800","linenum":"/home/tao/桌面/2021-ZeroGravity-backend/log/log.go:69","msg":"Waiting for the router, retry in 1 second.","serviceName":"server"}
 {"level":"info","time":"2021-02-26T14:29:12.685+0800","linenum":"/home/tao/桌面/2021-ZeroGravity-backend/log/log.go:69","msg":"The router has been deployed successfully.","serviceName":"server"}
+{"level":"info","time":"2021-03-03T17:25:02.322+0800","linenum":"/home/gongna/go/src/github.com/2021-ZeroGravity-backend/log/log.go:69","msg":"Start to listening the incoming requests on http address: 0.0.0.0:8899","serviceName":"server"}
+{"level":"info","time":"2021-03-03T17:25:02.323+0800","linenum":"/home/gongna/go/src/github.com/2021-ZeroGravity-backend/log/log.go:69","msg":"Waiting for the router, retry in 1 second.","serviceName":"server"}
+{"level":"info","time":"2021-03-03T17:25:03.324+0800","linenum":"/home/gongna/go/src/github.com/2021-ZeroGravity-backend/log/log.go:69","msg":"The router has been deployed successfully.","serviceName":"server"}

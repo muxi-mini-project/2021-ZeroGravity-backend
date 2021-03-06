@@ -14,6 +14,9 @@ import (
 	"github.com/2021-ZeroGravity-backend/handler/user"
 	"github.com/2021-ZeroGravity-backend/router/middleware"
 	"github.com/gin-gonic/gin"
+	"github.com/swaggo/gin-swagger"
+	"github.com/swaggo/gin-swagger/swaggerFiles"
+	_"github.com/2021-ZeroGravity-backend/docs"
 )
 
 func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
@@ -27,7 +30,7 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	g.NoRoute(func(c *gin.Context) {
 		c.String(http.StatusNotFound, "The incorrect API route.")
 	})
-
+    g.GET("/swagger/*any",ginSwagger.WrapHandler(swaggerFiles.Handler))
 	// router
 	authRouter := g.Group("/api/v1/auth")
 	{
@@ -107,6 +110,6 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		svcd.GET("/cpu", sd.CPUCheck)
 		svcd.GET("/ram", sd.RAMCheck)
 	}
-
+    
 	return g
 }

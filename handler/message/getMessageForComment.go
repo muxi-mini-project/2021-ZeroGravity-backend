@@ -12,6 +12,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
+// @Summary Get user comment information  
+// @Description Information returned to front-end user reviews
+// @Tags message
+// @Accept  json
+// @Produce  json
+// @Param userID head string true  "Information returned to front-end user reviews"
+// @Success 200 {object}  message.GetMessageForCommentResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
+// @Router/api/v1/message/comment [get]
 
 // GetMessageForComment ... 获取评论信息
 func GetMessageForComment(c *gin.Context) {

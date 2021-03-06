@@ -13,6 +13,14 @@ import (
 
 	"go.uber.org/zap"
 )
+// @Summary Get information about a certain user  
+// @Description All information returned to a user on the front end
+// @Tags user
+// @Accept  json
+// @Produce  json
+// @Param  id body string true  "All information returned to a user on the front end"
+// @Success 200 {object}  user.GetUserInfoResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
+// @Router /api/v1/user/detail/:id [get]
 
 // GetUserInfo ... 获取某个用户的信息
 func GetUserInfo(c *gin.Context) {

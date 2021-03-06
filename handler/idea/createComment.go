@@ -13,6 +13,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
+// @Summary Add comment   
+// @Description Add comment records to the database 
+// @Tags idea
+// @Accept  json
+// @Produce  json
+// @Param req body idea.CreateCommentRequest true  "Add comment records to the database"
+// @Success 200 "成功"
+// @Router/api/v1/idea/detail/:id/comment/:idea_id [post]
 
 // CreateComment is used to post comments 新增评论
 func CreateComment(c *gin.Context) {

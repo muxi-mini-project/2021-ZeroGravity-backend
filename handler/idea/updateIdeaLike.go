@@ -13,6 +13,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
+// @Summary Add thoughts like record
+// @Description Add an idea and like record to the database
+// @Tags idea
+// @Accept  json
+// @Produce  json
+// @Param userID head string true  "Add an idea and like record to the database"
+// @Success 200 "成功"
+// @Router/api/v1/idea/detail/:id/like [put]
 
 // UpdateIdeaLike is used to add a like record of idea 新增想法点赞记录
 func UpdateIdeaLike(c *gin.Context) {

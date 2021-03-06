@@ -12,6 +12,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
+// @Summary Get a list of ideas 
+// @Description Return a list of ideas to front-end users
+// @Tags idea
+// @Accept  json
+// @Produce  json
+// @Param userID head string true  "Return a list of ideas to front-end users"
+// @Success 200 {object}  idea.IdeaResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
+// @Router/api/v1/idea/list [get]
 
 // GetIdeaList ... 获取想法列表
 func GetIdeaList(c *gin.Context) {

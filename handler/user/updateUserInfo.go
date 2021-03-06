@@ -8,8 +8,16 @@ import (
 	"github.com/2021-ZeroGravity-backend/util"
 	"github.com/gin-gonic/gin"
 
-	"go.uber.org/zap"
-)
+	"go.uber.org/zap")
+
+// @Summary Change user information
+// @Description Update user information in the database
+// @Tags user
+// @Accept  json
+// @Produce  json
+// @Param  userID body string true  "Update user information in the database"
+// @Success 200 "成功"
+// @Router /api/v1/user [put])
 
 // UpdateUserInfo ... 更改用户的信息
 func UpdateUserInfo(c *gin.Context) {
