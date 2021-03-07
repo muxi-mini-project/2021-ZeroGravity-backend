@@ -20,7 +20,6 @@ import (
 // @Param req body auth.CreateUserRequest true "The user enters the account and password and then register in "
 // @Success 200 "成功"
 // @Router /api/v1/register [post]
-
 // Register creates a new user account ... 新增用户
 func Register(c *gin.Context) {
 	log.Info("User register function called.",

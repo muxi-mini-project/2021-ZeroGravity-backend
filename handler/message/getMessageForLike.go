@@ -16,10 +16,9 @@ import (
 // @Tags message
 // @Accept  json
 // @Produce  json
-// @Param userID head string true  "Like information returned to front-end users"
+// @Param token header string true  "Like information returned to front-end users"
 // @Success 200 {object}  message.GetMessageForLikeResponse  "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Router/api/v1/message/like [get])
-
 // GetMessageForLike ... 获取点赞信息
 func GetMessageForLike(c *gin.Context) {
 	log.Info("Message getMessageForLike function called.",

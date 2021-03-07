@@ -17,10 +17,9 @@ import (
 // @Tags message
 // @Accept  json
 // @Produce  json
-// @Param userID head string true  "Information returned to front-end user reviews"
+// @Param token header string true  "Information returned to front-end user reviews"
 // @Success 200 {object}  message.GetMessageForCommentResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Router/api/v1/message/comment [get]
-
 // GetMessageForComment ... 获取评论信息
 func GetMessageForComment(c *gin.Context) {
 	log.Info("Message getMessageForComment function called.",

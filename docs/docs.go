@@ -18,12 +18,568 @@ var doc = `{
     "info": {
         "description": "{{.Description}}",
         "title": "{{.Title}}",
-        "contact": {},
+        "termsOfService": "http://swagger.io/terrms",
+        "contact": {
+            "name": "gongna",
+            "email": "2036479155@qq.com"
+        },
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
-    "paths": {}
+    "paths": {
+        "/api/v1/collection": {
+            "get": {
+                "description": "Get a user's favorite record table and return it to the front end",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "collection"
+                ],
+                "summary": "Get a user's favorite record table",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Get a user's favorite record table",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":0,\"message\":\"OK\",\"data\":{\"username\":\"kong\"}}",
+                        "schema": {
+                            "$ref": "#/definitions/collection.IdeaResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete favorite records from the database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "collection"
+                ],
+                "summary": "Delete favorites",
+                "responses": {
+                    "200": {
+                        "description": "成功"
+                    }
+                }
+            }
+        },
+        "/api/v1/idea": {
+            "post": {
+                "description": "Add a thought record to the database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "idea"
+                ],
+                "summary": "Add ideas",
+                "parameters": [
+                    {
+                        "description": "Add a thought record to the database",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/idea.CreateIdeaRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功"
+                    }
+                }
+            }
+        },
+        "/api/v1/idea/detail/:id": {
+            "delete": {
+                "description": "Add a thought record to the database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "idea"
+                ],
+                "summary": "Add ideas",
+                "parameters": [
+                    {
+                        "description": "Add a thought record to the database",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/idea.CreateIdeaRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功"
+                    }
+                }
+            }
+        },
+        "/api/v1/login": {
+            "post": {
+                "description": "User login",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "The user enters the account and password and then logs in",
+                "parameters": [
+                    {
+                        "description": "The user enters the account and password and then logs in ",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/auth.LoginRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":0,\"message\":\"OK\",\"data\":{\"username\":\"kong\"}}",
+                        "schema": {
+                            "$ref": "#/definitions/auth.LoginResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/register": {
+            "post": {
+                "description": "User register",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "User enters account and password to register",
+                "parameters": [
+                    {
+                        "description": "The user enters the account and password and then register in ",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/auth.CreateUserRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功"
+                    }
+                }
+            }
+        },
+        "/api/v1/search": {
+            "get": {
+                "description": "Get search results, the result is a list of users or a list of ideas",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "search"
+                ],
+                "summary": "Get search results",
+                "parameters": [
+                    {
+                        "description": "Get search results, the result is a list of users or a list of ideas",
+                        "name": "id",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":0,\"message\":\"OK\",\"data\":{\"username\":\"kong\"}}",
+                        "schema": {
+                            "$ref": "#/definitions/search.UserListResponse"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "auth.CreateUserRequest": {
+            "type": "object",
+            "properties": {
+                "account": {
+                    "type": "string"
+                },
+                "account_password": {
+                    "type": "string"
+                },
+                "avatar": {
+                    "type": "string"
+                },
+                "nickname": {
+                    "type": "string"
+                }
+            }
+        },
+        "auth.LoginRequest": {
+            "type": "object",
+            "properties": {
+                "account": {
+                    "type": "string"
+                },
+                "account_password": {
+                    "type": "string"
+                }
+            }
+        },
+        "auth.LoginResponse": {
+            "type": "object",
+            "properties": {
+                "token": {
+                    "type": "string"
+                }
+            }
+        },
+        "collection.CreateCollectionRequest": {
+            "type": "object",
+            "properties": {
+                "collector_id": {
+                    "type": "integer"
+                },
+                "idea_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "collection.IdeaResponse": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "type": "integer"
+                },
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.IdeaListItem"
+                    }
+                }
+            }
+        },
+        "idea.CommentResponse": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "type": "integer"
+                },
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.CommentListItem"
+                    }
+                }
+            }
+        },
+        "idea.CreateCommentRequest": {
+            "type": "object",
+            "properties": {
+                "commented_id": {
+                    "type": "integer"
+                },
+                "commenter_id": {
+                    "type": "integer"
+                },
+                "content": {
+                    "type": "string"
+                }
+            }
+        },
+        "idea.CreateIdeaRequest": {
+            "type": "object",
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "publisher_id": {
+                    "type": "integer"
+                },
+                "releaseDate": {
+                    "type": "string"
+                }
+            }
+        },
+        "idea.IdeaResponse": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "type": "integer"
+                },
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.IdeaListItem"
+                    }
+                }
+            }
+        },
+        "message.GetMessageForCommentResponse": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "type": "integer"
+                },
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.MessageForCommentItem"
+                    }
+                }
+            }
+        },
+        "message.GetMessageForLikeResponse": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "type": "integer"
+                },
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.MessageForLikeItem"
+                    }
+                }
+            }
+        },
+        "message.GetMessageTipResponse": {
+            "type": "object",
+            "properties": {
+                "is_message": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "model.CommentListItem": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "commented_id": {
+                    "type": "integer"
+                },
+                "commenter_id": {
+                    "type": "integer"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "liked": {
+                    "description": "是否点赞",
+                    "type": "boolean"
+                },
+                "likes_sum": {
+                    "type": "integer"
+                },
+                "nickname": {
+                    "type": "string"
+                },
+                "release_date": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.IdeaListItem": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "comment_sum": {
+                    "type": "integer"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "idea_id": {
+                    "type": "integer"
+                },
+                "liked": {
+                    "description": "是否点赞",
+                    "type": "boolean"
+                },
+                "likes_sum": {
+                    "type": "integer"
+                },
+                "nickname": {
+                    "type": "string"
+                },
+                "publisher_id": {
+                    "type": "integer"
+                },
+                "release_date": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.MessageForCommentItem": {
+            "type": "object",
+            "required": [
+                "avatar",
+                "content",
+                "idea_id",
+                "nickname",
+                "reply",
+                "user_id"
+            ],
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "idea_id": {
+                    "type": "integer"
+                },
+                "nickname": {
+                    "type": "string"
+                },
+                "reply": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.MessageForLikeItem": {
+            "type": "object",
+            "required": [
+                "avatar",
+                "comment_id",
+                "content",
+                "idea_id",
+                "nickname",
+                "user_id"
+            ],
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "comment_id": {
+                    "type": "integer"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "date": {
+                    "type": "string"
+                },
+                "idea_id": {
+                    "type": "integer"
+                },
+                "nickname": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "report.CreateReportRequest": {
+            "type": "object",
+            "properties": {
+                "comment_id": {
+                    "type": "integer"
+                },
+                "idea_id": {
+                    "type": "integer"
+                },
+                "json": {
+                    "type": "string"
+                },
+                "kind": {
+                    "type": "integer"
+                },
+                "user_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "search.UserInfo": {
+            "type": "object",
+            "properties": {
+                "avatar": {
+                    "type": "string"
+                },
+                "energy": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "nickname": {
+                    "type": "string"
+                }
+            }
+        },
+        "search.UserListResponse": {
+            "type": "object",
+            "properties": {
+                "count": {
+                    "type": "integer"
+                },
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/search.UserInfo"
+                    }
+                }
+            }
+        }
+    }
 }`
 
 type swaggerInfo struct {
@@ -37,12 +593,12 @@ type swaggerInfo struct {
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
-	Version:     "",
-	Host:        "",
+	Version:     "1.0.0",
+	Host:        "124.71.184.107",
 	BasePath:    "",
-	Schemes:     []string{},
-	Title:       "",
-	Description: "",
+	Schemes:     []string{"http"},
+	Title:       "ZeroGravity",
+	Description: "零重力APP",
 }
 
 type s struct{}

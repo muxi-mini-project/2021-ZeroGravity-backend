@@ -21,7 +21,6 @@ import (
 // @Param req body auth.LoginRequest true "The user enters the account and password and then logs in "
 // @Success 200 {object} LoginResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Router /api/v1/login [post]
-
 // Login ... 登陆
 func Login(c *gin.Context) {
 	log.Info("login function called.",

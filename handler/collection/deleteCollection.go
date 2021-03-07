@@ -14,10 +14,9 @@ import (
 // @Tags collection
 // @Accept  json
 // @Produce  json
-// @Param req body collection.DeleteCollectionRequest  true "Delete favorite records from the database  "
+// @Body  req body collection.DeleteCollectionRequest  true "Delete favorite records from the database  "
 // @Success 200 "成功"
 // @Router /api/v1/collection [delete]
-
 // DeleteCollection  is used to add a collection record of idea 删除收藏记录
 func DeleteCollection(c *gin.Context) {
 	log.Info("Delete Collection function called.",
