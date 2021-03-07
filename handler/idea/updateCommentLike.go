@@ -18,10 +18,9 @@ import (
 // @Tags idea
 // @Accept  json
 // @Produce  json
-// @Param userID head string true  "Add a comment and like record to the database"
+// @Param token header string true  "Add a comment and like record to the database"
 // @Success 200 "成功"
 // @Router/api/v1/idea/comment/:id/like [put]
-
 // UpdateCommentLike is used to add a like record of comment 新增评论点赞记录
 func UpdateCommentLike(c *gin.Context) {
 

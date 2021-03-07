@@ -19,10 +19,9 @@ import (
 // @Tags idea
 // @Accept  json
 // @Produce  json
-// @Param userID head string true  "Return to the comment form obtained by the front end"
+// @Param token header string true  "Return to the comment form obtained by the front end"
 // @Success 200 {object}  idea.CommentResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Router/api/v1/idea/detail/:id/comment [get]
-
 // GetCommentList ... 获取某个想法的评论列表
 func GetCommentList(c *gin.Context) {
 	log.Info("idea getComment function called.",

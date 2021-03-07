@@ -16,6 +16,15 @@ import (
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
 )
+// @title ZeroGravity
+// @version 1.0.0
+// @description 零重力APP
+// @termsOfService http://swagger.io/terrms
+// @contact.name gongna
+// @contact.email 2036479155@qq.com
+// @host 124.71.184.107
+// @BasePath:/api/v1
+// @Schemes http
 
 func main() {
 	var err error
@@ -25,7 +34,7 @@ func main() {
 	// init config
 	err = config.Init("./conf/config.yaml", "")
 	if err != nil {
-		panic(err)w
+		panic(err)
 	}
 
 	// init db

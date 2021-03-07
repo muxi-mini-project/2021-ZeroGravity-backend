@@ -17,7 +17,6 @@ import (
 // @Param  req body report.CreateReportRequest true  "Initiate a request to report a user"
 // @Success 200 "成功"   
 // @Router/api/v1/report [post]
-
 // CreateReport is used to post report
 func CreateReport(c *gin.Context) {
 	log.Info("Create Report function called.",

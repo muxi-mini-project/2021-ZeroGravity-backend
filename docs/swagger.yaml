@@ -1,4 +1,374 @@
+definitions:
+  auth.CreateUserRequest:
+    properties:
+      account:
+        type: string
+      account_password:
+        type: string
+      avatar:
+        type: string
+      nickname:
+        type: string
+    type: object
+  auth.LoginRequest:
+    properties:
+      account:
+        type: string
+      account_password:
+        type: string
+    type: object
+  auth.LoginResponse:
+    properties:
+      token:
+        type: string
+    type: object
+  collection.CreateCollectionRequest:
+    properties:
+      collector_id:
+        type: integer
+      idea_id:
+        type: integer
+    type: object
+  collection.IdeaResponse:
+    properties:
+      count:
+        type: integer
+      list:
+        items:
+          $ref: '#/definitions/model.IdeaListItem'
+        type: array
+    type: object
+  idea.CommentResponse:
+    properties:
+      count:
+        type: integer
+      list:
+        items:
+          $ref: '#/definitions/model.CommentListItem'
+        type: array
+    type: object
+  idea.CreateCommentRequest:
+    properties:
+      commented_id:
+        type: integer
+      commenter_id:
+        type: integer
+      content:
+        type: string
+    type: object
+  idea.CreateIdeaRequest:
+    properties:
+      content:
+        type: string
+      publisher_id:
+        type: integer
+      releaseDate:
+        type: string
+    type: object
+  idea.IdeaResponse:
+    properties:
+      count:
+        type: integer
+      list:
+        items:
+          $ref: '#/definitions/model.IdeaListItem'
+        type: array
+    type: object
+  message.GetMessageForCommentResponse:
+    properties:
+      count:
+        type: integer
+      list:
+        items:
+          $ref: '#/definitions/model.MessageForCommentItem'
+        type: array
+    type: object
+  message.GetMessageForLikeResponse:
+    properties:
+      count:
+        type: integer
+      list:
+        items:
+          $ref: '#/definitions/model.MessageForLikeItem'
+        type: array
+    type: object
+  message.GetMessageTipResponse:
+    properties:
+      is_message:
+        type: boolean
+    type: object
+  model.CommentListItem:
+    properties:
+      avatar:
+        type: string
+      commented_id:
+        type: integer
+      commenter_id:
+        type: integer
+      content:
+        type: string
+      id:
+        type: integer
+      liked:
+        description: 是否点赞
+        type: boolean
+      likes_sum:
+        type: integer
+      nickname:
+        type: string
+      release_date:
+        type: string
+    type: object
+  model.IdeaListItem:
+    properties:
+      avatar:
+        type: string
+      comment_sum:
+        type: integer
+      content:
+        type: string
+      idea_id:
+        type: integer
+      liked:
+        description: 是否点赞
+        type: boolean
+      likes_sum:
+        type: integer
+      nickname:
+        type: string
+      publisher_id:
+        type: integer
+      release_date:
+        type: string
+    type: object
+  model.MessageForCommentItem:
+    properties:
+      avatar:
+        type: string
+      content:
+        type: string
+      date:
+        type: string
+      idea_id:
+        type: integer
+      nickname:
+        type: string
+      reply:
+        type: string
+      user_id:
+        type: integer
+    required:
+    - avatar
+    - content
+    - idea_id
+    - nickname
+    - reply
+    - user_id
+    type: object
+  model.MessageForLikeItem:
+    properties:
+      avatar:
+        type: string
+      comment_id:
+        type: integer
+      content:
+        type: string
+      date:
+        type: string
+      idea_id:
+        type: integer
+      nickname:
+        type: string
+      user_id:
+        type: integer
+    required:
+    - avatar
+    - comment_id
+    - content
+    - idea_id
+    - nickname
+    - user_id
+    type: object
+  report.CreateReportRequest:
+    properties:
+      comment_id:
+        type: integer
+      idea_id:
+        type: integer
+      json:
+        type: string
+      kind:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  search.UserInfo:
+    properties:
+      avatar:
+        type: string
+      energy:
+        type: integer
+      id:
+        type: integer
+      nickname:
+        type: string
+    type: object
+  search.UserListResponse:
+    properties:
+      count:
+        type: integer
+      list:
+        items:
+          $ref: '#/definitions/search.UserInfo'
+        type: array
+    type: object
+host: 124.71.184.107
 info:
-  contact: {}
-paths: {}
+  contact:
+    email: 2036479155@qq.com
+    name: gongna
+  description: 零重力APP
+  termsOfService: http://swagger.io/terrms
+  title: ZeroGravity
+  version: 1.0.0
+paths:
+  /api/v1/collection:
+    delete:
+      consumes:
+      - application/json
+      description: Delete favorite records from the database
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+      summary: Delete favorites
+      tags:
+      - collection
+    get:
+      consumes:
+      - application/json
+      description: Get a user's favorite record table and return it to the front end
+      parameters:
+      - description: Get a user's favorite record table
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
+          schema:
+            $ref: '#/definitions/collection.IdeaResponse'
+      summary: Get a user's favorite record table
+      tags:
+      - collection
+  /api/v1/idea:
+    post:
+      consumes:
+      - application/json
+      description: Add a thought record to the database
+      parameters:
+      - description: Add a thought record to the database
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/idea.CreateIdeaRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+      summary: Add ideas
+      tags:
+      - idea
+  /api/v1/idea/detail/:id:
+    delete:
+      consumes:
+      - application/json
+      description: Add a thought record to the database
+      parameters:
+      - description: Add a thought record to the database
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/idea.CreateIdeaRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+      summary: Add ideas
+      tags:
+      - idea
+  /api/v1/login:
+    post:
+      consumes:
+      - application/json
+      description: User login
+      parameters:
+      - description: 'The user enters the account and password and then logs in '
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/auth.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
+          schema:
+            $ref: '#/definitions/auth.LoginResponse'
+      summary: The user enters the account and password and then logs in
+      tags:
+      - auth
+  /api/v1/register:
+    post:
+      consumes:
+      - application/json
+      description: User register
+      parameters:
+      - description: 'The user enters the account and password and then register in '
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/auth.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+      summary: User enters account and password to register
+      tags:
+      - auth
+  /api/v1/search:
+    get:
+      consumes:
+      - application/json
+      description: Get search results, the result is a list of users or a list of ideas
+      parameters:
+      - description: Get search results, the result is a list of users or a list of ideas
+        in: body
+        name: id
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
+          schema:
+            $ref: '#/definitions/search.UserListResponse'
+      summary: Get search results
+      tags:
+      - search
+schemes:
+- http
 swagger: "2.0"
