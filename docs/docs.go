@@ -152,7 +152,80 @@ var doc = `{
                 }
             }
         },
+        "/api/v1/idea/comment/:id/like": {
+            "put": {
+                "description": "Add a comment and like record to the database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "idea"
+                ],
+                "summary": "Add comment and like record",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "LikersId",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "CommentId",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功"
+                    }
+                }
+            }
+        },
         "/api/v1/idea/detail/:id": {
+            "get": {
+                "description": "Return to the idea form obtained by the front end",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "idea"
+                ],
+                "summary": "Get ideas",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "uid",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":0,\"message\":\"OK\",\"data\":{\"username\":\"kong\"}}",
+                        "schema": {
+                            "$ref": "#/definitions/model.IdeaListItem"
+                        }
+                    }
+                }
+            },
             "delete": {
                 "description": "Add a thought record to the database",
                 "consumes": [
@@ -179,6 +252,275 @@ var doc = `{
                 "responses": {
                     "200": {
                         "description": "成功"
+                    }
+                }
+            }
+        },
+        "/api/v1/idea/detail/:id/comment": {
+            "get": {
+                "description": "Return to the comment form obtained by the front end",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "idea"
+                ],
+                "summary": "Get comments",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "uid",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "limit",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":0,\"message\":\"OK\",\"data\":{\"username\":\"kong\"}}",
+                        "schema": {
+                            "$ref": "#/definitions/idea.CommentResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/idea/detail/:id/comment/:comment_id": {
+            "delete": {
+                "description": "Delete the comment record from the database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "idea"
+                ],
+                "summary": "Delete comment",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "uid",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功"
+                    }
+                }
+            }
+        },
+        "/api/v1/idea/detail/:id/comment/:idea_id": {
+            "post": {
+                "description": "Add comment records to the database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "idea"
+                ],
+                "summary": "Add comment",
+                "parameters": [
+                    {
+                        "description": "Add comment records to the database",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/idea.CreateCommentRequest"
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "description": "IdeaId",
+                        "name": "idea_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功"
+                    }
+                }
+            }
+        },
+        "/api/v1/idea/detail/:id/like": {
+            "put": {
+                "description": "Add an idea and like record to the database",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "idea"
+                ],
+                "summary": "Add thoughts like record",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "LikersId ",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功"
+                    }
+                }
+            }
+        },
+        "/api/v1/idea/liked": {
+            "get": {
+                "description": "Return to the list of ideas that the front-end user likes",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "idea"
+                ],
+                "summary": "Get a list of ideas liked by users",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "UserId",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "limit",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":0,\"message\":\"OK\",\"data\":{\"username\":\"kong\"}}",
+                        "schema": {
+                            "$ref": "#/definitions/idea.IdeaResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/idea/list": {
+            "get": {
+                "description": "Return a list of ideas to front-end users",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "idea"
+                ],
+                "summary": "Get a list of ideas",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "uid",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "limit",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "userId",
+                        "name": "userId",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "privicy",
+                        "name": "privicy",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "index",
+                        "name": "index",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":0,\"message\":\"OK\",\"data\":{\"username\":\"kong\"}}",
+                        "schema": {
+                            "$ref": "#/definitions/idea.IdeaResponse"
+                        }
                     }
                 }
             }
@@ -217,6 +559,159 @@ var doc = `{
                 }
             }
         },
+        "/api/v1/message/comment": {
+            "get": {
+                "description": "Information returned to front-end user reviews",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "message"
+                ],
+                "summary": "Get user comment information",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Information returned to front-end user information",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "limit",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":0,\"message\":\"OK\",\"data\":{\"username\":\"kong\"}}",
+                        "schema": {
+                            "$ref": "#/definitions/message.GetMessageForCommentResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/message/like": {
+            "get": {
+                "description": "Like information returned to front-end users",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "message"
+                ],
+                "summary": "Get users' likes",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Like information returned to front-end users",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "limit",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "page",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":0,\"message\":\"OK\",\"data\":{\"username\":\"kong\"}}",
+                        "schema": {
+                            "$ref": "#/definitions/message.GetMessageForLikeResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/message/readall": {
+            "put": {
+                "description": "Change the status of the messages that the user has viewed to read",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "message"
+                ],
+                "summary": "Modify the information as read",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Change the status of the messages that the user has viewed to read",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功"
+                    }
+                }
+            }
+        },
+        "/api/v1/message/tip": {
+            "get": {
+                "description": "Return to the front-end message prompt",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "message"
+                ],
+                "summary": "Get message reminder",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Return to the front-end message prompt",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\":0,\"message\":\"OK\",\"data\":{\"username\":\"kong\"}}",
+                        "schema": {
+                            "$ref": "#/definitions/message.GetMessageTipResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/register": {
             "post": {
                 "description": "User register",
@@ -239,6 +734,44 @@ var doc = `{
                         "schema": {
                             "$ref": "#/definitions/auth.CreateUserRequest"
                         }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功"
+                    }
+                }
+            }
+        },
+        "/api/v1/report": {
+            "post": {
+                "description": "Initiate a request to report a user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "report"
+                ],
+                "summary": "New report request",
+                "parameters": [
+                    {
+                        "description": "Initiate a request to report a user",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/report.CreateReportRequest"
+                        }
+                    },
+                    {
+                        "type": "string",
+                        "description": "userId",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
