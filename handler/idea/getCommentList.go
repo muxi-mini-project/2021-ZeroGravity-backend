@@ -24,7 +24,7 @@ import (
 // @Param limit query  int true "limit"
 // @Param page  query  int true "page"
 // @Success 200 {object}  idea.CommentResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
-// @Router/api/v1/idea/detail/:id/comment [get]
+// @Router /api/v1/idea/detail/:id/comment [get]
 // GetCommentList ... 获取某个想法的评论列表
 func GetCommentList(c *gin.Context) {
 	log.Info("idea getComment function called.",

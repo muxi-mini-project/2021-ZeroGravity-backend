@@ -16,7 +16,7 @@ import (
 // @Produce  json
 // @Param token header string true  "Change the status of the messages that the user has viewed to read"
 // @Success 200 "成功" 
-// @Router/api/v1/message/readall [put]
+// @Router /api/v1/message/readall [put]
 // UpdateMessageReadAll ... 修改信息为已读
 func UpdateMessageReadAll(c *gin.Context) {
 	log.Info("Message getMessageTip function called.",

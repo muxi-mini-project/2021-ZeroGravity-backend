@@ -21,7 +21,7 @@ import (
 // @Param req body idea.CreateCommentRequest true  "Add comment records to the database"
 // @Param idea_id path int true "IdeaId"
 // @Success 200 "成功"
-// @Router/api/v1/idea/detail/:id/comment/:idea_id [post]
+// @Router /api/v1/idea/detail/:id/comment/:idea_id [post]
 // CreateComment is used to post comments 新增评论
 func CreateComment(c *gin.Context) {
 
