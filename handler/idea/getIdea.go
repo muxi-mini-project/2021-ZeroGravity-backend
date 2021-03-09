@@ -20,7 +20,7 @@ import (
 // @Param id path int true "id"
 // @Param token header string true  "uid"
 // @Success 200 {object}  model.IdeaListItem "{"code":0,"message":"OK","data":{"username":"kong"}}"
-// @Router/api/v1/idea/detail/:id [get]
+// @Router /api/v1/idea/detail/:id [get]
 // GetIdea ... 获取单个想法
 func GetIdea(c *gin.Context) {
 	log.Info("Idea getIdeaList function called.",

@@ -21,7 +21,7 @@ import (
 // @Param limit query  int true  "limit"
 // @Param page  query  int true  "page"
 // @Success 200 {object}  message.GetMessageForCommentResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
-// @Router/api/v1/message/comment [get]
+// @Router /api/v1/message/comment [get]
 // GetMessageForComment ... 获取评论信息
 func GetMessageForComment(c *gin.Context) {
 	log.Info("Message getMessageForComment function called.",

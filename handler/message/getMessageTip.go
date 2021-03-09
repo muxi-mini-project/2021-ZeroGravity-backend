@@ -16,7 +16,7 @@ import (
 // @Produce  json
 // @Param token header string true  "Return to the front-end message prompt"
 // @Success 200 {object}  message.GetMessageTipResponse  "{"code":0,"message":"OK","data":{"username":"kong"}}"
-// @Router/api/v1/message/tip [get]
+// @Router /api/v1/message/tip [get]
 // GetMessageTip ... 获取消息提示
 func GetMessageTip(c *gin.Context) {
 	log.Info("Message getMessageTip function called.",

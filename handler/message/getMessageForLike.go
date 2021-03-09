@@ -20,7 +20,7 @@ import (
 // @Param limit query  int true  "limit"
 // @Param page  query  int true  "page"
 // @Success 200 {object}  message.GetMessageForLikeResponse  "{"code":0,"message":"OK","data":{"username":"kong"}}"
-// @Router/api/v1/message/like [get])
+// @Router /api/v1/message/like [get])
 // GetMessageForLike ... 获取点赞信息
 func GetMessageForLike(c *gin.Context) {
 	log.Info("Message getMessageForLike function called.",
