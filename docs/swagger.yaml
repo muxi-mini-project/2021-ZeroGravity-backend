@@ -238,6 +238,24 @@ definitions:
           $ref: '#/definitions/search.UserInfo'
         type: array
     type: object
+  user.GetUserInfoResponse:
+    properties:
+      avatar:
+        type: string
+      energy:
+        type: integer
+      id:
+        type: integer
+      nickname:
+        type: string
+    type: object
+  user.UpdateUserInfoRequest:
+    properties:
+      avatar:
+        type: string
+      nickname:
+        type: string
+    type: object
 host: 124.71.184.107
 info:
   contact:
@@ -842,6 +860,52 @@ paths:
       summary: Get Histories
       tags:
       - search
+  /api/v1/user:
+    put:
+      consumes:
+      - application/json
+      description: Update user information in the database
+      parameters:
+      - description: UserId
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: Update user information in the database
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/user.UpdateUserInfoRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+      summary: Change user information
+      tags:
+      - user
+  /api/v1/user/detail/:id:
+    get:
+      consumes:
+      - application/json
+      description: All information returned to a user on the front end
+      parameters:
+      - description: userId
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
+          schema:
+            $ref: '#/definitions/user.GetUserInfoResponse'
+      summary: Get information about a certain user
+      tags:
+      - user
 schemes:
 - http
 swagger: "2.0"
