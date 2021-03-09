@@ -18,10 +18,9 @@ import (
 // @Tags user
 // @Accept  json
 // @Produce  json
-// @Param  id path int true  "userId"
+// @Param  id path int true "userId"
 // @Success 200 {object}  user.GetUserInfoResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Router /api/v1/user/detail/:id [get]
-
 // GetUserInfo ... 获取某个用户的信息
 func GetUserInfo(c *gin.Context) {
 	log.Info("user getUserInfo function called.",

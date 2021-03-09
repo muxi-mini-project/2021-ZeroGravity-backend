@@ -17,9 +17,8 @@ import (
 // @Produce  json
 // @Param  token header string true  "UserId"
 // @Param  req body user.UpdateUserInfoRequest true  "Update user information in the database"
-// @Success 200 "成功"
-// @Router /api/v1/user [put])
-
+// @Success  200 "成功"
+// @Router /api/v1/user [put]
 // UpdateUserInfo ... 更改用户的信息
 func UpdateUserInfo(c *gin.Context) {
 	log.Info("user getUserInfo function called.",
