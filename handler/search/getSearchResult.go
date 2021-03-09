@@ -20,7 +20,13 @@ import (
 // @Tags search
 // @Accept  json
 // @Produce  json
-// @Param  id body string true  "Get search results, the result is a list of users or a list of ideas"
+// @Param page  query int true " search by page"
+// @Param limit query int true " search by limit"
+// @Param target query int true " search by target"
+// @Param  keyword query string true "idea key word"
+// @Param  id path int true  "userId"
+// @Param  token header string true  "Get token"
+// @Success 200 {object}  search.IdeaResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Success 200 {object}  search.UserListResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Router /api/v1/search [get]
 // GetSearchResult ... 获取搜索结果，结果为用户列表或想法列表
@@ -101,6 +107,16 @@ func GetSearchResult(c *gin.Context) {
 	}
 }
 
+// @Summary Delete History
+// @Description Delete the history
+// @Tags search
+// @Accept  json
+// @Produce  json
+// @Param  id path int true  "userId"
+// @Param  h body model.History true  " delete history"
+// @Success @Success 200 "成功"
+// @Router /api/v1/search [delete]
+//  DeleteHistory... 删除历史记录
 func DeleteHistory(c *gin.Context) {
 	log.Info("Message getMessageForComment function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
@@ -114,6 +130,15 @@ func DeleteHistory(c *gin.Context) {
 	SendResponse(c, errno.OK, nil)
 }
 
+// @Summary Get Histories
+// @Description Delete the history
+// @Tags search
+// @Accept  json
+// @Produce  json
+// @Param  id path int true  "userId"
+// @Success 200 {object}  []model.History  "{"code":0,"message":"OK","data":{"username":"kong"}}"
+// @Router /api/v1/search/histories [get]
+//  GetHistories... 获取历史记录
 func GetHistories(c *gin.Context) {
 	log.Info("Message getMessageForComment function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))

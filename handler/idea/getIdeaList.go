@@ -17,7 +17,12 @@ import (
 // @Tags idea
 // @Accept  json
 // @Produce  json
-// @Param token header string true  "Return a list of ideas to front-end users"
+// @Param token header string true  "uid"
+// @Param limit query  int true "limit"
+// @Param page  query  int true "page"
+// @Param userId query int true "userId"
+// @Param privicy query int true "privicy"
+// @Param index query  int true "index" 
 // @Success 200 {object}  idea.IdeaResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Router/api/v1/idea/list [get]
 // GetIdeaList ... 获取想法列表

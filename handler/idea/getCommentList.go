@@ -19,7 +19,10 @@ import (
 // @Tags idea
 // @Accept  json
 // @Produce  json
-// @Param token header string true  "Return to the comment form obtained by the front end"
+// @Param token header string true  "uid"
+// @Param id path int true "id"
+// @Param limit query  int true "limit"
+// @Param page  query  int true "page"
 // @Success 200 {object}  idea.CommentResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Router/api/v1/idea/detail/:id/comment [get]
 // GetCommentList ... 获取某个想法的评论列表

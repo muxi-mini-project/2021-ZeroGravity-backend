@@ -18,7 +18,7 @@ import (
 // @Tags user
 // @Accept  json
 // @Produce  json
-// @Param  id body string true  "All information returned to a user on the front end"
+// @Param  id path int true  "userId"
 // @Success 200 {object}  user.GetUserInfoResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Router /api/v1/user/detail/:id [get]
 

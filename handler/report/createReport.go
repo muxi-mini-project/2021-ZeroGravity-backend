@@ -15,6 +15,7 @@ import (
 // @Accept  json
 // @Produce  json
 // @Param  req body report.CreateReportRequest true  "Initiate a request to report a user"
+// @Param token header string true  "userId"
 // @Success 200 "成功"   
 // @Router/api/v1/report [post]
 // CreateReport is used to post report

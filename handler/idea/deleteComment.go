@@ -18,7 +18,8 @@ import (
 // @Tags idea
 // @Accept  json
 // @Produce  json
-// @Param token header string true  "Delete the comment record from the database"
+// @Param id path string true "id"
+// @Param token header string true  "uid"
 // @Success 200 "成功"
 // @Router/api/v1/idea/detail/:id/comment/:comment_id [delete]
 //DeleteComment  is used to delete comments  删除评论
