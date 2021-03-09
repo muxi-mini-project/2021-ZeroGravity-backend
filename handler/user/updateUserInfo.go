@@ -15,7 +15,8 @@ import (
 // @Tags user
 // @Accept  json
 // @Produce  json
-// @Param  userID body string true  "Update user information in the database"
+// @Param  token header string true  "UserId"
+// @Param  req body user.UpdateUserInfoRequest true  "Update user information in the database"
 // @Success 200 "成功"
 // @Router /api/v1/user [put])
 

@@ -18,7 +18,8 @@ import (
 // @Tags idea
 // @Accept  json
 // @Produce  json
-// @Param token header string true  "Add a comment and like record to the database"
+// @Param token header string true  "LikersId"
+// @Param id path int true "CommentId"
 // @Success 200 "成功"
 // @Router/api/v1/idea/comment/:id/like [put]
 // UpdateCommentLike is used to add a like record of comment 新增评论点赞记录

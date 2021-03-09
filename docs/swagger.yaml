@@ -119,6 +119,13 @@ definitions:
       release_date:
         type: string
     type: object
+  model.History:
+    properties:
+      name:
+        type: string
+      user_id:
+        type: string
+    type: object
   model.IdeaListItem:
     properties:
       avatar:
@@ -202,6 +209,15 @@ definitions:
       user_id:
         type: integer
     type: object
+  search.IdeaResponse:
+    properties:
+      count:
+        type: integer
+      list:
+        items:
+          $ref: '#/definitions/model.IdeaListItem'
+        type: array
+    type: object
   search.UserInfo:
     properties:
       avatar:
@@ -250,11 +266,21 @@ paths:
       - application/json
       description: Get a user's favorite record table and return it to the front end
       parameters:
-      - description: Get a user's favorite record table
+      - description: id
         in: header
         name: token
         required: true
         type: string
+      - description: limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: page
+        in: query
+        name: page
+        required: true
+        type: integer
       produces:
       - application/json
       responses:
@@ -263,6 +289,25 @@ paths:
           schema:
             $ref: '#/definitions/collection.IdeaResponse'
       summary: Get a user's favorite record table
+      tags:
+      - collection
+    post:
+      consumes:
+      - application/json
+      description: Add a new favorite record to the database
+      parameters:
+      - description: 'Add a new favorite record to the database '
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/collection.CreateCollectionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+      summary: Add favorite record
       tags:
       - collection
   /api/v1/idea:
@@ -348,17 +393,65 @@ paths:
       tags:
       - auth
   /api/v1/search:
+    delete:
+      consumes:
+      - application/json
+      description: Delete the history
+      parameters:
+      - description: userId
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: ' delete history'
+        in: body
+        name: h
+        required: true
+        schema:
+          $ref: '#/definitions/model.History'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+      summary: Delete History
+      tags:
+      - search
     get:
       consumes:
       - application/json
       description: Get search results, the result is a list of users or a list of ideas
       parameters:
-      - description: Get search results, the result is a list of users or a list of ideas
-        in: body
+      - description: ' search by page'
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: ' search by limit'
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: ' search by target'
+        in: query
+        name: target
+        required: true
+        type: integer
+      - description: idea key word
+        in: query
+        name: keyword
+        required: true
+        type: string
+      - description: userId
+        in: path
         name: id
         required: true
-        schema:
-          type: string
+        type: integer
+      - description: Get token
+        in: header
+        name: token
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -367,6 +460,29 @@ paths:
           schema:
             $ref: '#/definitions/search.UserListResponse'
       summary: Get search results
+      tags:
+      - search
+  /api/v1/search/histories:
+    get:
+      consumes:
+      - application/json
+      description: Delete the history
+      parameters:
+      - description: userId
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
+          schema:
+            items:
+              $ref: '#/definitions/model.History'
+            type: array
+      summary: Get Histories
       tags:
       - search
 schemes:

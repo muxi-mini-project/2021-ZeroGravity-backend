@@ -18,7 +18,9 @@ import (
 // @Tags idea
 // @Accept  json
 // @Produce  json
-// @Param token header string true  "Return to the list of ideas that the front-end user likes"
+// @Param token header string true  "UserId"
+// @Param limit query  int true "limit"
+// @Param page  query  int true "page"
 // @Success 200 {object}  idea.IdeaResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Router/api/v1/idea/liked [get]
 // GetIdeaLikedList ... 获取某个用户点赞的想法列表

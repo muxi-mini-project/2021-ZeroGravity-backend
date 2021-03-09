@@ -17,7 +17,9 @@ import (
 // @Tags collection
 // @Accept  json
 // @Produce  json
-// @Param token header string true  "Get a user's favorite record table"
+// @Param token header string true  "id"
+// @Param limit query  int true "limit"
+// @Param page  query  int true "page"
 // @Success 200 {object} collection.IdeaResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Router /api/v1/collection [get]
 // GetCollection ... 获取某个用户的收藏列表

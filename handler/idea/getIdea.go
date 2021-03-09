@@ -17,7 +17,8 @@ import (
 // @Tags idea
 // @Accept  json
 // @Produce  json
-// @Param token header string true  "Return to the idea form obtained by the front end"
+// @Param id path int true "id"
+// @Param token header string true  "uid"
 // @Success 200 {object}  model.IdeaListItem "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Router/api/v1/idea/detail/:id [get]
 // GetIdea ... 获取单个想法
