@@ -330,6 +330,30 @@ paths:
       summary: Add ideas
       tags:
       - idea
+  /api/v1/idea/comment/:id/like:
+    put:
+      consumes:
+      - application/json
+      description: Add a comment and like record to the database
+      parameters:
+      - description: LikersId
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: CommentId
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+      summary: Add comment and like record
+      tags:
+      - idea
   /api/v1/idea/detail/:id:
     delete:
       consumes:
@@ -348,6 +372,212 @@ paths:
         "200":
           description: 成功
       summary: Add ideas
+      tags:
+      - idea
+    get:
+      consumes:
+      - application/json
+      description: Return to the idea form obtained by the front end
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: uid
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
+          schema:
+            $ref: '#/definitions/model.IdeaListItem'
+      summary: Get ideas
+      tags:
+      - idea
+  /api/v1/idea/detail/:id/comment:
+    get:
+      consumes:
+      - application/json
+      description: Return to the comment form obtained by the front end
+      parameters:
+      - description: uid
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: page
+        in: query
+        name: page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
+          schema:
+            $ref: '#/definitions/idea.CommentResponse'
+      summary: Get comments
+      tags:
+      - idea
+  /api/v1/idea/detail/:id/comment/:comment_id:
+    delete:
+      consumes:
+      - application/json
+      description: Delete the comment record from the database
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: uid
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+      summary: Delete comment
+      tags:
+      - idea
+  /api/v1/idea/detail/:id/comment/:idea_id:
+    post:
+      consumes:
+      - application/json
+      description: Add comment records to the database
+      parameters:
+      - description: Add comment records to the database
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/idea.CreateCommentRequest'
+      - description: IdeaId
+        in: path
+        name: idea_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+      summary: Add comment
+      tags:
+      - idea
+  /api/v1/idea/detail/:id/like:
+    put:
+      consumes:
+      - application/json
+      description: Add an idea and like record to the database
+      parameters:
+      - description: 'LikersId '
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+      summary: Add thoughts like record
+      tags:
+      - idea
+  /api/v1/idea/liked:
+    get:
+      consumes:
+      - application/json
+      description: Return to the list of ideas that the front-end user likes
+      parameters:
+      - description: UserId
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: page
+        in: query
+        name: page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
+          schema:
+            $ref: '#/definitions/idea.IdeaResponse'
+      summary: Get a list of ideas liked by users
+      tags:
+      - idea
+  /api/v1/idea/list:
+    get:
+      consumes:
+      - application/json
+      description: Return a list of ideas to front-end users
+      parameters:
+      - description: uid
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: page
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: userId
+        in: query
+        name: userId
+        required: true
+        type: integer
+      - description: privicy
+        in: query
+        name: privicy
+        required: true
+        type: integer
+      - description: index
+        in: query
+        name: index
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
+          schema:
+            $ref: '#/definitions/idea.IdeaResponse'
+      summary: Get a list of ideas
       tags:
       - idea
   /api/v1/login:
@@ -372,6 +602,108 @@ paths:
       summary: The user enters the account and password and then logs in
       tags:
       - auth
+  /api/v1/message/comment:
+    get:
+      consumes:
+      - application/json
+      description: Information returned to front-end user reviews
+      parameters:
+      - description: Information returned to front-end user information
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: page
+        in: query
+        name: page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
+          schema:
+            $ref: '#/definitions/message.GetMessageForCommentResponse'
+      summary: Get user comment information
+      tags:
+      - message
+  /api/v1/message/like:
+    get:
+      consumes:
+      - application/json
+      description: Like information returned to front-end users
+      parameters:
+      - description: Like information returned to front-end users
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: limit
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: page
+        in: query
+        name: page
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
+          schema:
+            $ref: '#/definitions/message.GetMessageForLikeResponse'
+      summary: Get users' likes
+      tags:
+      - message
+  /api/v1/message/readall:
+    put:
+      consumes:
+      - application/json
+      description: Change the status of the messages that the user has viewed to read
+      parameters:
+      - description: Change the status of the messages that the user has viewed to read
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+      summary: Modify the information as read
+      tags:
+      - message
+  /api/v1/message/tip:
+    get:
+      consumes:
+      - application/json
+      description: Return to the front-end message prompt
+      parameters:
+      - description: Return to the front-end message prompt
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
+          schema:
+            $ref: '#/definitions/message.GetMessageTipResponse'
+      summary: Get message reminder
+      tags:
+      - message
   /api/v1/register:
     post:
       consumes:
@@ -392,6 +724,31 @@ paths:
       summary: User enters account and password to register
       tags:
       - auth
+  /api/v1/report:
+    post:
+      consumes:
+      - application/json
+      description: Initiate a request to report a user
+      parameters:
+      - description: Initiate a request to report a user
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/report.CreateReportRequest'
+      - description: userId
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+      summary: New report request
+      tags:
+      - report
   /api/v1/search:
     delete:
       consumes:
