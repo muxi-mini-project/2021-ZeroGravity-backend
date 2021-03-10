@@ -16,7 +16,10 @@ import (
 // @Produce  json
 // @Param  req body report.CreateReportRequest true  "Initiate a request to report a user"
 // @Param token header string true  "userId"
-// @Success 200 "成功"   
+// @Success 200 "成功" 
+// @Failure 400 {object} errno.Errno
+// @Failure 404 {object} errno.Errno
+// @Failure 500 {object} errno.Errno  
 // @Router /api/v1/report [post]
 // CreateReport is used to post report
 func CreateReport(c *gin.Context) {

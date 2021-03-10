@@ -21,6 +21,9 @@ import (
 // @Param token header string true  "LikersId"
 // @Param id path int true "CommentId"
 // @Success 200 "成功"
+// @Failure 400 {object} errno.Errno
+// @Failure 404 {object} errno.Errno
+// @Failure 500 {object} errno.Errno
 // @Router /api/v1/idea/comment/:id/like [put]
 // UpdateCommentLike is used to add a like record of comment 新增评论点赞记录
 func UpdateCommentLike(c *gin.Context) {

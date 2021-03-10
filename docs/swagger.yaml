@@ -38,6 +38,13 @@ definitions:
           $ref: '#/definitions/model.IdeaListItem'
         type: array
     type: object
+  errno.Errno:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
   idea.CommentResponse:
     properties:
       count:
@@ -276,6 +283,18 @@ paths:
       responses:
         "200":
           description: 成功
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
       summary: Delete favorites
       tags:
       - collection
@@ -306,6 +325,18 @@ paths:
           description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
           schema:
             $ref: '#/definitions/collection.IdeaResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
       summary: Get a user's favorite record table
       tags:
       - collection
@@ -325,6 +356,18 @@ paths:
       responses:
         "200":
           description: 成功
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
       summary: Add favorite record
       tags:
       - collection
@@ -345,6 +388,18 @@ paths:
       responses:
         "200":
           description: 成功
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
       summary: Add ideas
       tags:
       - idea
@@ -369,6 +424,18 @@ paths:
       responses:
         "200":
           description: 成功
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
       summary: Add comment and like record
       tags:
       - idea
@@ -389,6 +456,18 @@ paths:
       responses:
         "200":
           description: 成功
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
       summary: Add ideas
       tags:
       - idea
@@ -414,6 +493,18 @@ paths:
           description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
           schema:
             $ref: '#/definitions/model.IdeaListItem'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
       summary: Get ideas
       tags:
       - idea
@@ -450,6 +541,18 @@ paths:
           description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
           schema:
             $ref: '#/definitions/idea.CommentResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
       summary: Get comments
       tags:
       - idea
@@ -474,6 +577,18 @@ paths:
       responses:
         "200":
           description: 成功
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
       summary: Delete comment
       tags:
       - idea
@@ -499,6 +614,18 @@ paths:
       responses:
         "200":
           description: 成功
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
       summary: Add comment
       tags:
       - idea
@@ -518,6 +645,18 @@ paths:
       responses:
         "200":
           description: 成功
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
       summary: Add thoughts like record
       tags:
       - idea
@@ -549,6 +688,18 @@ paths:
           description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
           schema:
             $ref: '#/definitions/idea.IdeaResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
       summary: Get a list of ideas liked by users
       tags:
       - idea
@@ -617,6 +768,18 @@ paths:
           description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
           schema:
             $ref: '#/definitions/auth.LoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
       summary: The user enters the account and password and then logs in
       tags:
       - auth
@@ -648,6 +811,18 @@ paths:
           description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
           schema:
             $ref: '#/definitions/message.GetMessageForCommentResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
       summary: Get user comment information
       tags:
       - message
@@ -679,6 +854,18 @@ paths:
           description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
           schema:
             $ref: '#/definitions/message.GetMessageForLikeResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
       summary: Get users' likes
       tags:
       - message
@@ -698,6 +885,18 @@ paths:
       responses:
         "200":
           description: 成功
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
       summary: Modify the information as read
       tags:
       - message
@@ -719,6 +918,18 @@ paths:
           description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
           schema:
             $ref: '#/definitions/message.GetMessageTipResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
       summary: Get message reminder
       tags:
       - message
@@ -739,6 +950,18 @@ paths:
       responses:
         "200":
           description: 成功
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
       summary: User enters account and password to register
       tags:
       - auth
@@ -764,6 +987,18 @@ paths:
       responses:
         "200":
           description: 成功
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
       summary: New report request
       tags:
       - report
@@ -789,6 +1024,18 @@ paths:
       responses:
         "200":
           description: 成功
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
       summary: Delete History
       tags:
       - search
@@ -834,6 +1081,18 @@ paths:
           description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
           schema:
             $ref: '#/definitions/search.UserListResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
       summary: Get search results
       tags:
       - search
@@ -857,6 +1116,18 @@ paths:
             items:
               $ref: '#/definitions/model.History'
             type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
       summary: Get Histories
       tags:
       - search

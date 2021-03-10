@@ -22,6 +22,9 @@ import (
 // @Param limit query  int true "limit"
 // @Param page  query  int true "page"
 // @Success 200 {object}  idea.IdeaResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
+// @Failure 400 {object} errno.Errno
+// @Failure 404 {object} errno.Errno
+// @Failure 500 {object} errno.Errno
 // @Router /api/v1/idea/liked [get]
 // GetIdeaLikedList ... 获取某个用户点赞的想法列表
 func GetIdeaLikedList(c *gin.Context) {

@@ -21,6 +21,9 @@ import (
 // @Param limit query  int true "limit"
 // @Param page  query  int true "page"
 // @Success 200 {object} collection.IdeaResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
+// @Failure 400 {object} errno.Errno
+// @Failure 404 {object} errno.Errno
+// @Failure 500 {object} errno.Errno
 // @Router /api/v1/collection [get]
 // GetCollection ... 获取某个用户的收藏列表
 func GetCollection(c *gin.Context) {
