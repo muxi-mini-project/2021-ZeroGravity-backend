@@ -28,6 +28,9 @@ import (
 // @Param  token header string true  "Get token"
 // @Success 200 {object}  search.IdeaResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Success 200 {object}  search.UserListResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
+// @Failure 400 {object} errno.Errno
+// @Failure 404 {object} errno.Errno
+// @Failure 500 {object} errno.Errno
 // @Router /api/v1/search [get]
 // GetSearchResult ... 获取搜索结果，结果为用户列表或想法列表
 func GetSearchResult(c *gin.Context) {
@@ -115,6 +118,9 @@ func GetSearchResult(c *gin.Context) {
 // @Param  id path int true  "userId"
 // @Param  h body model.History true  " delete history"
 // @Success @Success 200 "成功"
+// @Failure 400 {object} errno.Errno
+// @Failure 404 {object} errno.Errno
+// @Failure 500 {object} errno.Errno
 // @Router /api/v1/search [delete]
 //  DeleteHistory... 删除历史记录
 func DeleteHistory(c *gin.Context) {
@@ -137,6 +143,9 @@ func DeleteHistory(c *gin.Context) {
 // @Produce  json
 // @Param  id path int true  "userId"
 // @Success 200 {object}  []model.History  "{"code":0,"message":"OK","data":{"username":"kong"}}"
+// @Failure 400 {object} errno.Errno
+// @Failure 404 {object} errno.Errno
+// @Failure 500 {object} errno.Errno
 // @Router /api/v1/search/histories [get]
 //  GetHistories... 获取历史记录
 func GetHistories(c *gin.Context) {

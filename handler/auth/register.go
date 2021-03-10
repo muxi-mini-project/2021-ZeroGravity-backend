@@ -19,6 +19,9 @@ import (
 // @Produce  json
 // @Param req body auth.CreateUserRequest true "The user enters the account and password and then register in "
 // @Success 200 "成功"
+// @Failure 400 {object} errno.Errno
+// @Failure 404 {object} errno.Errno
+// @Failure 500 {object} errno.Errno
 // @Router /api/v1/register [post]
 // Register creates a new user account ... 新增用户
 func Register(c *gin.Context) {

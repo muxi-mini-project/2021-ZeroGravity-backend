@@ -20,6 +20,9 @@ import (
 // @Param id path int true "id"
 // @Param token header string true  "uid"
 // @Success 200 {object}  model.IdeaListItem "{"code":0,"message":"OK","data":{"username":"kong"}}"
+// @Failure 400 {object} errno.Errno
+// @Failure 404 {object} errno.Errno
+// @Failure 500 {object} errno.Errno
 // @Router /api/v1/idea/detail/:id [get]
 // GetIdea ... 获取单个想法
 func GetIdea(c *gin.Context) {

@@ -20,6 +20,9 @@ import (
 // @Produce  json
 // @Param token header string true  "LikersId "
 // @Success 200 "成功"
+// @Failure 400 {object} errno.Errno
+// @Failure 404 {object} errno.Errno
+// @Failure 500 {object} errno.Errno
 // @Router /api/v1/idea/detail/:id/like [put]
 // UpdateIdeaLike is used to add a like record of idea 新增想法点赞记录
 func UpdateIdeaLike(c *gin.Context) {

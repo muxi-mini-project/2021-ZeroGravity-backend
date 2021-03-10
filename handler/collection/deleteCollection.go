@@ -16,6 +16,9 @@ import (
 // @Produce  json
 // @Body  req body collection.DeleteCollectionRequest  true "Delete favorite records from the database  "
 // @Success 200 "成功"
+// @Failure 400 {object} errno.Errno
+// @Failure 404 {object} errno.Errno
+// @Failure 500 {object} errno.Errno
 // @Router /api/v1/collection [delete]
 // DeleteCollection  is used to add a collection record of idea 删除收藏记录
 func DeleteCollection(c *gin.Context) {
