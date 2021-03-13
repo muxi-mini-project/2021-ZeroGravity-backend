@@ -23,7 +23,7 @@ import (
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno
 // @Failure 500 {object} errno.Errno
-// @Router /api/v1/login [post]
+// @Router /api/v1/auth/api/v1/login [post]
 // Login ... 登陆
 func Login(c *gin.Context) {
 	log.Info("login function called.",

@@ -22,7 +22,7 @@ import (
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno
 // @Failure 500 {object} errno.Errno
-// @Router /api/v1/register [post]
+// @Router /api/v1/auth/api/v1/register [post]
 // Register creates a new user account ... 新增用户
 func Register(c *gin.Context) {
 	log.Info("User register function called.",
