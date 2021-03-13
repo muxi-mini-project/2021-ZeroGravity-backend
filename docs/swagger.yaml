@@ -273,6 +273,72 @@ info:
   title: ZeroGravity
   version: 1.0.0
 paths:
+  /api/v1/auth/api/v1/login:
+    post:
+      consumes:
+      - application/json
+      description: User login
+      parameters:
+      - description: 'The user enters the account and password and then logs in '
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/auth.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
+          schema:
+            $ref: '#/definitions/auth.LoginResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
+      summary: The user enters the account and password and then logs in
+      tags:
+      - auth
+  /api/v1/auth/api/v1/register:
+    post:
+      consumes:
+      - application/json
+      description: User register
+      parameters:
+      - description: 'The user enters the account and password and then register in '
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/auth.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
+      summary: User enters account and password to register
+      tags:
+      - auth
   /api/v1/collection:
     delete:
       consumes:
@@ -749,40 +815,6 @@ paths:
       summary: Get a list of ideas
       tags:
       - idea
-  /api/v1/login:
-    post:
-      consumes:
-      - application/json
-      description: User login
-      parameters:
-      - description: 'The user enters the account and password and then logs in '
-        in: body
-        name: req
-        required: true
-        schema:
-          $ref: '#/definitions/auth.LoginRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
-          schema:
-            $ref: '#/definitions/auth.LoginResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/errno.Errno'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/errno.Errno'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/errno.Errno'
-      summary: The user enters the account and password and then logs in
-      tags:
-      - auth
   /api/v1/message/comment:
     get:
       consumes:
@@ -933,38 +965,6 @@ paths:
       summary: Get message reminder
       tags:
       - message
-  /api/v1/register:
-    post:
-      consumes:
-      - application/json
-      description: User register
-      parameters:
-      - description: 'The user enters the account and password and then register in '
-        in: body
-        name: req
-        required: true
-        schema:
-          $ref: '#/definitions/auth.CreateUserRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: 成功
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/errno.Errno'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/errno.Errno'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/errno.Errno'
-      summary: User enters account and password to register
-      tags:
-      - auth
   /api/v1/report:
     post:
       consumes:
