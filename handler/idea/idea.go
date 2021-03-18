@@ -4,7 +4,6 @@ import "github.com/2021-ZeroGravity-backend/model"
 
 // CreateCommentRequest ... 创建评论请求
 type CreateCommentRequest struct {
-	CommenterId int    `json:"commenter_id"`
 	CommentedId int    `json:"commented_id"`
 	Content     string `json:"content"`
 }
@@ -16,14 +15,14 @@ type DeleteCommentRequest struct {
 
 // CreateIdeaRequest ... 创建想法请求
 type CreateIdeaRequest struct {
-	PublisherId int    `json:"publisher_id"`
+	
 	Content     string `json:"content"`
 	ReleaseDate string `json:"releaseDate"`
 }
 
 // DeleteIdeaRequest ... 删除想法请求
 type DeleteIdeaRequest struct {
-	PublisherId int `json:"publisher_id"`
+	
 	IdeaId      int `json:"idea_id"`
 }
 

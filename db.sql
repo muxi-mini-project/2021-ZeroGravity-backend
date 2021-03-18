@@ -9,7 +9,7 @@ use  `ZeroGravity`;
 create table `tbl_user`(
    `id`               int           not null  AUTO_INCREMENT             comment "用户id" ,       
    `account_password` varchar(20)       null                             comment "账户密码",
-   `account`          varchar(20)       null                             comment "Q Q账号",
+   `account`          int               null                             comment "Q Q账号",
    `nickname`         varchar(20)       null                             comment "昵称",
    `avatar`           varchar(255)      null                             comment "头像",
    `energy`           int               null  default 0                  comment "能量值"  ,   

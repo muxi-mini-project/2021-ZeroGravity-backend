@@ -193,6 +193,13 @@
                 "summary": "Add favorite record",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "userid",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "Add a new favorite record to the database ",
                         "name": "req",
                         "in": "body",
@@ -238,6 +245,24 @@
                     "collection"
                 ],
                 "summary": "Delete favorites",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "userid",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Delete favorite records from the database  ",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/collection.DeleteCollectionRequest"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "成功"
@@ -277,6 +302,13 @@
                 ],
                 "summary": "Add ideas",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "userid",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "Add a thought record to the database",
                         "name": "req",
@@ -443,6 +475,13 @@
                         "schema": {
                             "$ref": "#/definitions/idea.CreateIdeaRequest"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "userid",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -609,6 +648,13 @@
                 ],
                 "summary": "Add comment",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "userid",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "Add comment records to the database",
                         "name": "req",
@@ -1413,9 +1459,14 @@
         "collection.CreateCollectionRequest": {
             "type": "object",
             "properties": {
-                "collector_id": {
+                "idea_id": {
                     "type": "integer"
-                },
+                }
+            }
+        },
+        "collection.DeleteCollectionRequest": {
+            "type": "object",
+            "properties": {
                 "idea_id": {
                     "type": "integer"
                 }
@@ -1466,9 +1517,6 @@
                 "commented_id": {
                     "type": "integer"
                 },
-                "commenter_id": {
-                    "type": "integer"
-                },
                 "content": {
                     "type": "string"
                 }
@@ -1479,9 +1527,6 @@
             "properties": {
                 "content": {
                     "type": "string"
-                },
-                "publisher_id": {
-                    "type": "integer"
                 },
                 "releaseDate": {
                     "type": "string"

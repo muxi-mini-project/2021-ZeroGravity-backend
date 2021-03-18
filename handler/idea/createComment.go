@@ -18,6 +18,7 @@ import (
 // @Tags idea
 // @Accept  json
 // @Produce  json
+// @Param token header string true  "userid"
 // @Param req body idea.CreateCommentRequest true  "Add comment records to the database"
 // @Param idea_id path int true "IdeaId"
 // @Success 200 "成功"
@@ -30,7 +31,11 @@ func CreateComment(c *gin.Context) {
 
 	log.Info("Create Comment function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
+    var userid int
+	
 
+	// 从 token 获取 userid
+	userid = c.MustGet("userID").(int)
 	var req CreateCommentRequest
 
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -45,7 +50,7 @@ func CreateComment(c *gin.Context) {
 	}
 
 	// 调用服务
-	err = idea.CreateComment(req.CommenterId, req.Content, IdeaId)
+	err = idea.CreateComment(userid , req.Content, IdeaId)
 	if err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
@@ -56,7 +61,7 @@ func CreateComment(c *gin.Context) {
 	i2.CommentSum++
 	model.DB.Self.Model(&i).Update(i2)
 
-	if err := message.CreateMessage(req.CommentedId, req.CommenterId, 1, 0, IdeaId, i.Content, req.Content); err != nil {
+	if err := message.CreateMessage(req.CommentedId,userid, 1, 0, IdeaId, i.Content, req.Content); err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}

@@ -16,6 +16,7 @@ import (
 // @Accept  json
 // @Produce  json
 // @Param req body idea.CreateIdeaRequest true  "Add a thought record to the database"
+// @Param token header string true  "userid"
 // @Success 200 "成功"
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno
@@ -26,6 +27,11 @@ func DeleteIdea(c *gin.Context) {
 
 	log.Info("Delete Idea function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
+		var userid int
+	
+
+	// 从 token 获取 userid
+	userid= c.MustGet("userID").(int)
 
 	var req DeleteIdeaRequest
 
@@ -35,7 +41,7 @@ func DeleteIdea(c *gin.Context) {
 	}
 
 	// 调用服务
-	if err := model.DeleteIdea(req.IdeaId, req.PublisherId); err != nil {
+	if err := model.DeleteIdea(req.IdeaId, userid); err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}

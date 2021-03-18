@@ -14,7 +14,8 @@ import (
 // @Tags collection
 // @Accept  json
 // @Produce  json
-// @Body  req body collection.DeleteCollectionRequest  true "Delete favorite records from the database  "
+// @Param token header string true  "userid"
+// @Param  req body collection.DeleteCollectionRequest  true "Delete favorite records from the database  "
 // @Success 200 "成功"
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno
@@ -24,7 +25,11 @@ import (
 func DeleteCollection(c *gin.Context) {
 	log.Info("Delete Collection function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
+    var userid int
+	
 
+	// 从 token 获取 userid
+	userid = c.MustGet("userID").(int)
 	var req DeleteCollectionRequest
 
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -33,7 +38,7 @@ func DeleteCollection(c *gin.Context) {
 
 	}
 	// 调用服务
-	if err := model.DeleteCollection(req.IdeaId, req.CollectorId); err != nil {
+	if err := model.DeleteCollection(req.IdeaId, userid); err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}

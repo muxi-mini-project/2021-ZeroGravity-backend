@@ -206,6 +206,13 @@ var doc = `{
                 "summary": "Add favorite record",
                 "parameters": [
                     {
+                        "type": "string",
+                        "description": "userid",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
                         "description": "Add a new favorite record to the database ",
                         "name": "req",
                         "in": "body",
@@ -251,6 +258,24 @@ var doc = `{
                     "collection"
                 ],
                 "summary": "Delete favorites",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "userid",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Delete favorite records from the database  ",
+                        "name": "req",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/collection.DeleteCollectionRequest"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "成功"
@@ -290,6 +315,13 @@ var doc = `{
                 ],
                 "summary": "Add ideas",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "userid",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "Add a thought record to the database",
                         "name": "req",
@@ -456,6 +488,13 @@ var doc = `{
                         "schema": {
                             "$ref": "#/definitions/idea.CreateIdeaRequest"
                         }
+                    },
+                    {
+                        "type": "string",
+                        "description": "userid",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -622,6 +661,13 @@ var doc = `{
                 ],
                 "summary": "Add comment",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "userid",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "Add comment records to the database",
                         "name": "req",
@@ -1426,9 +1472,14 @@ var doc = `{
         "collection.CreateCollectionRequest": {
             "type": "object",
             "properties": {
-                "collector_id": {
+                "idea_id": {
                     "type": "integer"
-                },
+                }
+            }
+        },
+        "collection.DeleteCollectionRequest": {
+            "type": "object",
+            "properties": {
                 "idea_id": {
                     "type": "integer"
                 }
@@ -1479,9 +1530,6 @@ var doc = `{
                 "commented_id": {
                     "type": "integer"
                 },
-                "commenter_id": {
-                    "type": "integer"
-                },
                 "content": {
                     "type": "string"
                 }
@@ -1492,9 +1540,6 @@ var doc = `{
             "properties": {
                 "content": {
                     "type": "string"
-                },
-                "publisher_id": {
-                    "type": "integer"
                 },
                 "releaseDate": {
                     "type": "string"

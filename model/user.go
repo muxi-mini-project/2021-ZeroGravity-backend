@@ -21,13 +21,13 @@ func (u *UserModel) Update() error {
 	return DB.Self.Save(u).Error
 }
 
-func GetUserByAccount(account string) (*UserModel, error) {
+func GetUserByAccount(account string ) (*UserModel, error) {
 	u := &UserModel{}
 	d := DB.Self.Table("tbl_user").Where("account = ?", account).First(u)
 	return u, d.Error
 }
 
-func GetUserByAccountAndPassword(account, accountPassword string) (*UserModel, error) {
+func GetUserByAccountAndPassword(account string , accountPassword string) (*UserModel, error) {
 	u := &UserModel{}
 	d := DB.Self.Table("tbl_user").Where("account = ? AND account_password = ?", account, accountPassword).First(u)
 	return u, d.Error

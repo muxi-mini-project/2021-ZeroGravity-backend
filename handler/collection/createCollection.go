@@ -14,6 +14,7 @@ import (
 // @Tags collection
 // @Accept  json
 // @Produce  json
+// @Param token header string true  "userid"
 // @Param req body collection.CreateCollectionRequest  true "Add a new favorite record to the database "
 // @Success 200 "成功"
 // @Failure 400 {object} errno.Errno
@@ -24,7 +25,13 @@ import (
 func CreateCollection(c *gin.Context) {
 	log.Info("Create Collection function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
+	 
 
+    var userid int
+	
+
+	// 从 token 获取 userid
+	userid = c.MustGet("userID").(int)
 	var req CreateCollectionRequest
 
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -33,10 +40,10 @@ func CreateCollection(c *gin.Context) {
 
 	}
 	// 调用服务
-	if err := idea.CreateCollection(req.IdeaId, req.CollectorId); err != nil {
+
+	if err := idea.CreateCollection(req.IdeaId, userid); err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}
-
-	SendResponse(c, errno.OK, nil)
+SendResponse(c, errno.OK, nil)
 }

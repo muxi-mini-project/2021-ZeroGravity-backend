@@ -24,8 +24,11 @@ definitions:
     type: object
   collection.CreateCollectionRequest:
     properties:
-      collector_id:
+      idea_id:
         type: integer
+    type: object
+  collection.DeleteCollectionRequest:
+    properties:
       idea_id:
         type: integer
     type: object
@@ -58,8 +61,6 @@ definitions:
     properties:
       commented_id:
         type: integer
-      commenter_id:
-        type: integer
       content:
         type: string
     type: object
@@ -67,8 +68,6 @@ definitions:
     properties:
       content:
         type: string
-      publisher_id:
-        type: integer
       releaseDate:
         type: string
     type: object
@@ -344,6 +343,18 @@ paths:
       consumes:
       - application/json
       description: Delete favorite records from the database
+      parameters:
+      - description: userid
+        in: header
+        name: token
+        required: true
+        type: string
+      - description: 'Delete favorite records from the database  '
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/collection.DeleteCollectionRequest'
       produces:
       - application/json
       responses:
@@ -411,6 +422,11 @@ paths:
       - application/json
       description: Add a new favorite record to the database
       parameters:
+      - description: userid
+        in: header
+        name: token
+        required: true
+        type: string
       - description: 'Add a new favorite record to the database '
         in: body
         name: req
@@ -443,6 +459,11 @@ paths:
       - application/json
       description: Add a thought record to the database
       parameters:
+      - description: userid
+        in: header
+        name: token
+        required: true
+        type: string
       - description: Add a thought record to the database
         in: body
         name: req
@@ -517,6 +538,11 @@ paths:
         required: true
         schema:
           $ref: '#/definitions/idea.CreateIdeaRequest'
+      - description: userid
+        in: header
+        name: token
+        required: true
+        type: string
       produces:
       - application/json
       responses:
@@ -664,6 +690,11 @@ paths:
       - application/json
       description: Add comment records to the database
       parameters:
+      - description: userid
+        in: header
+        name: token
+        required: true
+        type: string
       - description: Add comment records to the database
         in: body
         name: req

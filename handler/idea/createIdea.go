@@ -14,6 +14,7 @@ import (
 // @Tags idea
 // @Accept  json
 // @Produce  json
+// @Param token header string true  "userid"
 // @Param req body idea.CreateIdeaRequest true  "Add a thought record to the database"
 // @Success 200 "成功"
 // @Failure 400 {object} errno.Errno
@@ -24,7 +25,11 @@ import (
 func CreateIdea(c *gin.Context) {
 	log.Info("Create Idea function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
+    var userid int
+	
 
+	// 从 token 获取 userid
+	userid = c.MustGet("userID").(int)
 	var req CreateIdeaRequest
 
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -33,7 +38,7 @@ func CreateIdea(c *gin.Context) {
 	}
 
 	// 调用服务
-	if err := idea.CreateIdea(req.Content, req.PublisherId, req.ReleaseDate); err != nil {
+	if err := idea.CreateIdea(req.Content, userid, req.ReleaseDate); err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}
