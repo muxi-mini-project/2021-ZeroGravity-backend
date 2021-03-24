@@ -7,6 +7,7 @@ import (
 	"github.com/2021-ZeroGravity-backend/handler/report"
 	"github.com/2021-ZeroGravity-backend/handler/search"
 
+	_ "github.com/2021-ZeroGravity-backend/docs"
 	"github.com/2021-ZeroGravity-backend/handler/auth"
 	"github.com/2021-ZeroGravity-backend/handler/collection"
 	"github.com/2021-ZeroGravity-backend/handler/idea"
@@ -14,9 +15,8 @@ import (
 	"github.com/2021-ZeroGravity-backend/handler/user"
 	"github.com/2021-ZeroGravity-backend/router/middleware"
 	"github.com/gin-gonic/gin"
-	"github.com/swaggo/gin-swagger"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
-	_"github.com/2021-ZeroGravity-backend/docs"
 )
 
 func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
@@ -30,7 +30,7 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	g.NoRoute(func(c *gin.Context) {
 		c.String(http.StatusNotFound, "The incorrect API route.")
 	})
-    g.GET("/swagger/*any",ginSwagger.WrapHandler(swaggerFiles.Handler))
+	g.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	// router
 	authRouter := g.Group("/api/v1/auth")
 	{
@@ -69,9 +69,9 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	collectionRouter := g.Group("/api/v1/collection")
 	collectionRouter.Use(middleware.AuthMiddleware)
 	{
-		collectionRouter.GET("/collection", collection.GetCollection)
-		collectionRouter.POST("/collection", collection.CreateCollection)
-		collectionRouter.DELETE("/collection", collection.DeleteCollection)
+		collectionRouter.GET("", collection.GetCollection)
+		collectionRouter.POST("", collection.CreateCollection)
+		collectionRouter.DELETE("", collection.DeleteCollection)
 	}
 
 	searchRouter := g.Group("/api/v1/search")
@@ -110,6 +110,6 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		svcd.GET("/cpu", sd.CPUCheck)
 		svcd.GET("/ram", sd.RAMCheck)
 	}
-    
+
 	return g
 }

@@ -52,7 +52,7 @@ func GetMessageTipByUserId(uid int) (int, error) {
 }
 
 func ReadAll(uid int) error {
-	d := DB.Self.Table("message").Where("sub_user_id = ?", uid).Update("is_read", 1)
+	d := DB.Self.Table("tbl_message").Where("sub_user_id = ?", uid).Update("is_read", 1)
 	return d.Error
 }
 
