@@ -15,15 +15,12 @@ type DeleteCommentRequest struct {
 
 // CreateIdeaRequest ... 创建想法请求
 type CreateIdeaRequest struct {
-	
-	Content     string `json:"content"`
-	ReleaseDate string `json:"releaseDate"`
+	Content string `json:"content"`
 }
 
 // DeleteIdeaRequest ... 删除想法请求
 type DeleteIdeaRequest struct {
-	
-	IdeaId      int `json:"idea_id"`
+	IdeaId int `json:"idea_id"`
 }
 
 // UpdateIdeaLikeRequest ... 想法点赞/取消请求

@@ -9,7 +9,7 @@ use  `ZeroGravity`;
 create table `tbl_user`(
    `id`               int           not null  AUTO_INCREMENT             comment "用户id" ,       
    `account_password` varchar(20)       null                             comment "账户密码",
-   `account`          int               null                             comment "Q Q账号",
+   `account`          varchar(30)       null                             comment "Q Q账号",
    `nickname`         varchar(20)       null                             comment "昵称",
    `avatar`           varchar(255)      null                             comment "头像",
    `energy`           int               null  default 0                  comment "能量值"  ,   
@@ -29,7 +29,7 @@ create table `tbl_idea` (
     `releaseDate`     date              null comment "发布日期",
     `publisher_id`    int           null comment "发布者id",
     `likes_sum`       int           not null DEFAULT 0 comment "点赞数",
-    `comments_sum`    int           not null DEFAULT 0 comment "评论数",
+    `comment_sum`    int           not null DEFAULT 0 comment "评论数",
     `privacy`         tinyint(1)    not null DEFAULT 0,
 -- 添加约束
 primary key                         (`idea_id`),

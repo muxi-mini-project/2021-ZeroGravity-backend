@@ -3,7 +3,6 @@ package model
 type CommentModel struct {
 	Id          int    `json:"id" gorm:"column:id;" binding:"required"`
 	CommenterId int    `json:"commenter_id" gorm:"column:commenter_id;" binding:"required"`
-	CommentedId int    `json:"commented_id" gorm:"column:commented_id;" binding:"required"`
 	LikesSum    int    `json:"likes_sum" gorm:"column:likes_sum;" binding:"required"`
 	ReleaseDate string `json:"release_date" gorm:"column:release_date;" binding:"required"`
 	Content     string `json:"content" gorm:"column:content;" binding:"required"`
@@ -12,7 +11,7 @@ type CommentModel struct {
 
 type CommentInfo struct {
 	Id          int    `json:"id" gorm:"column:id;" binding:"required"`
-	CommentedId int    `json:"commented_id" gorm:"column:commented_id;" binding:"required"`
+	IdeaId      int    `json:"idea_id" gorm:"column:idea_id;" binding:"required"`
 	LikesSum    int    `json:"likes_sum" gorm:"column:likes_sum;" binding:"required"`
 	ReleaseDate string `json:"release_date" gorm:"column:release_date;" binding:"required"`
 	Content     string `json:"content" gorm:"column:content;" binding:"required"`
@@ -23,7 +22,7 @@ type CommentInfo struct {
 
 type CommentListItem struct {
 	Id          int    `json:"id"`
-	CommentedId int    `json:"commented_id"`
+	IdeaId      int    `json:"idea_id"`
 	LikesSum    int    `json:"likes_sum"`
 	ReleaseDate string `json:"release_date"`
 	Content     string `json:"content"`
@@ -52,7 +51,7 @@ func GetCommentListByIdeaId(id, offset, limit int) ([]*CommentInfo, []int, error
 
 	query := DB.Self.Table("tbl_comments").
 		Select("tbl_comments.*,tbl_user.nickname,tbl_user.avatar").
-		Where("tbl_comments.commeted_id = ?", id).
+		Where("tbl_comments.idea_id = ?", id).
 		Joins("left join tbl_user on tbl_user.id = tbl_comments.commenter_id").
 		Order("tbl_comments.id desc")
 

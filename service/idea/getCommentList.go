@@ -31,7 +31,7 @@ func GetCommentList(id, uid, offset, limit int) ([]*model.CommentListItem, error
 			item := list[i]
 			listItem = append(listItem, &model.CommentListItem{
 				Id:          item.Id,
-				CommentedId: item.CommentedId,
+				IdeaId:      item.IdeaId,
 				LikesSum:    item.LikesSum,
 				ReleaseDate: item.ReleaseDate,
 				Content:     item.Content,
@@ -48,7 +48,7 @@ func GetCommentList(id, uid, offset, limit int) ([]*model.CommentListItem, error
 			item := list[i]
 			listItem = append(listItem, &model.CommentListItem{
 				Id:          item.Id,
-				CommentedId: item.CommentedId,
+				IdeaId:      item.IdeaId,
 				LikesSum:    item.LikesSum,
 				ReleaseDate: item.ReleaseDate,
 				Content:     item.Content,
@@ -68,7 +68,7 @@ func GetCommentList(id, uid, offset, limit int) ([]*model.CommentListItem, error
 			item := list[i]
 			listItem = append(listItem, &model.CommentListItem{
 				Id:          item.Id,
-				CommentedId: item.CommentedId,
+				IdeaId:      item.IdeaId,
 				LikesSum:    item.LikesSum,
 				ReleaseDate: item.ReleaseDate,
 				Content:     item.Content,

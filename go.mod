@@ -10,7 +10,6 @@ require (
 	github.com/jinzhu/gorm v1.9.16
 	github.com/lexkong/log v0.0.0-20180607165131-972f9cd951fc
 	github.com/satori/go.uuid v1.2.0
-	github.com/shirou/gopsutil v3.21.1+incompatible
 	github.com/spf13/viper v1.7.1
 	github.com/swaggo/gin-swagger v1.3.0
 	github.com/swaggo/swag v1.5.1
@@ -19,4 +18,5 @@ require (
 	go.uber.org/zap v1.16.0
 	gopkg.in/go-playground/validator.v9 v9.31.0
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
+	github.com/shirou/gopsutil v2.20.8+incompatible
 )

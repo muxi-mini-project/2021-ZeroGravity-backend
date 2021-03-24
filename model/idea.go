@@ -7,7 +7,7 @@ type IdeaModel struct {
 	PublisherId int    `json:"publisher_id" gorm:"column:publisher_id;" binding:"required"`
 	LikesSum    int    `json:"likes_sum" gorm:"column:likes_sum;" binding:"required"`
 	CommentSum  int    `json:"comment_sum" gorm:"column:comment_sum;" binding:"required"`
-	Privicy     int    `json:"privicy" gorm:"column:privicy;" binding:"required"` // 0->公有 1->私有
+	Privacy     int    `json:"privacy" gorm:"column:privacy;" binding:"required"` // 0->公有 1->私有
 }
 
 type IdeaInfo struct {
@@ -16,7 +16,7 @@ type IdeaInfo struct {
 	ReleaseDate string `json:"release_date" gorm:"column:release_date;" binding:"required"`
 	LikesSum    int    `json:"likes_sum" gorm:"column:likes_sum;" binding:"required"`
 	CommentSum  int    `json:"comment_sum" gorm:"column:comment_sum;" binding:"required"`
-	Privicy     int    `json:"privicy" gorm:"column:privicy;" binding:"required"`
+	Privacy     int    `json:"privacy" gorm:"column:privacy;" binding:"required"`
 	UserId      int    `json:"publisher_id" gorm:"column:publisher_id;" binding:"required"`
 	Avatar      string `json:"avatar" gorm:"column:avatar;" binding:"required"`
 	NickName    string `json:"nickname" gorm:"column:nickname;" binding:"required"`
@@ -55,7 +55,7 @@ func GetIdeaById(id int) (*IdeaInfo, error) {
 	query := DB.Self.Table("tbl_idea").
 		Select("tbl_idea.*,tbl_user.nickname,tbl_user.avatar").
 		Joins("left join tbl_user on tbl_user.id = tbl_idea.publisher_id").
-		Where("tbl_idea.tbl_idea_id = ?", id)
+		Where("tbl_idea.idea_id = ?", id)
 
 	if err := query.Scan(u).Error; err != nil {
 		return nil, err

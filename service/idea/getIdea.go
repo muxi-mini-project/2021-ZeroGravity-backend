@@ -11,7 +11,7 @@ func GetIdea(id, uid int) (*model.IdeaListItem, error) {
 		return nil, err
 	}
 
-	if item.Privicy == 1 && item.UserId != uid {
+	if item.Privacy == 1 && item.UserId != uid {
 		return nil, errno.ErrPermissionDenied
 	}
 

@@ -47,13 +47,13 @@ func CreateHistory(id string, name string) error {
 }
 func GetHistories(id string) ([]History, error) {
 	var histories []History
-	if result := DB.Self.Where("student_id = ? ", id).Find(&histories); result.Error != nil {
+	if result := DB.Self.Where("user_id = ? ", id).Find(&histories); result.Error != nil {
 		return histories, result.Error
 	}
 	return histories, nil
 }
 func DeleteHistory(h History) error {
-	if result := DB.Self.Where("student_id = ? AND name = ? ", h.UserID, h.Name).Delete(&h); result.Error != nil {
+	if result := DB.Self.Where("user_id = ? AND name = ? ", h.UserID, h.Name).Delete(&h); result.Error != nil {
 		return result.Error
 	}
 	return nil

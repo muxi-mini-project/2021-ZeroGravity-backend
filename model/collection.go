@@ -26,7 +26,7 @@ func GetCollectionByUserId(id, offset, limit int) ([]*IdeaInfo, []int, error) {
 	item := make([]*CollectionModel, 0)
 
 	d := DB.Self.Table("tbl_favorite_records").
-		Where("collector_id  = ?", id).
+		Where("collector_id = ?", id).
 		Offset(offset).Limit(limit).
 		Order("id desc").Scan(&item)
 
@@ -43,9 +43,9 @@ func GetCollectionByUserId(id, offset, limit int) ([]*IdeaInfo, []int, error) {
 
 	query := DB.Self.Table("tbl_idea").
 		Select("tbl_idea.*,tbl_user.nickname,tbl_user.avatar").
-		Where("tbl_idea.idea_id IN ?", idList).
+		Where("tbl_idea.idea_id IN (?)", idList).
 		Joins("left join tbl_user on tbl_user.id = tbl_idea.publisher_id").
-		Order("tbl_idea.id desc")
+		Order("tbl_idea.idea_id desc")
 
 	if err := query.Scan(&ideaList).Error; err != nil {
 		return nil, nil, err
