@@ -1527,9 +1527,6 @@
             "properties": {
                 "content": {
                     "type": "string"
-                },
-                "releaseDate": {
-                    "type": "string"
                 }
             }
         },
@@ -1589,9 +1586,6 @@
                 "avatar": {
                     "type": "string"
                 },
-                "commented_id": {
-                    "type": "integer"
-                },
                 "commenter_id": {
                     "type": "integer"
                 },
@@ -1599,6 +1593,9 @@
                     "type": "string"
                 },
                 "id": {
+                    "type": "integer"
+                },
+                "idea_id": {
                     "type": "integer"
                 },
                 "liked": {

@@ -1540,9 +1540,6 @@ var doc = `{
             "properties": {
                 "content": {
                     "type": "string"
-                },
-                "releaseDate": {
-                    "type": "string"
                 }
             }
         },
@@ -1602,9 +1599,6 @@ var doc = `{
                 "avatar": {
                     "type": "string"
                 },
-                "commented_id": {
-                    "type": "integer"
-                },
                 "commenter_id": {
                     "type": "integer"
                 },
@@ -1612,6 +1606,9 @@ var doc = `{
                     "type": "string"
                 },
                 "id": {
+                    "type": "integer"
+                },
+                "idea_id": {
                     "type": "integer"
                 },
                 "liked": {
