@@ -13,7 +13,7 @@ type IdeaModel struct {
 type IdeaInfo struct {
 	Id          int    `json:"idea_id" gorm:"column:idea_id;" binding:"required"`
 	Content     string `json:"content" gorm:"column:content;" binding:"required"`
-	ReleaseDate string `json:"release_date" gorm:"column:release_date;" binding:"required"`
+	ReleaseDate string `json:"releaseDate" gorm:"column:releaseDate;" binding:"required"`
 	LikesSum    int    `json:"likes_sum" gorm:"column:likes_sum;" binding:"required"`
 	CommentSum  int    `json:"comment_sum" gorm:"column:comment_sum;" binding:"required"`
 	Privacy     int    `json:"privacy" gorm:"column:privacy;" binding:"required"`

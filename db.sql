@@ -26,7 +26,7 @@ FULLTEXT (`nickname`) WITH PARSER ngram
 create table `tbl_idea` (
     `idea_id`         int           not null AUTO_INCREMENT comment "想法id",
     `content`         varchar(255)      null comment "想法内容",
-    `releaseDate`     date              null comment "发布日期",
+    `releaseDate`     varchar(50)              null comment "发布日期",
     `publisher_id`    int           null comment "发布者id",
     `likes_sum`       int           not null DEFAULT 0 comment "点赞数",
     `comment_sum`    int           not null DEFAULT 0 comment "评论数",
@@ -43,7 +43,7 @@ create table `tbl_comments`(
     `commenter_id`     int              null comment "评论者id",
     `idea_id`          int              null comment "idea_id",
     `likes_sum`        int          not null DEFAULT 0 comment "赞数",
-    `release_date`     date             null comment "发布日期",
+    `release_date`     varchar(50)             null comment "发布日期",
     `content`          varchar(255)     null comment "内容",
 -- 添加约束
 primary key                          (`id`),

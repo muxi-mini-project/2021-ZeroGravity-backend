@@ -12,7 +12,7 @@ func AgainstAndMatchIdea(offset, limit int, kw string) ([]*IdeaInfo, error) {
 		Offset(offset).Limit(limit).Order("tbl_idea.idea_id desc").
 		Where(where)
 
-	if err := query.Scan(&ideaList).Error; err != nil {
+	if err := query.Find(&ideaList).Error; err != nil {
 		return nil, err
 	}
 
@@ -26,7 +26,7 @@ func AgainstAndMatchUser(offset, limit int, kw string) ([]*UserModel, error) {
 	where := "MATCH (nickname) AGAINST ('" + kw + "')"
 
 	query := DB.Self.Debug().Table("tbl_user").
-		Offset(offset).Limit(limit).Order("tbl_idea.idea_id desc").
+		Offset(offset).Limit(limit).Order("id desc").
 		Where(where)
 
 	if err := query.Scan(&userList).Error; err != nil {
