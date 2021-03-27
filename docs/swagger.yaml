@@ -68,8 +68,6 @@ definitions:
     properties:
       content:
         type: string
-      releaseDate:
-        type: string
     type: object
   idea.IdeaResponse:
     properties:
@@ -107,13 +105,13 @@ definitions:
     properties:
       avatar:
         type: string
-      commented_id:
-        type: integer
       commenter_id:
         type: integer
       content:
         type: string
       id:
+        type: integer
+      idea_id:
         type: integer
       liked:
         description: 是否点赞
