@@ -64,7 +64,7 @@ func GetIdeaById(id int) (*IdeaInfo, error) {
 	return u, nil
 }
 
-func GetIdeaList(uid, offset, limit, privicy, index, userId int) ([]*IdeaInfo, error) {
+func GetIdeaList(uid, offset, limit, privacy, index, userId int) ([]*IdeaInfo, error) {
 	item := make([]*IdeaInfo, 0)
 
 	query := DB.Self.Table("tbl_idea").
@@ -73,9 +73,9 @@ func GetIdeaList(uid, offset, limit, privicy, index, userId int) ([]*IdeaInfo, e
 		Offset(offset).Limit(limit)
 
 	// privicy 判断
-	if privicy == 0 {
+	if privacy == 0 {
 		// 获取他人想法
-		query = query.Where("tbl_idea.privicy = ?", 0)
+		query = query.Where("tbl_idea.privacy = ?", 0)
 
 		// 判断是否选择用户
 		if userId != 0 {
