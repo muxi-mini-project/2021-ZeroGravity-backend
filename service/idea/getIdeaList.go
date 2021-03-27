@@ -49,7 +49,7 @@ func GetIdeaList(uid, offset, limit, privicy, index, userId int) ([]*model.IdeaL
 			UserId:      item.UserId,
 			Avatar:      item.Avatar,
 			NickName:    item.NickName,
-			Liked:       true,
+			Liked:       false,
 		})
 	}
 
