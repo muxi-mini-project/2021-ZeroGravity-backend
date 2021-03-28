@@ -13,8 +13,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
-// @Summary Add comment   
-// @Description Add comment records to the database 
+
+// @Summary Add comment
+// @Description Add comment records to the database
 // @Tags idea
 // @Accept  json
 // @Produce  json
@@ -31,8 +32,7 @@ func CreateComment(c *gin.Context) {
 
 	log.Info("Create Comment function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
-    var userid int
-	
+	var userid int
 
 	// 从 token 获取 userid
 	userid = c.MustGet("userID").(int)
@@ -43,25 +43,25 @@ func CreateComment(c *gin.Context) {
 		return
 
 	}
-	IdeaId, err := strconv.Atoi(c.Param("idea_id"))
+	IdeaId, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		SendBadRequest(c, errno.ErrPathParam, nil, err.Error(), GetLine())
 		return
 	}
 
 	// 调用服务
-	err = idea.CreateComment(userid , req.Content, IdeaId)
+	err = idea.CreateComment(userid, req.Content, IdeaId)
 	if err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}
-	var i model.IdeaInfo
+	var i model.IdeaModel
 	model.DB.Self.Where("idea_id = ? ", IdeaId).First(&i)
 	i2 := i
 	i2.CommentSum++
 	model.DB.Self.Model(&i).Update(i2)
 
-	if err := message.CreateMessage(req.CommentedId,userid, 1, 0, IdeaId, i.Content, req.Content); err != nil {
+	if err := message.CreateMessage(req.CommentedId, userid, 1, 0, IdeaId, i.Content, req.Content); err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}

@@ -3,6 +3,7 @@ package idea
 import "github.com/2021-ZeroGravity-backend/model"
 
 // CreateCommentRequest ... 创建评论请求
+// 需要传递 被评论的 idea 的 userId
 type CreateCommentRequest struct {
 	CommentedId int    `json:"commented_id"`
 	Content     string `json:"content"`
