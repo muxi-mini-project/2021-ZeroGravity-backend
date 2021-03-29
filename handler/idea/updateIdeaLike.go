@@ -48,7 +48,7 @@ func UpdateIdeaLike(c *gin.Context) {
 		SendBadRequest(c, errno.ErrChoice, nil, "", GetLine())
 		return
 	}
-	var IDEA model.IdeaInfo
+	var IDEA model.IdeaModel
 	result := model.DB.Self.Where("idea_id = ? ", IdeaId).First(&IDEA)
 	if result.Error != nil {
 		return
@@ -56,7 +56,7 @@ func UpdateIdeaLike(c *gin.Context) {
 	//取消点赞
 	if req.Choice == 2 {
 		var Idea model.IdeaLikeModel
-		if result := model.DB.Self.Where("idea_id = ? AND likers_id = ? ", IdeaId, IDEA.UserId).First(&Idea); result.Error != nil {
+		if result := model.DB.Self.Where("idea_id = ? AND likers_id = ? ", IdeaId, LikersId).First(&Idea); result.Error != nil {
 			//未点赞
 			SendError(c, errno.ErrNotLike, nil, "", GetLine())
 			return
@@ -71,7 +71,7 @@ func UpdateIdeaLike(c *gin.Context) {
 		}
 	}
 	if req.Choice == 1 {
-		if result := model.DB.Self.Where("idea_id = ? AND likers_id = ? ", IdeaId, IDEA.UserId); result.Error == nil {
+		if result := model.DB.Self.Where("idea_id = ? AND likers_id = ? ", IdeaId, LikersId); result.Error == nil {
 			//未点赞
 			SendError(c, errno.ErrHaveLike, nil, "", GetLine())
 			return
@@ -87,7 +87,7 @@ func UpdateIdeaLike(c *gin.Context) {
 			model.DB.Self.Model(&i).Where("idea_id = ? ", IdeaId).Update("likes_sum", i.LikesSum)
 
 			//creae message
-			if err := message.CreateMessage(LikersId, IDEA.UserId, 0, 0, IdeaId, i.Content, ""); err != nil {
+			if err := message.CreateMessage(LikersId, IDEA.PublisherId, 0, 0, IdeaId, i.Content, ""); err != nil {
 				SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 				return
 			}

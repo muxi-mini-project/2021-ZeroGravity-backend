@@ -43,7 +43,7 @@ func CreateComment(c *gin.Context) {
 		return
 
 	}
-	IdeaId, err := strconv.Atoi(c.Param("idea_id"))
+	IdeaId, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		SendBadRequest(c, errno.ErrPathParam, nil, err.Error(), GetLine())
 		return

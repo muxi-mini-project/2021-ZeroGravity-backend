@@ -9,7 +9,7 @@ type MessageModel struct {
 	PubUserId int    `json:"pub_user_id" gorm:"column:pub_user_id;" binding:"required"`
 	SubUserId int    `json:"sub_user_id" gorm:"column:sub_user_id;" binding:"required"`
 	Kind      int    `json:"kind" gorm:"column:kind;" binding:"required"`
-	IsRead    int    `json:"is_read" gorm:"column:"is_read;" binding:"required""`
+	IsRead    int    `json:"is_read" gorm:"column:is_read;" binding:"required""`
 	Date      string `json:"date" gorm:"column:date;" binding:"required"`
 	CommentId int    `json:"comment_id" gorm:"column:comment_id;" binding:"required"`
 	Reply     string `json:"reply" gorm:"column:reply;" binding:"required"`

@@ -15,7 +15,7 @@ import (
 	"go.uber.org/zap"
 )
 
-// @Summary Get search results  
+// @Summary Get search results
 // @Description Get search results, the result is a list of users or a list of ideas
 // @Tags search
 // @Accept  json
@@ -61,7 +61,7 @@ func GetSearchResult(c *gin.Context) {
 		return
 	}
 
-	keyword = c.DefaultQuery("page", "")
+	keyword = c.DefaultQuery("keyword", "")
 	//
 	//
 	//

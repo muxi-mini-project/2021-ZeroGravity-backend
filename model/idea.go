@@ -13,7 +13,7 @@ type IdeaModel struct {
 type IdeaInfo struct {
 	Id          int    `json:"idea_id" gorm:"column:idea_id;" binding:"required"`
 	Content     string `json:"content" gorm:"column:content;" binding:"required"`
-	ReleaseDate string `json:"release_date" gorm:"column:release_date;" binding:"required"`
+	ReleaseDate string `json:"releaseDate" gorm:"column:releaseDate;" binding:"required"`
 	LikesSum    int    `json:"likes_sum" gorm:"column:likes_sum;" binding:"required"`
 	CommentSum  int    `json:"comment_sum" gorm:"column:comment_sum;" binding:"required"`
 	Privacy     int    `json:"privacy" gorm:"column:privacy;" binding:"required"`
@@ -64,7 +64,7 @@ func GetIdeaById(id int) (*IdeaInfo, error) {
 	return u, nil
 }
 
-func GetIdeaList(uid, offset, limit, privicy, index, userId int) ([]*IdeaInfo, error) {
+func GetIdeaList(uid, offset, limit, privacy, index, userId int) ([]*IdeaInfo, error) {
 	item := make([]*IdeaInfo, 0)
 
 	query := DB.Self.Table("tbl_idea").
@@ -73,9 +73,9 @@ func GetIdeaList(uid, offset, limit, privicy, index, userId int) ([]*IdeaInfo, e
 		Offset(offset).Limit(limit)
 
 	// privicy 判断
-	if privicy == 0 {
+	if privacy == 0 {
 		// 获取他人想法
-		query = query.Where("tbl_idea.privicy = ?", 0)
+		query = query.Where("tbl_idea.privacy = ?", 0)
 
 		// 判断是否选择用户
 		if userId != 0 {
