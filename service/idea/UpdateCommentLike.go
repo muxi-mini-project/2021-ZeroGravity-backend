@@ -5,14 +5,14 @@ import (
 )
 
 //UpdateCommentLike is used to update comment like
-func UpdateCommentLike(id, uid, uid2 int) error {
+func UpdateCommentLike(id, uid int) error {
 
 	var CommentLike *model.CommentLikeModel
 
 	CommentLike = &model.CommentLikeModel{
 		CommentId: id,
 		LikersId:  uid,
-		BelikedId: uid2,
+		//BelikedId: uid2,
 	}
 
 	return CommentLike.Create()

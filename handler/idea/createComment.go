@@ -26,7 +26,7 @@ import (
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno
 // @Failure 500 {object} errno.Errno
-// @Router /api/v1/idea/detail/:id/comment/:idea_id [post]
+// @Router /api/v1/idea/detail/:id/comment [post]
 // CreateComment is used to post comments 新增评论
 func CreateComment(c *gin.Context) {
 

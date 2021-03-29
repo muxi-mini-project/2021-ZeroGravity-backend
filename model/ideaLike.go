@@ -1,10 +1,10 @@
 package model
 
 type IdeaLikeModel struct {
-	Id        int `json:"id" gorm:"column:id;" binding:"required"`
-	IdeaId    int `json:"idea_id" gorm:"idea_id;" binding:"required"`
-	LikersId  int `json:"likers_id" gorm:"likers_id;" binding:"required"`
-	BelikedId int `json:"beliked_id" gorm:"beliked_id;" binding:"required"`
+	Id       int `json:"id" gorm:"column:id;" binding:"required"`
+	IdeaId   int `json:"idea_id" gorm:"column:idea_id;" binding:"required"`
+	LikersId int `json:"likers_id" gorm:"column:likers_id;" binding:"required"`
+	//BelikedId int `json:"beliked_id" gorm:"beliked_id;" binding:"required"`
 }
 
 func (u *IdeaLikeModel) TableName() string {

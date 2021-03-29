@@ -1,6 +1,7 @@
 package idea
 
 import (
+	"fmt"
 	"strconv"
 
 	. "github.com/2021-ZeroGravity-backend/handler"
@@ -28,6 +29,16 @@ import (
 // UpdateIdeaLike is used to add a like record of idea 新增想法点赞记录
 func UpdateIdeaLike(c *gin.Context) {
 
+	var IdeaLike *model.IdeaLikeModel
+	IdeaLike = &model.IdeaLikeModel{
+		IdeaId:   1,
+		LikersId: 1,
+	}
+	err1 := IdeaLike.Create()
+	fmt.Println("11111111111111")
+	fmt.Println(err1)
+	fmt.Println("11111111111111")
+
 	log.Info("Update Idea Like function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
 
@@ -44,6 +55,7 @@ func UpdateIdeaLike(c *gin.Context) {
 		SendBadRequest(c, errno.ErrPathParam, nil, err.Error(), GetLine())
 		return
 	}
+
 	if req.Choice > 2 || req.Choice < 1 {
 		SendBadRequest(c, errno.ErrChoice, nil, "", GetLine())
 		return
@@ -55,13 +67,13 @@ func UpdateIdeaLike(c *gin.Context) {
 	}
 	//取消点赞
 	if req.Choice == 2 {
-		var Idea model.IdeaLikeModel
-		if result := model.DB.Self.Where("idea_id = ? AND likers_id = ? ", IdeaId, LikersId).First(&Idea); result.Error != nil {
+		var Idealike model.IdeaLikeModel
+		if result := model.DB.Self.Where("idea_id = ? AND likers_id = ? ", IdeaId, LikersId).First(&Idealike); result.Error == nil {
 			//未点赞
-			SendError(c, errno.ErrNotLike, nil, "", GetLine())
+			SendError(c, errno.ErrNotLike, nil, result.Error.Error(), GetLine())
 			return
 		} else {
-			model.DB.Self.Delete(&Idea)
+			model.DB.Self.Delete(&Idealike)
 			var i model.IdeaModel
 			model.DB.Self.Where("idea_id = ? ", IdeaId).First(&i)
 			i.LikesSum--
@@ -71,9 +83,9 @@ func UpdateIdeaLike(c *gin.Context) {
 		}
 	}
 	if req.Choice == 1 {
-		if result := model.DB.Self.Where("idea_id = ? AND likers_id = ? ", IdeaId, LikersId); result.Error == nil {
-			//未点赞
-			SendError(c, errno.ErrHaveLike, nil, "", GetLine())
+		if result := model.DB.Self.Where("idea_id = ? AND likers_id = ? ", IdeaId, LikersId); result.Error != nil {
+			//已点赞
+			SendError(c, errno.ErrHaveLike, nil, result.Error.Error(), GetLine())
 			return
 		} else {
 			// 调用服务
@@ -81,6 +93,7 @@ func UpdateIdeaLike(c *gin.Context) {
 				SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 				return
 			}
+			//fmt.Println("777777777777777777777")
 			var i model.IdeaModel
 			model.DB.Self.Where("idea_id = ? ", IdeaId).First(&i)
 			i.LikesSum--

@@ -36,12 +36,24 @@ func DeleteComment(c *gin.Context) {
 		SendBadRequest(c, errno.ErrPathParam, nil, err.Error(), GetLine())
 		return
 	}
+	uid := c.MustGet("userID").(int)
 	CommentId, err := strconv.Atoi(c.Param("comment_id"))
 	if err != nil {
 		SendBadRequest(c, errno.ErrPathParam, nil, err.Error(), GetLine())
 		return
 	}
-	uid := c.MustGet("userID").(int)
+
+	var com model.CommentModel
+	err = model.DB.Self.Where("id = ? ", CommentId).First(&com).Error
+	if err != nil {
+		SendBadRequest(c, errno.ErrDatabase, nil, err.Error(), GetLine())
+		return
+	}
+	if com.CommenterId != uid {
+		SendError(c, errno.ErrMatch, nil, "", GetLine())
+		return
+	}
+
 	// 调用服务
 	if err := model.DeleteComment(CommentId, uid); err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())

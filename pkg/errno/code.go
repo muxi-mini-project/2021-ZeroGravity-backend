@@ -27,4 +27,6 @@ var (
 	ErrChoice   = &Errno{Code: 10002, Message: "Fail: 1 == 点赞， 2 == 取消点赞."}
 	ErrHaveLike = &Errno{Code: 40003, Message: "已点赞"}
 	ErrNotLike  = &Errno{Code: 40003, Message: "未点赞"}
+
+	ErrMatch = &Errno{Code: 40004, Message: "与该user不匹配"}
 )

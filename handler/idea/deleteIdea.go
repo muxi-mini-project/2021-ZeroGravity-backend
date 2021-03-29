@@ -10,7 +10,7 @@ import (
 	"go.uber.org/zap"
 )
 
-// @Summary Add ideas  
+// @Summary Add ideas
 // @Description Add a thought record to the database
 // @Tags idea
 // @Accept  json
@@ -27,11 +27,10 @@ func DeleteIdea(c *gin.Context) {
 
 	log.Info("Delete Idea function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
-		var userid int
-	
+	var userid int
 
 	// 从 token 获取 userid
-	userid= c.MustGet("userID").(int)
+	userid = c.MustGet("userID").(int)
 
 	var req DeleteIdeaRequest
 
@@ -40,6 +39,15 @@ func DeleteIdea(c *gin.Context) {
 		return
 	}
 
+	Idea, err := model.GetIdeaById(req.IdeaId)
+	if err != nil {
+		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
+		return
+	}
+	if Idea.UserId != userid {
+		SendError(c, errno.ErrMatch, nil, "", GetLine())
+		return
+	}
 	// 调用服务
 	if err := model.DeleteIdea(req.IdeaId, userid); err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())

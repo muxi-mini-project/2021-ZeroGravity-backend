@@ -50,46 +50,47 @@ func UpdateCommentLike(c *gin.Context) {
 		return
 	}
 
-	var COMment model.CommentInfo
-	result := model.DB.Self.Where("comment_id = ? ", CommentId).First(&COMment)
+	var COMment model.CommentModel
+	result := model.DB.Self.Where("id = ? ", CommentId).First(&COMment)
 	if result.Error != nil {
+		SendError(c, errno.ErrDatabase, nil, result.Error.Error(), GetLine())
 		return
 	}
 	//取消点赞
 	if req.Choice == 2 {
-		var Idea model.IdeaLikeModel
-		if result := model.DB.Self.Where("comment_id = ? AND likers_id = ? ", CommentId, LikersId).First(&Idea); result.Error != nil {
+		var comlike model.CommentLikeModel
+		if result := model.DB.Self.Where("comment_id = ? AND likers_id = ? ", CommentId, LikersId).First(&comlike); result.Error == nil {
 			//未点赞
 			SendError(c, errno.ErrNotLike, nil, result.Error.Error(), GetLine())
 			return
 		} else {
-			model.DB.Self.Delete(&Idea)
+			model.DB.Self.Delete(&comlike)
 			var i model.CommentModel
 			model.DB.Self.Where("id = ? ", CommentId).First(&i)
 			i.LikesSum--
-			model.DB.Self.Model(&i).Where("id = ? ", CommentId).Update(i)
+			model.DB.Self.Model(&i).Where("id = ? ", CommentId).Update("likes_sum", i.LikesSum)
 			SendResponse(c, errno.OK, nil)
 			return
 		}
 	}
 	if req.Choice == 1 {
-		if result := model.DB.Self.Where("comment_id = ? AND likers_id = ? ", CommentId, LikersId); result.Error == nil {
+		if result := model.DB.Self.Where("comment_id = ? AND likers_id = ? ", CommentId, LikersId); result.Error != nil {
 			//已点赞
 			SendError(c, errno.ErrHaveLike, nil, result.Error.Error(), GetLine())
 			return
 		} else {
 			// 调用服务
-			if err := idea.UpdateCommentLike(CommentId, LikersId, COMment.UserId); err != nil {
+			if err := idea.UpdateCommentLike(CommentId, LikersId); err != nil {
 				SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 				return
 			}
 			var i model.CommentModel
 			model.DB.Self.Where("id = ? ", CommentId).First(&i)
 			i.LikesSum++
-			model.DB.Self.Model(&i).Where("id = ? ", CommentId).Update(i)
+			model.DB.Self.Model(&i).Where("id = ? ", CommentId).Update("likes_sum", i.LikesSum)
 
 			//creae message
-			if err := message.CreateMessage(LikersId, COMment.UserId, 0, CommentId, 0, i.Content, ""); err != nil {
+			if err := message.CreateMessage(LikersId, COMment.CommenterId, 0, CommentId, 0, i.Content, ""); err != nil {
 				SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 				return
 			}
