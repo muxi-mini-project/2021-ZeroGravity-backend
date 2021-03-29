@@ -1,6 +1,8 @@
 package idea
 
 import (
+	"strconv"
+
 	. "github.com/2021-ZeroGravity-backend/handler"
 	"github.com/2021-ZeroGravity-backend/log"
 	"github.com/2021-ZeroGravity-backend/model"
@@ -15,7 +17,6 @@ import (
 // @Tags idea
 // @Accept  json
 // @Produce  json
-// @Param req body idea.CreateIdeaRequest true  "Add a thought record to the database"
 // @Param token header string true  "userid"
 // @Success 200 "成功"
 // @Failure 400 {object} errno.Errno
@@ -32,14 +33,12 @@ func DeleteIdea(c *gin.Context) {
 	// 从 token 获取 userid
 	userid = c.MustGet("userID").(int)
 
-	var req DeleteIdeaRequest
-
-	if err := c.ShouldBindJSON(&req); err != nil {
-		SendBadRequest(c, errno.ErrBind, nil, err.Error(), GetLine())
+	IdeaId, err := strconv.Atoi(c.Param("id"))
+	if err != nil {
+		SendBadRequest(c, errno.ErrPathParam, nil, err.Error(), GetLine())
 		return
 	}
-
-	Idea, err := model.GetIdeaById(req.IdeaId)
+	Idea, err := model.GetIdeaById(IdeaId)
 	if err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
@@ -49,7 +48,7 @@ func DeleteIdea(c *gin.Context) {
 		return
 	}
 	// 调用服务
-	if err := model.DeleteIdea(req.IdeaId, userid); err != nil {
+	if err := model.DeleteIdea(IdeaId, userid); err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}
