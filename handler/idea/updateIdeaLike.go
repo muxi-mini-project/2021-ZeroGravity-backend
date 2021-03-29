@@ -1,7 +1,6 @@
 package idea
 
 import (
-	"fmt"
 	"strconv"
 
 	. "github.com/2021-ZeroGravity-backend/handler"
@@ -28,16 +27,6 @@ import (
 // @Router /api/v1/idea/detail/:id/like [put]
 // UpdateIdeaLike is used to add a like record of idea 新增想法点赞记录
 func UpdateIdeaLike(c *gin.Context) {
-
-	var IdeaLike *model.IdeaLikeModel
-	IdeaLike = &model.IdeaLikeModel{
-		IdeaId:   1,
-		LikersId: 1,
-	}
-	err1 := IdeaLike.Create()
-	fmt.Println("11111111111111")
-	fmt.Println(err1)
-	fmt.Println("11111111111111")
 
 	log.Info("Update Idea Like function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
@@ -93,7 +82,6 @@ func UpdateIdeaLike(c *gin.Context) {
 				SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 				return
 			}
-			//fmt.Println("777777777777777777777")
 			var i model.IdeaModel
 			model.DB.Self.Where("idea_id = ? ", IdeaId).First(&i)
 			i.LikesSum--
