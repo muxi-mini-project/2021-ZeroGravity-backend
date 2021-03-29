@@ -13,6 +13,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
+
 // @Summary Add thoughts like record
 // @Description Add an idea and like record to the database
 // @Tags idea
@@ -61,11 +62,10 @@ func UpdateIdeaLike(c *gin.Context) {
 			return
 		} else {
 			model.DB.Self.Delete(&Idea)
-			var i model.IdeaInfo
+			var i model.IdeaModel
 			model.DB.Self.Where("idea_id = ? ", IdeaId).First(&i)
-			i2 := i
-			i2.LikesSum--
-			model.DB.Self.Model(&i).Update(i2)
+			i.LikesSum--
+			model.DB.Self.Model(&i).Where("idea_id = ? ", IdeaId).Update("likes_sum", i.LikesSum)
 			SendResponse(c, errno.OK, nil)
 			return
 		}
@@ -81,11 +81,10 @@ func UpdateIdeaLike(c *gin.Context) {
 				SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 				return
 			}
-			var i model.IdeaInfo
+			var i model.IdeaModel
 			model.DB.Self.Where("idea_id = ? ", IdeaId).First(&i)
-			i2 := i
-			i2.LikesSum++
-			model.DB.Self.Model(&i).Update(i2)
+			i.LikesSum--
+			model.DB.Self.Model(&i).Where("idea_id = ? ", IdeaId).Update("likes_sum", i.LikesSum)
 
 			//creae message
 			if err := message.CreateMessage(LikersId, IDEA.UserId, 0, 0, IdeaId, i.Content, ""); err != nil {

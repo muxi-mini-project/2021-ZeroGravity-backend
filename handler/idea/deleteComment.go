@@ -13,8 +13,8 @@ import (
 	"go.uber.org/zap"
 )
 
-// @Summary Delete comment   
-// @Description Delete the comment record from the database 
+// @Summary Delete comment
+// @Description Delete the comment record from the database
 // @Tags idea
 // @Accept  json
 // @Produce  json
@@ -36,17 +36,21 @@ func DeleteComment(c *gin.Context) {
 		SendBadRequest(c, errno.ErrPathParam, nil, err.Error(), GetLine())
 		return
 	}
+	CommentId, err := strconv.Atoi(c.Param("comment_id"))
+	if err != nil {
+		SendBadRequest(c, errno.ErrPathParam, nil, err.Error(), GetLine())
+		return
+	}
 	uid := c.MustGet("userID").(int)
 	// 调用服务
-	if err := model.DeleteComment(id, uid); err != nil {
+	if err := model.DeleteComment(CommentId, uid); err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}
-	var i model.IdeaInfo
+	var i model.IdeaModel
 	model.DB.Self.Where("idea_id = ? ", id).First(&i)
-	i2 := i
-	i2.CommentSum--
-	model.DB.Self.Model(&i).Update(i2)
+	i.CommentSum--
+	model.DB.Self.Model(&i).Where("idea_id = ? ", id).Update("comment_sum", i.CommentSum)
 	SendResponse(c, errno.OK, nil)
 
 }
