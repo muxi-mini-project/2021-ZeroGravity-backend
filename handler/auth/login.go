@@ -13,7 +13,7 @@ import (
 	"go.uber.org/zap"
 )
 
-// @Summary The user enters the account and password and then logs in 
+// @Summary The user enters the account and password and then logs in
 // @Description User login
 // @Tags auth
 // @Accept  json
@@ -43,14 +43,14 @@ func Login(c *gin.Context) {
 	}
 
 	// 调用服务
-	var token string
-	token, err = user.Login(req.Account, string(decodePassword))
+	token, userId, err := user.Login(req.Account, string(decodePassword))
 	if err != nil {
 		SendError(c, errno.ErrPasswordIncorrect, nil, err.Error(), GetLine())
 		return
 	}
 
 	SendResponse(c, errno.OK, &LoginResponse{
-		Token: token,
+		Token:  token,
+		UserId: userId,
 	})
 }

@@ -10,13 +10,13 @@ import (
 	"github.com/2021-ZeroGravity-backend/util"
 )
 
-func Login(account  , accountPassword string) (string, error) {
+func Login(account, accountPassword string) (string, int, error) {
 	user, err := model.GetUserByAccountAndPassword(account, accountPassword)
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
-			return "", errors.New("user doesn't exist")
+			return "", 0, errors.New("user doesn't exist")
 		}
-		return "", err
+		return "", 0, err
 	}
 
 	// 生成 auth token
@@ -25,8 +25,8 @@ func Login(account  , accountPassword string) (string, error) {
 		Expired: util.GetExpiredTime(),
 	})
 	if err != nil {
-		return "", err
+		return "", 0, err
 	}
 
-	return token, nil
+	return token, user.Id, nil
 }

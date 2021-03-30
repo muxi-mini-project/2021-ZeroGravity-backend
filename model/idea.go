@@ -44,8 +44,7 @@ func (u *IdeaModel) Create() error {
 
 func DeleteIdea(id, uid int) error {
 	u := &IdeaModel{}
-	u.IdeaId = id
-	d := DB.Self.Where("publisher_id = ?", uid).Delete(u)
+	d := DB.Self.Where("publisher_id = ? AND idea_id = ?", uid, id).Delete(u)
 	return d.Error
 }
 

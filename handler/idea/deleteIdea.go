@@ -53,6 +53,12 @@ func DeleteIdea(c *gin.Context) {
 		return
 	}
 
+	// TODO：事务
+	if err := model.DeleteCollection(IdeaId, userid); err != nil {
+		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
+		return
+	}
+
 	SendResponse(c, errno.OK, nil)
 
 }

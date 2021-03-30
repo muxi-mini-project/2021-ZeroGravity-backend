@@ -58,7 +58,10 @@ func CreateComment(c *gin.Context) {
 	var i model.IdeaModel
 	model.DB.Self.Where("idea_id = ? ", IdeaId).First(&i)
 	i.CommentSum++
-	model.DB.Self.Model(&i).Where("idea_id = ? ", IdeaId).Update("comment_sum", i.CommentSum)
+	if err := model.DB.Self.Model(&i).Where("idea_id = ? ", IdeaId).Update("comment_sum", i.CommentSum).Error; err != nil {
+		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
+		return
+	}
 
 	if err := message.CreateMessage(req.CommentedId, userid, 1, 0, IdeaId, i.Content, req.Content); err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())

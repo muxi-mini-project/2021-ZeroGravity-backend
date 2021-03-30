@@ -16,8 +16,7 @@ func (u *CollectionModel) Create() error {
 
 func DeleteCollection(id, uid int) error {
 	u := &CollectionModel{}
-	u.Id = id
-	d := DB.Self.Where("collector_id = ?", uid).Delete(u)
+	d := DB.Self.Where("collector_id = ? AND idea_id = ?", uid, id).Delete(u)
 	return d.Error
 }
 

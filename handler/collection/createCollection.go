@@ -3,13 +3,15 @@ package collection
 import (
 	. "github.com/2021-ZeroGravity-backend/handler"
 	"github.com/2021-ZeroGravity-backend/log"
+	"github.com/2021-ZeroGravity-backend/model"
 	"github.com/2021-ZeroGravity-backend/pkg/errno"
 	"github.com/2021-ZeroGravity-backend/service/idea"
 	"github.com/2021-ZeroGravity-backend/util"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
-// @Summary Add favorite record  
+
+// @Summary Add favorite record
 // @Description Add a new favorite record to the database
 // @Tags collection
 // @Accept  json
@@ -25,10 +27,8 @@ import (
 func CreateCollection(c *gin.Context) {
 	log.Info("Create Collection function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
-	 
 
-    var userid int
-	
+	var userid int
 
 	// 从 token 获取 userid
 	userid = c.MustGet("userID").(int)
@@ -40,10 +40,15 @@ func CreateCollection(c *gin.Context) {
 
 	}
 	// 调用服务
+	_, err := model.GetIdeaById(req.IdeaId)
+	if err != nil {
+		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
+		return
+	}
 
 	if err := idea.CreateCollection(req.IdeaId, userid); err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}
-SendResponse(c, errno.OK, nil)
+	SendResponse(c, errno.OK, nil)
 }

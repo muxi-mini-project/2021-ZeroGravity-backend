@@ -18,10 +18,10 @@ func GetCollection(id, offset, limit int) ([]*model.IdeaListItem, error) {
 	// 合并
 	listItem := make([]*model.IdeaListItem, 0)
 	lenLike := len(ideaLikeList)
-	lenList := len(idList)
+	lenList := len(list)
 	i := 0 // list 的指针
 	j := 0 // like 的指针
-	for i != lenList && j != lenLike {
+	for i < lenList && j < lenLike {
 		if ideaLikeList[j].IdeaId > list[i].Id { // 如果 likelist 当前 id 比 idealist id 大，说明不在范围内，直接跳过。
 			j++ // 只有 j 索引往后移动
 			continue
@@ -63,7 +63,7 @@ func GetCollection(id, offset, limit int) ([]*model.IdeaListItem, error) {
 
 	// 若 idealist 没走完，需要把剩下的 idea 插入结果
 	if i < lenList {
-		for i != lenList {
+		for i < lenList {
 			item := list[i]
 			listItem = append(listItem, &model.IdeaListItem{
 				Id:          item.Id,
