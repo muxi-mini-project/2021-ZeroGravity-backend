@@ -9,7 +9,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
-// @Summary Get message reminder  
+
+// @Summary Get message reminder
 // @Description Return to the front-end message prompt
 // @Tags message
 // @Accept  json
@@ -34,7 +35,7 @@ func GetMessageTip(c *gin.Context) {
 		return
 	}
 
-	var resp *GetMessageTipResponse
+	resp := &GetMessageTipResponse{}
 	if count != 0 {
 		resp.HaveMessage = true
 	}

@@ -26,7 +26,7 @@ type DeleteIdeaRequest struct {
 	IdeaId int `json:"idea_id"`
 }
 
-// UpdateIdeaLikeRequest ... 想法点赞/取消请求
+// UpdateLikeRequest ... 想法点赞/取消请求
 type UpdateLikeRequest struct {
 	Choice int `json:"choice"`
 }
