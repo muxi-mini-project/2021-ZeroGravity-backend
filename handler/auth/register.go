@@ -12,12 +12,12 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
-// @Summary User enters account and password to register 
-// @Description User register
+// @Summary  用户输入账号和密码登录
+// @Description 用户注册
 // @Tags auth
 // @Accept  json
 // @Produce  json
-// @Param req body auth.CreateUserRequest true "The user enters the account and password and then register in "
+// @Param req body auth.CreateUserRequest true "Account--账户 AccountPassword--账户密码	NickName--昵称	Avatar--头像 "
 // @Success 200 "成功"
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno

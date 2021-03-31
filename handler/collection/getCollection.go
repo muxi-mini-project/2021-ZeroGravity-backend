@@ -12,14 +12,15 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
-// @Summary Get a user's favorite record table  
-// @Description Get a user's favorite record table and return it to the front end 
+
+// @Summary  查询用户的收藏列表
+// @Description 查看用户的收藏列表
 // @Tags collection
 // @Accept  json
 // @Produce  json
-// @Param token header string true  "id"
-// @Param limit query  int true "limit"
-// @Param page  query  int true "page"
+// @Param token header string true  "userid用户ID"
+// @Param limit query  int true "limit--偏移量指定开始返回记录之前要跳过的记录数 "
+// @Param page  query  int true "page--限制指定要检索的记录数 "
 // @Success 200 {object} collection.IdeaResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno

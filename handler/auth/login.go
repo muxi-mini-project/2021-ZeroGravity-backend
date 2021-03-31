@@ -13,12 +13,12 @@ import (
 	"go.uber.org/zap"
 )
 
-// @Summary The user enters the account and password and then logs in
-// @Description User login
+// @Summary 用户输入账号和密码登录 
+// @Description 登录
 // @Tags auth
 // @Accept  json
 // @Produce  json
-// @Param req body auth.LoginRequest true "The user enters the account and password and then logs in "
+// @Param req body auth.LoginRequest true " Account 账户   AccountPassword 密码   "
 // @Success 200 {object} LoginResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno

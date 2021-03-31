@@ -10,14 +10,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
-
-// @Summary Add favorite record
-// @Description Add a new favorite record to the database
+// @Summary 添加收藏记录  
+// @Description 新增收藏记录
 // @Tags collection
 // @Accept  json
 // @Produce  json
-// @Param token header string true  "userid"
-// @Param req body collection.CreateCollectionRequest  true "Add a new favorite record to the database "
+// @Param token header string true  "userid用户的ID"
+// @Param req body collection.CreateCollectionRequest  true "IdeaId用户收藏的想法ID"
 // @Success 200 "成功"
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno

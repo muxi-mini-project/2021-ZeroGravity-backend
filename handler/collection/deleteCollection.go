@@ -9,13 +9,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
-// @Summary Delete favorites   
-// @Description Delete favorite records from the database 
+// @Summary 用户删除收藏记录   
+// @Description 删除收藏记录 
 // @Tags collection
 // @Accept  json
 // @Produce  json
-// @Param token header string true  "userid"
-// @Param  req body collection.DeleteCollectionRequest  true "Delete favorite records from the database  "
+// @Param token header string true  "userid用户的ID"
+// @Param  req body collection.DeleteCollectionRequest  true "IdeaId用户收藏的想法ID"
 // @Success 200 "成功"
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno
