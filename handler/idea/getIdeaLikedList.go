@@ -13,14 +13,14 @@ import (
 	"go.uber.org/zap"
 )
 
-// @Summary Get a list of ideas liked by users  
-// @Description Return to the list of ideas that the front-end user likes
+// @Summary 获取用户个人发布的想法被点赞的情况  
+// @Description  获取想法被点赞的信息表
 // @Tags idea
 // @Accept  json
 // @Produce  json
-// @Param token header string true  "UserId"
-// @Param limit query  int true "limit"
-// @Param page  query  int true "page"
+// @Param token header string true  "UserId--用户ID"
+// @Param limit query  int true "limit--偏移量指定开始返回记录之前要跳过的记录数"
+// @Param page  query  int true "page--限制指定要检索的记录数 "
 // @Success 200 {object}  idea.IdeaResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno

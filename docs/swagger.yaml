@@ -21,6 +21,8 @@ definitions:
     properties:
       token:
         type: string
+      user_id:
+        type: integer
     type: object
   collection.CreateCollectionRequest:
     properties:
@@ -68,6 +70,12 @@ definitions:
     properties:
       content:
         type: string
+      privacy:
+        description: 0->公开 1->隐私
+        type: integer
+      space:
+        description: 1->情绪 2->脑洞 3->沉思 4->探梦
+        type: integer
     type: object
   idea.IdeaResponse:
     properties:
@@ -274,9 +282,9 @@ paths:
     post:
       consumes:
       - application/json
-      description: User login
+      description: 登录
       parameters:
-      - description: 'The user enters the account and password and then logs in '
+      - description: ' Account 账户   AccountPassword 密码   '
         in: body
         name: req
         required: true
@@ -301,16 +309,16 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/errno.Errno'
-      summary: The user enters the account and password and then logs in
+      summary: 用户输入账号和密码登录
       tags:
       - auth
   /api/v1/auth/api/v1/register:
     post:
       consumes:
       - application/json
-      description: User register
+      description: 用户注册
       parameters:
-      - description: 'The user enters the account and password and then register in '
+      - description: "Account--账户 AccountPassword--账户密码\tNickName--昵称\tAvatar--头像 "
         in: body
         name: req
         required: true
@@ -321,10 +329,6 @@ paths:
       responses:
         "200":
           description: 成功
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/errno.Errno'
         "404":
           description: Not Found
           schema:
@@ -333,21 +337,21 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/errno.Errno'
-      summary: User enters account and password to register
+      summary: 用户输入账号和密码注册
       tags:
       - auth
   /api/v1/collection:
     delete:
       consumes:
       - application/json
-      description: Delete favorite records from the database
+      description: 删除收藏记录
       parameters:
-      - description: userid
+      - description: userid--用户的ID
         in: header
         name: token
         required: true
         type: string
-      - description: 'Delete favorite records from the database  '
+      - description: IdeaId用户收藏的想法ID
         in: body
         name: req
         required: true
@@ -370,25 +374,25 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/errno.Errno'
-      summary: Delete favorites
+      summary: 用户删除收藏记录
       tags:
       - collection
     get:
       consumes:
       - application/json
-      description: Get a user's favorite record table and return it to the front end
+      description: 查看用户的收藏列表
       parameters:
-      - description: id
+      - description: userid用户ID
         in: header
         name: token
         required: true
         type: string
-      - description: limit
+      - description: 'limit--偏移量指定开始返回记录之前要跳过的记录数 '
         in: query
         name: limit
         required: true
         type: integer
-      - description: page
+      - description: 'page--限制指定要检索的记录数 '
         in: query
         name: page
         required: true
@@ -412,20 +416,20 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/errno.Errno'
-      summary: Get a user's favorite record table
+      summary: 查询用户的收藏列表
       tags:
       - collection
     post:
       consumes:
       - application/json
-      description: Add a new favorite record to the database
+      description: 新增收藏记录
       parameters:
-      - description: userid
+      - description: userid--用户的ID
         in: header
         name: token
         required: true
         type: string
-      - description: 'Add a new favorite record to the database '
+      - description: IdeaId用户收藏的想法ID
         in: body
         name: req
         required: true
@@ -448,21 +452,21 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/errno.Errno'
-      summary: Add favorite record
+      summary: 添加收藏记录
       tags:
       - collection
   /api/v1/idea:
     post:
       consumes:
       - application/json
-      description: Add a thought record to the database
+      description: 新增想法
       parameters:
-      - description: userid
+      - description: userid--用户ID
         in: header
         name: token
         required: true
         type: string
-      - description: Add a thought record to the database
+      - description: Content 想法内容 || Space  1->情绪 2->脑洞 3->沉思 4->探梦 || Privacy  0->公开 1->隐私
         in: body
         name: req
         required: true
@@ -485,21 +489,21 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/errno.Errno'
-      summary: Add ideas
+      summary: 发布想法
       tags:
       - idea
   /api/v1/idea/comment/:id/like:
     put:
       consumes:
       - application/json
-      description: Add a comment and like record to the database
+      description: 新增评论点赞
       parameters:
-      - description: LikersId
+      - description: LikersId点赞者的ID
         in: header
         name: token
         required: true
         type: string
-      - description: CommentId
+      - description: CommentId 评论的ID
         in: path
         name: id
         required: true
@@ -521,22 +525,16 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/errno.Errno'
-      summary: Add comment and like record
+      summary: 上传对用户发布的评论的点赞
       tags:
       - idea
   /api/v1/idea/detail/:id:
     delete:
       consumes:
       - application/json
-      description: Add a thought record to the database
+      description: 删除想法
       parameters:
-      - description: Add a thought record to the database
-        in: body
-        name: req
-        required: true
-        schema:
-          $ref: '#/definitions/idea.CreateIdeaRequest'
-      - description: userid
+      - description: userid--用户ID
         in: header
         name: token
         required: true
@@ -558,20 +556,20 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/errno.Errno'
-      summary: Add ideas
+      summary: 删除想法
       tags:
       - idea
     get:
       consumes:
       - application/json
-      description: Return to the idea form obtained by the front end
+      description: 根据用户ID获取这个ID下发布的想法
       parameters:
-      - description: id
+      - description: id--根据这个id判断发布的想法是否为私密，id为1是显示想法为私密发布，你无权查看
         in: path
         name: id
         required: true
         type: integer
-      - description: uid
+      - description: uid--用户ID
         in: header
         name: token
         required: true
@@ -595,31 +593,31 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/errno.Errno'
-      summary: Get ideas
+      summary: 获取想法
       tags:
       - idea
   /api/v1/idea/detail/:id/comment:
     get:
       consumes:
       - application/json
-      description: Return to the comment form obtained by the front end
+      description: 想法的评论列表
       parameters:
-      - description: uid
+      - description: uid--用户ID
         in: header
         name: token
         required: true
         type: string
-      - description: id
+      - description: id--被评论的想法ID
         in: path
         name: id
         required: true
         type: integer
-      - description: limit
+      - description: limit--偏移量指定开始返回记录之前要跳过的记录数
         in: query
         name: limit
         required: true
         type: integer
-      - description: page
+      - description: 'page--限制指定要检索的记录数 '
         in: query
         name: page
         required: true
@@ -643,63 +641,26 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/errno.Errno'
-      summary: Get comments
+      summary: 发布的想法下对应的评论
       tags:
       - idea
-  /api/v1/idea/detail/:id/comment/:comment_id:
-    delete:
-      consumes:
-      - application/json
-      description: Delete the comment record from the database
-      parameters:
-      - description: id
-        in: path
-        name: id
-        required: true
-        type: string
-      - description: uid
-        in: header
-        name: token
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: 成功
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/errno.Errno'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/errno.Errno'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/errno.Errno'
-      summary: Delete comment
-      tags:
-      - idea
-  /api/v1/idea/detail/:id/comment/:idea_id:
     post:
       consumes:
       - application/json
       description: Add comment records to the database
       parameters:
-      - description: userid
+      - description: userid--用户的ID
         in: header
         name: token
         required: true
         type: string
-      - description: Add comment records to the database
+      - description: CommentedId 被评论者的ID || Content 评论内容
         in: body
         name: req
         required: true
         schema:
           $ref: '#/definitions/idea.CreateCommentRequest'
-      - description: IdeaId
+      - description: IdeaId--想法ID
         in: path
         name: idea_id
         required: true
@@ -724,13 +685,18 @@ paths:
       summary: Add comment
       tags:
       - idea
-  /api/v1/idea/detail/:id/like:
-    put:
+  /api/v1/idea/detail/:id/comment/:comment_id:
+    delete:
       consumes:
       - application/json
-      description: Add an idea and like record to the database
+      description: 删除评论
       parameters:
-      - description: 'LikersId '
+      - description: id--评论的ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: uid --用户的ID
         in: header
         name: token
         required: true
@@ -752,26 +718,57 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/errno.Errno'
-      summary: Add thoughts like record
+      summary: 删除用户自己的评论
+      tags:
+      - idea
+  /api/v1/idea/detail/:id/like:
+    put:
+      consumes:
+      - application/json
+      description: 新增对想法的点赞
+      parameters:
+      - description: 'LikersId点赞者的ID '
+        in: header
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 成功
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/errno.Errno'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/errno.Errno'
+      summary: 上传想法点赞信息
       tags:
       - idea
   /api/v1/idea/liked:
     get:
       consumes:
       - application/json
-      description: Return to the list of ideas that the front-end user likes
+      description: 获取想法被点赞的信息表
       parameters:
-      - description: UserId
+      - description: UserId--用户ID
         in: header
         name: token
         required: true
         type: string
-      - description: limit
+      - description: limit--偏移量指定开始返回记录之前要跳过的记录数
         in: query
         name: limit
         required: true
         type: integer
-      - description: page
+      - description: 'page--限制指定要检索的记录数 '
         in: query
         name: page
         required: true
@@ -795,41 +792,41 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/errno.Errno'
-      summary: Get a list of ideas liked by users
+      summary: 获取用户个人发布的想法被点赞的情况
       tags:
       - idea
   /api/v1/idea/list:
     get:
       consumes:
       - application/json
-      description: Return a list of ideas to front-end users
+      description: 显示用户发布的想法
       parameters:
-      - description: uid
+      - description: uid--用户ID
         in: header
         name: token
         required: true
         type: string
-      - description: limit
+      - description: limit--偏移量指定开始返回记录之前要跳过的记录数
         in: query
         name: limit
         required: true
         type: integer
-      - description: page
+      - description: 'page--限制指定要检索的记录数 '
         in: query
         name: page
         required: true
         type: integer
-      - description: userId
+      - description: userId--用户ID
         in: query
         name: userId
         required: true
         type: integer
-      - description: privicy
+      - description: privicy 获取想法的私有策略 0->不获取私有 1->获取私有 默认不获取 || 若获取则默认为获取自己的想法，需要服务判断 uid
         in: query
         name: privicy
         required: true
         type: integer
-      - description: index
+      - description: index--获取排序规则 0->默认时间排序 1->热度排序
         in: query
         name: index
         required: true
@@ -841,26 +838,26 @@ paths:
           description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
           schema:
             $ref: '#/definitions/idea.IdeaResponse'
-      summary: Get a list of ideas
+      summary: 进入空间后看到的想法
       tags:
       - idea
   /api/v1/message/comment:
     get:
       consumes:
       - application/json
-      description: Information returned to front-end user reviews
+      description: 拉取评论我的消息
       parameters:
-      - description: Information returned to front-end user information
+      - description: 后端给前端的Token
         in: header
         name: token
         required: true
         type: string
-      - description: limit
+      - description: limit--偏移量指定开始返回记录之前要跳过的记录数
         in: query
         name: limit
         required: true
         type: integer
-      - description: page
+      - description: page--限制指定要检索的记录数
         in: query
         name: page
         required: true
@@ -884,26 +881,26 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/errno.Errno'
-      summary: Get user comment information
+      summary: 拉取评论我的消息
       tags:
       - message
   /api/v1/message/like:
     get:
       consumes:
       - application/json
-      description: Like information returned to front-end users
+      description: 获取点赞我的信息
       parameters:
       - description: Like information returned to front-end users
         in: header
         name: token
         required: true
         type: string
-      - description: limit
+      - description: limit--偏移量指定开始返回记录之前要跳过的记录数
         in: query
         name: limit
         required: true
         type: integer
-      - description: page
+      - description: page--限制指定要检索的记录数
         in: query
         name: page
         required: true
@@ -927,16 +924,16 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/errno.Errno'
-      summary: Get users' likes
+      summary: 获取点赞我的信息
       tags:
       - message
   /api/v1/message/readall:
     put:
       consumes:
       - application/json
-      description: Change the status of the messages that the user has viewed to read
+      description: 修改信息为已读
       parameters:
-      - description: Change the status of the messages that the user has viewed to read
+      - description: 后端给前端的token
         in: header
         name: token
         required: true
@@ -958,16 +955,14 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/errno.Errno'
-      summary: Modify the information as read
-      tags:
-      - message
+      summary: 修改信息为已读
   /api/v1/message/tip:
     get:
       consumes:
       - application/json
-      description: Return to the front-end message prompt
+      description: 获取消息提示
       parameters:
-      - description: Return to the front-end message prompt
+      - description: 后端给前端的Token
         in: header
         name: token
         required: true
@@ -991,22 +986,22 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/errno.Errno'
-      summary: Get message reminder
+      summary: 获取消息提示
       tags:
       - message
   /api/v1/report:
     post:
       consumes:
       - application/json
-      description: Initiate a request to report a user
+      description: 举报用户
       parameters:
-      - description: Initiate a request to report a user
+      - description: UserID--被举报的用户ID || Kind-- ||   Reason--原因   || CommentId --评论的ID|| ideaId--想法的ID
         in: body
         name: req
         required: true
         schema:
           $ref: '#/definitions/report.CreateReportRequest'
-      - description: userId
+      - description: userId--用户ID
         in: header
         name: token
         required: true
@@ -1028,21 +1023,21 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/errno.Errno'
-      summary: New report request
+      summary: 举报用户
       tags:
       - report
   /api/v1/search:
     delete:
       consumes:
       - application/json
-      description: Delete the history
+      description: 删除查询历史
       parameters:
-      - description: userId
+      - description: userId--用户ID
         in: path
         name: id
         required: true
         type: integer
-      - description: ' delete history'
+      - description: delete history删除历史记录
         in: body
         name: h
         required: true
@@ -1065,30 +1060,30 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/errno.Errno'
-      summary: Delete History
+      summary: 删除查询历史
       tags:
       - search
     get:
       consumes:
       - application/json
-      description: Get search results, the result is a list of users or a list of ideas
+      description: 获取搜索结果，结果为用户列表或想法列表
       parameters:
-      - description: ' search by page'
+      - description: page--限制指定要检索的记录数
         in: query
         name: page
         required: true
         type: integer
-      - description: ' search by limit'
+      - description: limit--偏移量指定开始返回记录之前要跳过的记录数
         in: query
         name: limit
         required: true
         type: integer
-      - description: ' search by target'
+      - description: 搜索目标，0->idea 1->user 默认搜索 idea
         in: query
         name: target
         required: true
         type: integer
-      - description: idea key word
+      - description: 关键字
         in: query
         name: keyword
         required: true
@@ -1098,7 +1093,7 @@ paths:
         name: id
         required: true
         type: integer
-      - description: Get token
+      - description: 后端给前端的token
         in: header
         name: token
         required: true
@@ -1122,16 +1117,16 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/errno.Errno'
-      summary: Get search results
+      summary: 获取搜索结果
       tags:
       - search
   /api/v1/search/histories:
     get:
       consumes:
       - application/json
-      description: Delete the history
+      description: 获取历史记录
       parameters:
-      - description: userId
+      - description: userId--用户ID
         in: path
         name: id
         required: true
@@ -1157,21 +1152,21 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/errno.Errno'
-      summary: Get Histories
+      summary: 获取历史记录
       tags:
       - search
   /api/v1/user:
     put:
       consumes:
       - application/json
-      description: Update user information in the database
+      description: 更改用户信息
       parameters:
-      - description: UserId
+      - description: UserId--用户ID
         in: header
         name: token
         required: true
         type: string
-      - description: Update user information in the database
+      - description: Avatar头像|| NickName昵称
         in: body
         name: req
         required: true
@@ -1182,16 +1177,16 @@ paths:
       responses:
         "200":
           description: 成功
-      summary: Change user information
+      summary: 更改用户信息
       tags:
       - user
   /api/v1/user/detail/:id:
     get:
       consumes:
       - application/json
-      description: All information returned to a user on the front end
+      description: 得到用户所有的个人信息
       parameters:
-      - description: userId
+      - description: userId--用户ID
         in: path
         name: id
         required: true
@@ -1203,7 +1198,7 @@ paths:
           description: '{"code":0,"message":"OK","data":{"username":"kong"}}'
           schema:
             $ref: '#/definitions/user.GetUserInfoResponse'
-      summary: Get information about a certain user
+      summary: 得到用户信息
       tags:
       - user
 schemes:

@@ -12,14 +12,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
-// @Summary Get user comment information  
-// @Description Information returned to front-end user reviews
+// @Summary   拉取评论我的消息
+// @Description  拉取评论我的消息
 // @Tags message
 // @Accept  json
 // @Produce  json
-// @Param token header string true  "Information returned to front-end user information"
-// @Param limit query  int true  "limit"
-// @Param page  query  int true  "page"
+// @Param token header string true  "后端给前端的Token"
+// @Param limit query  int true  "limit--偏移量指定开始返回记录之前要跳过的记录数"
+// @Param page  query  int true  "page--限制指定要检索的记录数"
 // @Success 200 {object}  message.GetMessageForCommentResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno

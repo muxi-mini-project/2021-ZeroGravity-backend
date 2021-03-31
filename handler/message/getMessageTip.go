@@ -10,12 +10,12 @@ import (
 	"go.uber.org/zap"
 )
 
-// @Summary Get message reminder
-// @Description Return to the front-end message prompt
+// @Summary 获取消息提示
+// @Description 获取消息提示
 // @Tags message
 // @Accept  json
 // @Produce  json
-// @Param token header string true  "Return to the front-end message prompt"
+// @Param token header string true  "后端给前端的Token"
 // @Success 200 {object}  message.GetMessageTipResponse  "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno

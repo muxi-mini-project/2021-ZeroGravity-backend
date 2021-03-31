@@ -12,13 +12,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
-// @Summary Get ideas  
-// @Description Return to the idea form obtained by the front end
+// @Summary 获取想法  
+// @Description 根据用户ID获取这个ID下发布的想法
 // @Tags idea
 // @Accept  json
 // @Produce  json
-// @Param id path int true "id"
-// @Param token header string true  "uid"
+// @Param id path int true "id--根据这个id判断发布的想法是否为私密，id为1是显示想法为私密发布，你无权查看"
+// @Param token header string true  "uid--用户ID"
 // @Success 200 {object}  model.IdeaListItem "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno

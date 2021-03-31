@@ -9,12 +9,11 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
-// @Summary Modify the information as read  
-// @Description Change the status of the messages that the user has viewed to read
-// @Tags message
+// @Summary   修改信息为已读  
+// @Description  修改信息为已读
 // @Accept  json
 // @Produce  json
-// @Param token header string true  "Change the status of the messages that the user has viewed to read"
+// @Param token header string true  "后端给前端的token"
 // @Success 200 "成功" 
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno

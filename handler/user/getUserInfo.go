@@ -13,12 +13,12 @@ import (
 
 	"go.uber.org/zap"
 )
-// @Summary Get information about a certain user  
-// @Description All information returned to a user on the front end
+// @Summary 得到用户信息  
+// @Description 得到用户所有的个人信息
 // @Tags user
 // @Accept  json
 // @Produce  json
-// @Param  id path int true "userId"
+// @Param  id path int true "userId--用户ID"
 // @Success 200 {object}  user.GetUserInfoResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Router /api/v1/user/detail/:id [get]
 // GetUserInfo ... 获取某个用户的信息

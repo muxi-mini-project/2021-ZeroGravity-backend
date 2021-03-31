@@ -19,9 +19,9 @@ import (
 // @Tags idea
 // @Accept  json
 // @Produce  json
-// @Param token header string true  "userid"
-// @Param req body idea.CreateCommentRequest true  "Add comment records to the database"
-// @Param idea_id path int true "IdeaId"
+// @Param token header string true  "userid--用户的ID"
+// @Param req body idea.CreateCommentRequest true  "CommentedId 被评论者的ID || Content 评论内容"
+// @Param idea_id path int true "IdeaId--想法ID"
 // @Success 200 "成功"
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno

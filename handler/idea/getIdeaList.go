@@ -13,17 +13,17 @@ import (
 	"go.uber.org/zap"
 )
 
-// @Summary Get a list of ideas
-// @Description Return a list of ideas to front-end users
+// @Summary  进入空间后看到的想法
+// @Description  显示用户发布的想法
 // @Tags idea
 // @Accept  json
 // @Produce  json
-// @Param token header string true  "uid"
-// @Param limit query  int true "limit"
-// @Param page  query  int true "page"
-// @Param userId query int true "userId"
-// @Param privicy query int true "privicy"
-// @Param index query  int true "index"
+// @Param token header string true  "uid--用户ID"
+// @Param limit query  int true "limit--偏移量指定开始返回记录之前要跳过的记录数"
+// @Param page  query  int true "page--限制指定要检索的记录数 "
+// @Param userId query int true "userId--用户ID"
+// @Param privicy query int true "privicy 获取想法的私有策略 0->不获取私有 1->获取私有 默认不获取 || 若获取则默认为获取自己的想法，需要服务判断 uid"
+// @Param index query  int true "index--获取排序规则 0->默认时间排序 1->热度排序"
 // @Success 200 {object}  idea.IdeaResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Router /api/v1/idea/list [get]
 // GetIdeaList ... 获取想法列表

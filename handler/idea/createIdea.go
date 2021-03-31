@@ -10,13 +10,13 @@ import (
 	"go.uber.org/zap"
 )
 
-// @Summary Add ideas
-// @Description Add a thought record to the database
+// @Summary 发布想法
+// @Description 新增想法
 // @Tags idea
 // @Accept  json
 // @Produce  json
-// @Param token header string true  "userid"
-// @Param req body idea.CreateIdeaRequest true  "Add a thought record to the database"
+// @Param token header string true  "userid--用户ID"
+// @Param req body idea.CreateIdeaRequest true  "Content 想法内容 || Space  1->情绪 2->脑洞 3->沉思 4->探梦 || Privacy  0->公开 1->隐私"
 // @Success 200 "成功"
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno

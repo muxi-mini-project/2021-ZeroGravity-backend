@@ -14,13 +14,13 @@ import (
 	"go.uber.org/zap"
 )
 
-// @Summary Add comment and like record
-// @Description Add a comment and like record to the database
+// @Summary  上传对用户发布的评论的点赞
+// @Description 新增评论点赞
 // @Tags idea
 // @Accept  json
 // @Produce  json
-// @Param token header string true  "LikersId"
-// @Param id path int true "CommentId"
+// @Param token header string true  "LikersId点赞者的ID"
+// @Param id path int true "CommentId 评论的ID"
 // @Success 200 "成功"
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno

@@ -10,13 +10,13 @@ import (
 
 	"go.uber.org/zap")
 
-// @Summary Change user information
-// @Description Update user information in the database
+// @Summary 更改用户信息
+// @Description 更改用户信息
 // @Tags user
 // @Accept  json
 // @Produce  json
-// @Param  token header string true  "UserId"
-// @Param  req body user.UpdateUserInfoRequest true  "Update user information in the database"
+// @Param  token header string true  "UserId--用户ID"
+// @Param  req body user.UpdateUserInfoRequest true  "Avatar头像|| NickName昵称"
 // @Success  200 "成功"
 // @Router /api/v1/user [put]
 // UpdateUserInfo ... 更改用户的信息

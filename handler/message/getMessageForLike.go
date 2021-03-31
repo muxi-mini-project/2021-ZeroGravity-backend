@@ -11,14 +11,14 @@ import (
 	"github.com/2021-ZeroGravity-backend/util"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap")
-// @Summary Get users' likes  
-// @Description Like information returned to front-end users
+// @Summary 获取点赞我的信息
+// @Description  获取点赞我的信息
 // @Tags message
 // @Accept  json
 // @Produce  json
 // @Param token header string true  "Like information returned to front-end users"
-// @Param limit query  int true  "limit"
-// @Param page  query  int true  "page"
+// @Param limit query  int true  "limit--偏移量指定开始返回记录之前要跳过的记录数"
+// @Param page  query  int true  "page--限制指定要检索的记录数"
 // @Success 200 {object}  message.GetMessageForLikeResponse  "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno

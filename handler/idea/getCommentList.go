@@ -14,15 +14,15 @@ import (
 	"go.uber.org/zap"
 )
 
-// @Summary Get comments  
-// @Description Return to the comment form obtained by the front end
+// @Summary 发布的想法下对应的评论  
+// @Description 想法的评论列表
 // @Tags idea
 // @Accept  json
 // @Produce  json
-// @Param token header string true  "uid"
-// @Param id path int true "id"
-// @Param limit query  int true "limit"
-// @Param page  query  int true "page"
+// @Param token header string true  "uid--用户ID"
+// @Param id path int true "id--被评论的想法ID"
+// @Param limit query  int true "limit--偏移量指定开始返回记录之前要跳过的记录数"
+// @Param page  query  int true "page--限制指定要检索的记录数 "
 // @Success 200 {object}  idea.CommentResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno

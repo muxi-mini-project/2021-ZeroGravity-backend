@@ -12,12 +12,12 @@ import (
 	"go.uber.org/zap"
 )
 
-// @Summary Add ideas
-// @Description Add a thought record to the database
+// @Summary 删除想法
+// @Description 删除想法
 // @Tags idea
 // @Accept  json
 // @Produce  json
-// @Param token header string true  "userid"
+// @Param token header string true  "userid--用户ID"
 // @Success 200 "成功"
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno

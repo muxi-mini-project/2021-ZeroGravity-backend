@@ -14,12 +14,12 @@ import (
 	"go.uber.org/zap"
 )
 
-// @Summary Add thoughts like record
-// @Description Add an idea and like record to the database
+// @Summary 上传想法点赞信息
+// @Description 新增对想法的点赞
 // @Tags idea
 // @Accept  json
 // @Produce  json
-// @Param token header string true  "LikersId "
+// @Param token header string true  "LikersId点赞者的ID "
 // @Success 200 "成功"
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno

@@ -30,7 +30,7 @@ var doc = `{
     "paths": {
         "/api/v1/auth/api/v1/login": {
             "post": {
-                "description": "User login",
+                "description": "登录",
                 "consumes": [
                     "application/json"
                 ],
@@ -40,10 +40,10 @@ var doc = `{
                 "tags": [
                     "auth"
                 ],
-                "summary": "The user enters the account and password and then logs in",
+                "summary": "用户输入账号和密码登录",
                 "parameters": [
                     {
-                        "description": "The user enters the account and password and then logs in ",
+                        "description": " Account 账户   AccountPassword 密码   ",
                         "name": "req",
                         "in": "body",
                         "required": true,
@@ -82,7 +82,7 @@ var doc = `{
         },
         "/api/v1/auth/api/v1/register": {
             "post": {
-                "description": "User register",
+                "description": "用户注册",
                 "consumes": [
                     "application/json"
                 ],
@@ -92,10 +92,10 @@ var doc = `{
                 "tags": [
                     "auth"
                 ],
-                "summary": "User enters account and password to register",
+                "summary": "用户输入账号和密码注册",
                 "parameters": [
                     {
-                        "description": "The user enters the account and password and then register in ",
+                        "description": "Account--账户 AccountPassword--账户密码\tNickName--昵称\tAvatar--头像 ",
                         "name": "req",
                         "in": "body",
                         "required": true,
@@ -107,12 +107,6 @@ var doc = `{
                 "responses": {
                     "200": {
                         "description": "成功"
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/errno.Errno"
-                        }
                     },
                     "404": {
                         "description": "Not Found",
@@ -131,7 +125,7 @@ var doc = `{
         },
         "/api/v1/collection": {
             "get": {
-                "description": "Get a user's favorite record table and return it to the front end",
+                "description": "查看用户的收藏列表",
                 "consumes": [
                     "application/json"
                 ],
@@ -141,25 +135,25 @@ var doc = `{
                 "tags": [
                     "collection"
                 ],
-                "summary": "Get a user's favorite record table",
+                "summary": "查询用户的收藏列表",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "id",
+                        "description": "userid用户ID",
                         "name": "token",
                         "in": "header",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "limit",
+                        "description": "limit--偏移量指定开始返回记录之前要跳过的记录数 ",
                         "name": "limit",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "page",
+                        "description": "page--限制指定要检索的记录数 ",
                         "name": "page",
                         "in": "query",
                         "required": true
@@ -193,7 +187,7 @@ var doc = `{
                 }
             },
             "post": {
-                "description": "Add a new favorite record to the database",
+                "description": "新增收藏记录",
                 "consumes": [
                     "application/json"
                 ],
@@ -203,17 +197,17 @@ var doc = `{
                 "tags": [
                     "collection"
                 ],
-                "summary": "Add favorite record",
+                "summary": "添加收藏记录",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "userid",
+                        "description": "userid--用户的ID",
                         "name": "token",
                         "in": "header",
                         "required": true
                     },
                     {
-                        "description": "Add a new favorite record to the database ",
+                        "description": "IdeaId用户收藏的想法ID",
                         "name": "req",
                         "in": "body",
                         "required": true,
@@ -247,7 +241,7 @@ var doc = `{
                 }
             },
             "delete": {
-                "description": "Delete favorite records from the database",
+                "description": "删除收藏记录",
                 "consumes": [
                     "application/json"
                 ],
@@ -257,17 +251,17 @@ var doc = `{
                 "tags": [
                     "collection"
                 ],
-                "summary": "Delete favorites",
+                "summary": "用户删除收藏记录",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "userid",
+                        "description": "userid--用户的ID",
                         "name": "token",
                         "in": "header",
                         "required": true
                     },
                     {
-                        "description": "Delete favorite records from the database  ",
+                        "description": "IdeaId用户收藏的想法ID",
                         "name": "req",
                         "in": "body",
                         "required": true,
@@ -303,7 +297,7 @@ var doc = `{
         },
         "/api/v1/idea": {
             "post": {
-                "description": "Add a thought record to the database",
+                "description": "新增想法",
                 "consumes": [
                     "application/json"
                 ],
@@ -313,17 +307,17 @@ var doc = `{
                 "tags": [
                     "idea"
                 ],
-                "summary": "Add ideas",
+                "summary": "发布想法",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "userid",
+                        "description": "userid--用户ID",
                         "name": "token",
                         "in": "header",
                         "required": true
                     },
                     {
-                        "description": "Add a thought record to the database",
+                        "description": "Content 想法内容 || Space  1-\u003e情绪 2-\u003e脑洞 3-\u003e沉思 4-\u003e探梦 || Privacy  0-\u003e公开 1-\u003e隐私",
                         "name": "req",
                         "in": "body",
                         "required": true,
@@ -359,7 +353,7 @@ var doc = `{
         },
         "/api/v1/idea/comment/:id/like": {
             "put": {
-                "description": "Add a comment and like record to the database",
+                "description": "新增评论点赞",
                 "consumes": [
                     "application/json"
                 ],
@@ -369,18 +363,18 @@ var doc = `{
                 "tags": [
                     "idea"
                 ],
-                "summary": "Add comment and like record",
+                "summary": "上传对用户发布的评论的点赞",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "LikersId",
+                        "description": "LikersId点赞者的ID",
                         "name": "token",
                         "in": "header",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "CommentId",
+                        "description": "CommentId 评论的ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -413,7 +407,7 @@ var doc = `{
         },
         "/api/v1/idea/detail/:id": {
             "get": {
-                "description": "Return to the idea form obtained by the front end",
+                "description": "根据用户ID获取这个ID下发布的想法",
                 "consumes": [
                     "application/json"
                 ],
@@ -423,18 +417,18 @@ var doc = `{
                 "tags": [
                     "idea"
                 ],
-                "summary": "Get ideas",
+                "summary": "获取想法",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "id",
+                        "description": "id--根据这个id判断发布的想法是否为私密，id为1是显示想法为私密发布，你无权查看",
                         "name": "id",
                         "in": "path",
                         "required": true
                     },
                     {
                         "type": "string",
-                        "description": "uid",
+                        "description": "uid--用户ID",
                         "name": "token",
                         "in": "header",
                         "required": true
@@ -468,7 +462,7 @@ var doc = `{
                 }
             },
             "delete": {
-                "description": "Add a thought record to the database",
+                "description": "删除想法",
                 "consumes": [
                     "application/json"
                 ],
@@ -478,20 +472,11 @@ var doc = `{
                 "tags": [
                     "idea"
                 ],
-                "summary": "Add ideas",
+                "summary": "删除想法",
                 "parameters": [
                     {
-                        "description": "Add a thought record to the database",
-                        "name": "req",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/idea.CreateIdeaRequest"
-                        }
-                    },
-                    {
                         "type": "string",
-                        "description": "userid",
+                        "description": "userid--用户ID",
                         "name": "token",
                         "in": "header",
                         "required": true
@@ -524,7 +509,7 @@ var doc = `{
         },
         "/api/v1/idea/detail/:id/comment": {
             "get": {
-                "description": "Return to the comment form obtained by the front end",
+                "description": "想法的评论列表",
                 "consumes": [
                     "application/json"
                 ],
@@ -534,32 +519,32 @@ var doc = `{
                 "tags": [
                     "idea"
                 ],
-                "summary": "Get comments",
+                "summary": "发布的想法下对应的评论",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "uid",
+                        "description": "uid--用户ID",
                         "name": "token",
                         "in": "header",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "id",
+                        "description": "id--被评论的想法ID",
                         "name": "id",
                         "in": "path",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "limit",
+                        "description": "limit--偏移量指定开始返回记录之前要跳过的记录数",
                         "name": "limit",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "page",
+                        "description": "page--限制指定要检索的记录数 ",
                         "name": "page",
                         "in": "query",
                         "required": true
@@ -591,63 +576,7 @@ var doc = `{
                         }
                     }
                 }
-            }
-        },
-        "/api/v1/idea/detail/:id/comment/:comment_id": {
-            "delete": {
-                "description": "Delete the comment record from the database",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "idea"
-                ],
-                "summary": "Delete comment",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "id",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "uid",
-                        "name": "token",
-                        "in": "header",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "成功"
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/errno.Errno"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/errno.Errno"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "$ref": "#/definitions/errno.Errno"
-                        }
-                    }
-                }
-            }
-        },
-        "/api/v1/idea/detail/:id/comment/:idea_id": {
+            },
             "post": {
                 "description": "Add comment records to the database",
                 "consumes": [
@@ -663,13 +592,13 @@ var doc = `{
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "userid",
+                        "description": "userid--用户的ID",
                         "name": "token",
                         "in": "header",
                         "required": true
                     },
                     {
-                        "description": "Add comment records to the database",
+                        "description": "CommentedId 被评论者的ID || Content 评论内容",
                         "name": "req",
                         "in": "body",
                         "required": true,
@@ -679,7 +608,7 @@ var doc = `{
                     },
                     {
                         "type": "integer",
-                        "description": "IdeaId",
+                        "description": "IdeaId--想法ID",
                         "name": "idea_id",
                         "in": "path",
                         "required": true
@@ -710,9 +639,9 @@ var doc = `{
                 }
             }
         },
-        "/api/v1/idea/detail/:id/like": {
-            "put": {
-                "description": "Add an idea and like record to the database",
+        "/api/v1/idea/detail/:id/comment/:comment_id": {
+            "delete": {
+                "description": "删除评论",
                 "consumes": [
                     "application/json"
                 ],
@@ -722,11 +651,65 @@ var doc = `{
                 "tags": [
                     "idea"
                 ],
-                "summary": "Add thoughts like record",
+                "summary": "删除用户自己的评论",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "LikersId ",
+                        "description": "id--评论的ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "uid --用户的ID",
+                        "name": "token",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "成功"
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/errno.Errno"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/errno.Errno"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/errno.Errno"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/idea/detail/:id/like": {
+            "put": {
+                "description": "新增对想法的点赞",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "idea"
+                ],
+                "summary": "上传想法点赞信息",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "LikersId点赞者的ID ",
                         "name": "token",
                         "in": "header",
                         "required": true
@@ -759,7 +742,7 @@ var doc = `{
         },
         "/api/v1/idea/liked": {
             "get": {
-                "description": "Return to the list of ideas that the front-end user likes",
+                "description": "获取想法被点赞的信息表",
                 "consumes": [
                     "application/json"
                 ],
@@ -769,25 +752,25 @@ var doc = `{
                 "tags": [
                     "idea"
                 ],
-                "summary": "Get a list of ideas liked by users",
+                "summary": "获取用户个人发布的想法被点赞的情况",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "UserId",
+                        "description": "UserId--用户ID",
                         "name": "token",
                         "in": "header",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "limit",
+                        "description": "limit--偏移量指定开始返回记录之前要跳过的记录数",
                         "name": "limit",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "page",
+                        "description": "page--限制指定要检索的记录数 ",
                         "name": "page",
                         "in": "query",
                         "required": true
@@ -823,7 +806,7 @@ var doc = `{
         },
         "/api/v1/idea/list": {
             "get": {
-                "description": "Return a list of ideas to front-end users",
+                "description": "显示用户发布的想法",
                 "consumes": [
                     "application/json"
                 ],
@@ -833,46 +816,46 @@ var doc = `{
                 "tags": [
                     "idea"
                 ],
-                "summary": "Get a list of ideas",
+                "summary": "进入空间后看到的想法",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "uid",
+                        "description": "uid--用户ID",
                         "name": "token",
                         "in": "header",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "limit",
+                        "description": "limit--偏移量指定开始返回记录之前要跳过的记录数",
                         "name": "limit",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "page",
+                        "description": "page--限制指定要检索的记录数 ",
                         "name": "page",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "userId",
+                        "description": "userId--用户ID",
                         "name": "userId",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "privicy",
+                        "description": "privicy 获取想法的私有策略 0-\u003e不获取私有 1-\u003e获取私有 默认不获取 || 若获取则默认为获取自己的想法，需要服务判断 uid",
                         "name": "privicy",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "index",
+                        "description": "index--获取排序规则 0-\u003e默认时间排序 1-\u003e热度排序",
                         "name": "index",
                         "in": "query",
                         "required": true
@@ -890,7 +873,7 @@ var doc = `{
         },
         "/api/v1/message/comment": {
             "get": {
-                "description": "Information returned to front-end user reviews",
+                "description": "拉取评论我的消息",
                 "consumes": [
                     "application/json"
                 ],
@@ -900,25 +883,25 @@ var doc = `{
                 "tags": [
                     "message"
                 ],
-                "summary": "Get user comment information",
+                "summary": "拉取评论我的消息",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Information returned to front-end user information",
+                        "description": "后端给前端的Token",
                         "name": "token",
                         "in": "header",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "limit",
+                        "description": "limit--偏移量指定开始返回记录之前要跳过的记录数",
                         "name": "limit",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "page",
+                        "description": "page--限制指定要检索的记录数",
                         "name": "page",
                         "in": "query",
                         "required": true
@@ -954,7 +937,7 @@ var doc = `{
         },
         "/api/v1/message/like": {
             "get": {
-                "description": "Like information returned to front-end users",
+                "description": "获取点赞我的信息",
                 "consumes": [
                     "application/json"
                 ],
@@ -964,7 +947,7 @@ var doc = `{
                 "tags": [
                     "message"
                 ],
-                "summary": "Get users' likes",
+                "summary": "获取点赞我的信息",
                 "parameters": [
                     {
                         "type": "string",
@@ -975,14 +958,14 @@ var doc = `{
                     },
                     {
                         "type": "integer",
-                        "description": "limit",
+                        "description": "limit--偏移量指定开始返回记录之前要跳过的记录数",
                         "name": "limit",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": "page",
+                        "description": "page--限制指定要检索的记录数",
                         "name": "page",
                         "in": "query",
                         "required": true
@@ -1018,21 +1001,18 @@ var doc = `{
         },
         "/api/v1/message/readall": {
             "put": {
-                "description": "Change the status of the messages that the user has viewed to read",
+                "description": "修改信息为已读",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
                     "application/json"
                 ],
-                "tags": [
-                    "message"
-                ],
-                "summary": "Modify the information as read",
+                "summary": "修改信息为已读",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Change the status of the messages that the user has viewed to read",
+                        "description": "后端给前端的token",
                         "name": "token",
                         "in": "header",
                         "required": true
@@ -1065,7 +1045,7 @@ var doc = `{
         },
         "/api/v1/message/tip": {
             "get": {
-                "description": "Return to the front-end message prompt",
+                "description": "获取消息提示",
                 "consumes": [
                     "application/json"
                 ],
@@ -1075,11 +1055,11 @@ var doc = `{
                 "tags": [
                     "message"
                 ],
-                "summary": "Get message reminder",
+                "summary": "获取消息提示",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "Return to the front-end message prompt",
+                        "description": "后端给前端的Token",
                         "name": "token",
                         "in": "header",
                         "required": true
@@ -1115,7 +1095,7 @@ var doc = `{
         },
         "/api/v1/report": {
             "post": {
-                "description": "Initiate a request to report a user",
+                "description": "举报用户",
                 "consumes": [
                     "application/json"
                 ],
@@ -1125,10 +1105,10 @@ var doc = `{
                 "tags": [
                     "report"
                 ],
-                "summary": "New report request",
+                "summary": "举报用户",
                 "parameters": [
                     {
-                        "description": "Initiate a request to report a user",
+                        "description": "UserID--被举报的用户ID || Kind-- ||   Reason--原因   || CommentId --评论的ID|| ideaId--想法的ID",
                         "name": "req",
                         "in": "body",
                         "required": true,
@@ -1138,7 +1118,7 @@ var doc = `{
                     },
                     {
                         "type": "string",
-                        "description": "userId",
+                        "description": "userId--用户ID",
                         "name": "token",
                         "in": "header",
                         "required": true
@@ -1171,7 +1151,7 @@ var doc = `{
         },
         "/api/v1/search": {
             "get": {
-                "description": "Get search results, the result is a list of users or a list of ideas",
+                "description": "获取搜索结果，结果为用户列表或想法列表",
                 "consumes": [
                     "application/json"
                 ],
@@ -1181,32 +1161,32 @@ var doc = `{
                 "tags": [
                     "search"
                 ],
-                "summary": "Get search results",
+                "summary": "获取搜索结果",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": " search by page",
+                        "description": "page--限制指定要检索的记录数",
                         "name": "page",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": " search by limit",
+                        "description": "limit--偏移量指定开始返回记录之前要跳过的记录数",
                         "name": "limit",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "integer",
-                        "description": " search by target",
+                        "description": "搜索目标，0-\u003eidea 1-\u003euser 默认搜索 idea",
                         "name": "target",
                         "in": "query",
                         "required": true
                     },
                     {
                         "type": "string",
-                        "description": "idea key word",
+                        "description": "关键字",
                         "name": "keyword",
                         "in": "query",
                         "required": true
@@ -1220,7 +1200,7 @@ var doc = `{
                     },
                     {
                         "type": "string",
-                        "description": "Get token",
+                        "description": "后端给前端的token",
                         "name": "token",
                         "in": "header",
                         "required": true
@@ -1254,7 +1234,7 @@ var doc = `{
                 }
             },
             "delete": {
-                "description": "Delete the history",
+                "description": "删除查询历史",
                 "consumes": [
                     "application/json"
                 ],
@@ -1264,17 +1244,17 @@ var doc = `{
                 "tags": [
                     "search"
                 ],
-                "summary": "Delete History",
+                "summary": "删除查询历史",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "userId",
+                        "description": "userId--用户ID",
                         "name": "id",
                         "in": "path",
                         "required": true
                     },
                     {
-                        "description": " delete history",
+                        "description": "delete history删除历史记录",
                         "name": "h",
                         "in": "body",
                         "required": true,
@@ -1310,7 +1290,7 @@ var doc = `{
         },
         "/api/v1/search/histories": {
             "get": {
-                "description": "Delete the history",
+                "description": "获取历史记录",
                 "consumes": [
                     "application/json"
                 ],
@@ -1320,11 +1300,11 @@ var doc = `{
                 "tags": [
                     "search"
                 ],
-                "summary": "Get Histories",
+                "summary": "获取历史记录",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "userId",
+                        "description": "userId--用户ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -1363,7 +1343,7 @@ var doc = `{
         },
         "/api/v1/user": {
             "put": {
-                "description": "Update user information in the database",
+                "description": "更改用户信息",
                 "consumes": [
                     "application/json"
                 ],
@@ -1373,17 +1353,17 @@ var doc = `{
                 "tags": [
                     "user"
                 ],
-                "summary": "Change user information",
+                "summary": "更改用户信息",
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "UserId",
+                        "description": "UserId--用户ID",
                         "name": "token",
                         "in": "header",
                         "required": true
                     },
                     {
-                        "description": "Update user information in the database",
+                        "description": "Avatar头像|| NickName昵称",
                         "name": "req",
                         "in": "body",
                         "required": true,
@@ -1401,7 +1381,7 @@ var doc = `{
         },
         "/api/v1/user/detail/:id": {
             "get": {
-                "description": "All information returned to a user on the front end",
+                "description": "得到用户所有的个人信息",
                 "consumes": [
                     "application/json"
                 ],
@@ -1411,11 +1391,11 @@ var doc = `{
                 "tags": [
                     "user"
                 ],
-                "summary": "Get information about a certain user",
+                "summary": "得到用户信息",
                 "parameters": [
                     {
                         "type": "integer",
-                        "description": "userId",
+                        "description": "userId--用户ID",
                         "name": "id",
                         "in": "path",
                         "required": true
@@ -1466,6 +1446,9 @@ var doc = `{
             "properties": {
                 "token": {
                     "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -1540,6 +1523,14 @@ var doc = `{
             "properties": {
                 "content": {
                     "type": "string"
+                },
+                "privacy": {
+                    "description": "0-\u003e公开 1-\u003e隐私",
+                    "type": "integer"
+                },
+                "space": {
+                    "description": "1-\u003e情绪 2-\u003e脑洞 3-\u003e沉思 4-\u003e探梦",
+                    "type": "integer"
                 }
             }
         },

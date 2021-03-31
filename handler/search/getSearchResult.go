@@ -15,17 +15,17 @@ import (
 	"go.uber.org/zap"
 )
 
-// @Summary Get search results
-// @Description Get search results, the result is a list of users or a list of ideas
+// @Summary 获取搜索结果
+// @Description 获取搜索结果，结果为用户列表或想法列表
 // @Tags search
 // @Accept  json
 // @Produce  json
-// @Param page  query int true " search by page"
-// @Param limit query int true " search by limit"
-// @Param target query int true " search by target"
-// @Param  keyword query string true "idea key word"
+// @Param page  query int true "page--限制指定要检索的记录数"
+// @Param limit query int true "limit--偏移量指定开始返回记录之前要跳过的记录数"
+// @Param target query int true "搜索目标，0->idea 1->user 默认搜索 idea"
+// @Param  keyword query string true "关键字"
 // @Param  id path int true  "userId"
-// @Param  token header string true  "Get token"
+// @Param  token header string true  "后端给前端的token"
 // @Success 200 {object}  search.IdeaResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Success 200 {object}  search.UserListResponse "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Failure 400 {object} errno.Errno
@@ -110,14 +110,14 @@ func GetSearchResult(c *gin.Context) {
 	}
 }
 
-// @Summary Delete History
-// @Description Delete the history
+// @Summary 删除查询历史
+// @Description 删除查询历史
 // @Tags search
 // @Accept  json
 // @Produce  json
-// @Param  id path int true  "userId"
-// @Param  h body model.History true  " delete history"
-// @Success @Success 200 "成功"
+// @Param  id path int true  "userId--用户ID"
+// @Param  h body model.History true  "delete history删除历史记录"
+// @Success 200 "成功"
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno
 // @Failure 500 {object} errno.Errno
@@ -136,12 +136,12 @@ func DeleteHistory(c *gin.Context) {
 	SendResponse(c, errno.OK, nil)
 }
 
-// @Summary Get Histories
-// @Description Delete the history
+// @Summary 获取历史记录
+// @Description 获取历史记录
 // @Tags search
 // @Accept  json
 // @Produce  json
-// @Param  id path int true  "userId"
+// @Param  id path int true  "userId--用户ID"
 // @Success 200 {object}  []model.History  "{"code":0,"message":"OK","data":{"username":"kong"}}"
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno

@@ -13,13 +13,13 @@ import (
 	"go.uber.org/zap"
 )
 
-// @Summary Delete comment
-// @Description Delete the comment record from the database
+// @Summary 删除用户自己的评论
+// @Description 删除评论
 // @Tags idea
 // @Accept  json
 // @Produce  json
-// @Param id path string true "id"
-// @Param token header string true  "uid"
+// @Param id path string true "id--评论的ID"
+// @Param token header string true  "uid --用户的ID"
 // @Success 200 "成功"
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno

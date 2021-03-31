@@ -14,7 +14,7 @@ import (
 // @Tags collection
 // @Accept  json
 // @Produce  json
-// @Param token header string true  "userid用户的ID"
+// @Param token header string true  "userid--用户的ID"
 // @Param  req body collection.DeleteCollectionRequest  true "IdeaId用户收藏的想法ID"
 // @Success 200 "成功"
 // @Failure 400 {object} errno.Errno

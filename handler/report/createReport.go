@@ -9,13 +9,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
-// @Summary New report request  
-// @Description Initiate a request to report a user
+// @Summary 举报用户 
+// @Description 举报用户
 // @Tags report
 // @Accept  json
 // @Produce  json
-// @Param  req body report.CreateReportRequest true  "Initiate a request to report a user"
-// @Param token header string true  "userId"
+// @Param  req body report.CreateReportRequest true  "UserID--被举报的用户ID || Kind-- ||   Reason--原因   || CommentId --评论的ID|| ideaId--想法的ID" 
+// @Param token header string true  "userId--用户ID"
 // @Success 200 "成功" 
 // @Failure 400 {object} errno.Errno
 // @Failure 404 {object} errno.Errno
