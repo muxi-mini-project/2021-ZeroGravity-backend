@@ -8,6 +8,7 @@ type IdeaModel struct {
 	LikesSum    int    `json:"likes_sum" gorm:"column:likes_sum;" binding:"required"`
 	CommentSum  int    `json:"comment_sum" gorm:"column:comment_sum;" binding:"required"`
 	Privacy     int    `json:"privacy" gorm:"column:privacy;" binding:"required"` // 0->公有 1->私有
+	Space       int    `json:"space" gorm:"column:space;" binding:"required"`
 }
 
 type IdeaInfo struct {
@@ -63,7 +64,7 @@ func GetIdeaById(id int) (*IdeaInfo, error) {
 	return u, nil
 }
 
-func GetIdeaList(uid, offset, limit, privacy, index, userId int) ([]*IdeaInfo, error) {
+func GetIdeaList(uid, offset, limit, privacy, index, userId, space int) ([]*IdeaInfo, error) {
 	item := make([]*IdeaInfo, 0)
 
 	query := DB.Self.Table("tbl_idea").
@@ -71,7 +72,7 @@ func GetIdeaList(uid, offset, limit, privacy, index, userId int) ([]*IdeaInfo, e
 		Joins("left join tbl_user on tbl_user.id = tbl_idea.publisher_id").
 		Offset(offset).Limit(limit)
 
-	// privicy 判断
+	// privacy 判断
 	if privacy == 0 {
 		// 获取他人想法
 		query = query.Where("tbl_idea.privacy = ?", 0)
@@ -79,6 +80,11 @@ func GetIdeaList(uid, offset, limit, privacy, index, userId int) ([]*IdeaInfo, e
 		// 判断是否选择用户
 		if userId != 0 {
 			query = query.Where("tbl_idea.publisher_id = ?", userId)
+		}
+
+		// 判断选择空间站
+		if space != 0 {
+			query = query.Where("tbl_idea.space = ?", space)
 		}
 	} else {
 		// 获取用户自己的想法

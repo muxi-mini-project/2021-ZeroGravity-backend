@@ -31,11 +31,18 @@ func GetIdeaList(c *gin.Context) {
 	log.Info("Idea getIdeaList function called.",
 		zap.String("X-Request-Id", util.GetReqID(c)))
 
-	var uid, limit, page, userId, index, privacy int
+	var uid, limit, page, userId, index, privacy, space int
 	var err error
 
 	// 从 token 获取 userid
 	uid = c.MustGet("userID").(int)
+
+	// 获取空间选择，默认 0 获取全部
+	space, err = strconv.Atoi(c.DefaultQuery("space", "0"))
+	if err != nil {
+		SendBadRequest(c, errno.ErrQuery, nil, err.Error(), GetLine())
+		return
+	}
 
 	limit, err = strconv.Atoi(c.DefaultQuery("limit", "10"))
 	if err != nil {
@@ -72,7 +79,7 @@ func GetIdeaList(c *gin.Context) {
 	}
 
 	// 调用服务
-	item, err := idea.GetIdeaList(uid, page*limit, limit, privacy, index, userId)
+	item, err := idea.GetIdeaList(uid, page*limit, limit, privacy, index, userId, space)
 	if err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return

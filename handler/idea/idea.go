@@ -17,6 +17,8 @@ type DeleteCommentRequest struct {
 // CreateIdeaRequest ... 创建想法请求
 type CreateIdeaRequest struct {
 	Content string `json:"content"`
+	Space   int    `json:"space"`   // 1->情绪 2->脑洞 3->沉思 4->探梦
+	Privacy int    `json:"privacy"` // 0->公开 1->隐私
 }
 
 // DeleteIdeaRequest ... 删除想法请求

@@ -4,8 +4,8 @@ import (
 	"github.com/2021-ZeroGravity-backend/model"
 )
 
-func GetIdeaList(uid, offset, limit, privicy, index, userId int) ([]*model.IdeaListItem, error) {
-	list, err := model.GetIdeaList(uid, offset, limit, privicy, index, userId)
+func GetIdeaList(uid, offset, limit, privicy, index, userId, space int) ([]*model.IdeaListItem, error) {
+	list, err := model.GetIdeaList(uid, offset, limit, privicy, index, userId, space)
 	if err != nil {
 		return nil, err
 	}

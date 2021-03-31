@@ -29,4 +29,7 @@ var (
 	ErrNotLike  = &Errno{Code: 40003, Message: "未点赞"}
 
 	ErrMatch = &Errno{Code: 40004, Message: "与该user不匹配"}
+
+	// idea errors
+	ErrSpace = &Errno{Code: 40005, Message: "idea 必须发布到一个对应空间站，privacy 和 space 不能同时为 0。"}
 )

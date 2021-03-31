@@ -7,7 +7,7 @@ import (
 )
 
 //CreateIdea is used to create idea
-func CreateIdea(content string, uid int) error {
+func CreateIdea(content string, uid, space, privacy int) error {
 
 	var idea *model.IdeaModel
 
@@ -17,6 +17,8 @@ func CreateIdea(content string, uid int) error {
 		PublisherId: uid,
 		Content:     content,
 		ReleaseDate: t.Format("2006-01-02 15:04:05"),
+		Space:       space,
+		Privacy:     privacy,
 	}
 
 	return idea.Create()

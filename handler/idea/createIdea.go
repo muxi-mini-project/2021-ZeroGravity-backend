@@ -37,8 +37,13 @@ func CreateIdea(c *gin.Context) {
 		return
 	}
 
+	// space 和 privacy 判断
+	if req.Space == 0 && req.Privacy == 0 {
+		SendBadRequest(c, errno.ErrSpace, nil, "idea must choose a space", GetLine())
+	}
+
 	// 调用服务
-	if err := idea.CreateIdea(req.Content, userid); err != nil {
+	if err := idea.CreateIdea(req.Content, userid, req.Space, req.Privacy); err != nil {
 		SendError(c, errno.ErrDatabase, nil, err.Error(), GetLine())
 		return
 	}
