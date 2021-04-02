@@ -13,7 +13,7 @@ import (
 	"go.uber.org/zap"
 )
 
-// @Summary 用户输入账号和密码登录 
+// @Summary 输入账号和密码登录 
 // @Description 登录
 // @Tags auth
 // @Accept  json

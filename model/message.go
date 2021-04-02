@@ -73,6 +73,26 @@ func GetMessageForComment(uid, offset, limit int) ([]*MessageForCommentItem, err
 	return message, nil
 }
 
+
+
+// GetUserList ...拉取单字搜索的用户信息
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // GetMessageForLike ... 拉取点赞我的消息
 func GetMessageForLike(uid, offset, limit int) ([]*MessageForLikeItem, error) {
 	message := make([]*MessageForLikeItem, 0)
