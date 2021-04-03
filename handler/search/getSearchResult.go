@@ -22,7 +22,7 @@ import (
 // @Produce  json
 // @Param page  query int true "page--限制指定要检索的记录数"
 // @Param limit query int true "limit--偏移量指定开始返回记录之前要跳过的记录数"
-// @Param target query int true "搜索目标，0->idea 1->user 默认搜索 idea"
+// @Param target query int true "target为0模糊搜索想法  target为1模糊搜索用户 若想模糊查找用户请给target赋值为1传给服务器"
 // @Param  keyword query string true "关键字"
 // @Param  id path int true  "userId"
 // @Param  token header string true  "后端给前端的token"
