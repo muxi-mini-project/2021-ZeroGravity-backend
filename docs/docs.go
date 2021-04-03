@@ -40,7 +40,7 @@ var doc = `{
                 "tags": [
                     "auth"
                 ],
-                "summary": "用户输入账号和密码登录",
+                "summary": "输入账号和密码登录",
                 "parameters": [
                     {
                         "description": " Account 账户   AccountPassword 密码   ",
@@ -1179,7 +1179,7 @@ var doc = `{
                     },
                     {
                         "type": "integer",
-                        "description": "搜索目标，0-\u003eidea 1-\u003euser 默认搜索 idea",
+                        "description": "target为0模糊搜索想法  target为1模糊搜索用户 若想模糊查找用户请给target赋值为1传给服务器",
                         "name": "target",
                         "in": "query",
                         "required": true
