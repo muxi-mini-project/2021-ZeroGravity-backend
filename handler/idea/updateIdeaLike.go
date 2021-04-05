@@ -57,7 +57,7 @@ func UpdateIdeaLike(c *gin.Context) {
 	//取消点赞
 	if req.Choice == 2 {
 		var Idealike model.IdeaLikeModel
-		if result := model.DB.Self.Where("idea_id = ? AND likers_id = ? ", IdeaId, LikersId).First(&Idealike); result.Error != nil {
+		if result := model.DB.Self.Where("idea_id = ? AND likers_id = ? ", IdeaId, LikersId).First(&Idealike); result.Error == nil {
 			//未点赞
 			SendError(c, errno.ErrNotLike, nil, result.Error.Error(), GetLine())
 			return
@@ -72,7 +72,7 @@ func UpdateIdeaLike(c *gin.Context) {
 		}
 	}
 	if req.Choice == 1 {
-		if result := model.DB.Self.Where("idea_id = ? AND likers_id = ? ", IdeaId, LikersId); result.Error != nil {
+		if result := model.DB.Self.Where("idea_id = ? AND likers_id = ? ", IdeaId, LikersId); result.Error == nil {
 			//已点赞
 			SendError(c, errno.ErrHaveLike, nil, result.Error.Error(), GetLine())
 			return
