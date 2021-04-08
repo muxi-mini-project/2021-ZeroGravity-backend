@@ -83,6 +83,9 @@ func GetCollection(id, offset, limit int) ([]*model.IdeaListItem, error) {
 	// 按 idList 排序
 	for i, v := range idList {
 		for j, k := range listItem {
+			if i > len(listItem) || j > len(idList) {
+				continue
+			}
 			if v == k.Id {
 				listItem[i], listItem[j] = listItem[j], listItem[i]
 			}
